@@ -34,39 +34,40 @@
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
-    padding: 40px 20px;
+    padding: clamp(16px, 4vw, 40px) clamp(12px, 3vw, 20px);
     line-height: 1.6;
   }
 
   .app {
     max-width: 800px;
     margin: 0 auto;
+    width: 100%;
   }
 
   /* Header */
   .header {
     border-bottom: 1px solid var(--border);
-    padding-bottom: 32px;
-    margin-bottom: 40px;
+    padding-bottom: clamp(20px, 5vw, 32px);
+    margin-bottom: clamp(24px, 6vw, 40px);
   }
 
   .header-brand {
     font-family: 'Outfit', sans-serif;
-    font-size: 12px;
+    font-size: clamp(10px, 2.5vw, 12px);
     font-weight: 600;
-    letter-spacing: 3px;
+    letter-spacing: clamp(2px, 0.5vw, 3px);
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 8px;
+    margin-bottom: clamp(6px, 2vw, 8px);
   }
 
   .header h1 {
     font-family: 'Outfit', sans-serif;
-    font-size: clamp(32px, 5vw, 56px);
+    font-size: clamp(28px, 6vw, 56px);
     font-weight: 300;
-    line-height: 1;
-    margin-bottom: 16px;
-    letter-spacing: -2px;
+    line-height: 1.1;
+    margin-bottom: clamp(12px, 3vw, 16px);
+    letter-spacing: clamp(-1.5px, -0.3vw, -2px);
   }
 
   .header h1 span {
@@ -163,24 +164,27 @@
   /* Question Navigation */
   .question-nav {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(32px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
     gap: 2px;
     background: var(--border);
     border: 1px solid var(--border);
-    margin-bottom: 40px;
+    margin-bottom: clamp(24px, 5vw, 40px);
   }
 
   .nav-dot {
     aspect-ratio: 1;
+    min-height: 36px;
     background: var(--surface);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 11px;
+    font-size: clamp(10px, 2.5vw, 11px);
     font-weight: 500;
     color: var(--text-muted);
     cursor: pointer;
     transition: all 0.2s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .nav-dot:hover {
@@ -237,10 +241,10 @@
   }
 
   .question-text {
-    font-size: 18px;
+    font-size: clamp(16px, 4vw, 18px);
     font-weight: 400;
-    line-height: 1.7;
-    margin-bottom: 32px;
+    line-height: 1.6;
+    margin-bottom: clamp(20px, 5vw, 32px);
     color: var(--text);
   }
 
@@ -305,14 +309,17 @@
     background: var(--border);
     font-size: 16px;
     font-weight: 600;
+    flex-shrink: 0;
   }
 
   .option-text {
-    font-size: 15px;
+    font-size: clamp(14px, 2.5vw, 15px);
     font-weight: 400;
-    line-height: 1.6;
+    line-height: 1.5;
     display: flex;
     align-items: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   /* Explanation */
@@ -366,16 +373,19 @@
 
   button {
     font-family: 'Outfit', sans-serif;
-    font-size: 12px;
+    font-size: clamp(11px, 2.5vw, 12px);
     font-weight: 600;
     letter-spacing: 1px;
     text-transform: uppercase;
-    padding: 16px 32px;
+    padding: clamp(14px, 3vw, 16px) clamp(24px, 5vw, 32px);
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text);
     cursor: pointer;
     transition: all 0.2s ease;
+    min-height: 48px;
+    min-width: 120px;
+    -webkit-tap-highlight-color: transparent;
   }
 
   button:hover:not(:disabled) {
@@ -402,35 +412,35 @@
   /* Result Screen */
   .result {
     text-align: center;
-    padding: 60px 40px;
+    padding: clamp(32px, 8vw, 60px) clamp(20px, 5vw, 40px);
   }
 
   .result-brand {
     font-family: 'Outfit', sans-serif;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 24px;
+    margin-bottom: clamp(16px, 4vw, 24px);
   }
 
   .result h2 {
     font-family: 'Outfit', sans-serif;
-    font-size: clamp(36px, 6vw, 72px);
+    font-size: clamp(32px, 7vw, 72px);
     font-weight: 300;
-    line-height: 1;
-    margin-bottom: 16px;
-    letter-spacing: -2px;
+    line-height: 1.1;
+    margin-bottom: clamp(12px, 3vw, 16px);
+    letter-spacing: -1.5px;
   }
 
   .result .score {
     font-family: 'Outfit', sans-serif;
-    font-size: clamp(64px, 10vw, 120px);
+    font-size: clamp(48px, 12vw, 120px);
     font-weight: 700;
     color: var(--accent);
     line-height: 1;
-    margin: 32px 0;
+    margin: clamp(24px, 6vw, 32px) 0;
   }
 
   .score-label {
@@ -524,49 +534,227 @@
   }
 
   /* Responsive */
-  @media (max-width: 640px) {
-    body {
-      padding: 24px 16px;
+  @media (max-width: 768px) {
+    .header {
+      padding-bottom: 24px;
+      margin-bottom: 24px;
+    }
+
+    .header-brand {
+      font-size: 10px;
+      letter-spacing: 2px;
+    }
+
+    .stats-bar {
+      margin-bottom: 24px;
+    }
+
+    .stat {
+      padding: 16px 20px;
+    }
+
+    .stat-value {
+      font-size: clamp(24px, 5vw, 28px);
+    }
+
+    .progress-section {
+      margin-bottom: 24px;
+    }
+
+    .question-nav {
+      margin-bottom: 24px;
     }
 
     .card {
       padding: 24px;
+      margin-bottom: 16px;
     }
 
-    .stats-bar {
-      grid-template-columns: 1fr;
+    .card-header {
+      margin-bottom: 20px;
+      padding-bottom: 16px;
     }
 
-    .nav {
-      flex-direction: column-reverse;
+    .question-text {
+      font-size: 16px;
+      margin-bottom: 20px;
     }
 
-    .nav button {
+    .option {
+      gap: 16px;
+      padding: 16px 20px;
+    }
+
+    .option-letter {
+      width: 44px;
+      height: 44px;
+      font-size: 15px;
+    }
+
+    .explain {
+      margin-top: 20px;
+      padding: 20px;
+    }
+
+    .keyboard-hint {
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 12px;
+    }
+
+    .keyboard-hint span:first-child {
       width: 100%;
+      text-align: center;
+      margin-bottom: 8px;
     }
 
     .result {
       padding: 40px 24px;
     }
 
+    .result h2 {
+      margin-bottom: 12px;
+    }
+
+    .result-stats {
+      margin: 24px 0;
+      gap: 1px;
+    }
+
+    .result-stat {
+      padding: 20px 16px;
+    }
+
+    .result-message {
+      font-size: 15px;
+      margin-bottom: 32px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .stats-bar {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    .stat {
+      padding: 14px 16px;
+    }
+
+    .nav {
+      flex-direction: column-reverse;
+      gap: 12px;
+    }
+
+    .nav button {
+      width: 100%;
+    }
+
     .result-stats {
       grid-template-columns: 1fr;
     }
 
-    .header h1 {
-      font-size: 36px;
-    }
-
     .option {
       grid-template-columns: 40px 1fr;
-      gap: 16px;
-      padding: 16px 20px;
+      gap: 12px;
+      padding: 14px 16px;
     }
 
     .option-letter {
       width: 40px;
       height: 40px;
       font-size: 14px;
+    }
+
+    .header-topics {
+      gap: 6px;
+    }
+
+    .topic {
+      font-size: 9px;
+      padding: 4px 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .card {
+      padding: 20px 16px;
+    }
+
+    .card-header {
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+    }
+
+    .question-text {
+      font-size: 15px;
+    }
+
+    .option {
+      padding: 12px 14px;
+    }
+
+    .option-letter {
+      width: 36px;
+      height: 36px;
+      font-size: 13px;
+    }
+
+    .option-text {
+      font-size: 14px;
+    }
+
+    .explain {
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .explain-text {
+      font-size: 13px;
+    }
+
+    .result {
+      padding: 32px 20px;
+    }
+
+    .result-stat-value {
+      font-size: 28px;
+    }
+
+    .key {
+      min-width: 24px;
+      height: 24px;
+      font-size: 11px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    body {
+      padding: 12px;
+    }
+
+    .card {
+      padding: 16px 12px;
+    }
+
+    .option {
+      grid-template-columns: 32px 1fr;
+      padding: 10px 12px;
+    }
+
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      font-size: 12px;
+    }
+
+    .question-nav {
+      grid-template-columns: repeat(auto-fill, minmax(32px, 1fr));
+    }
+
+    .nav-dot {
+      min-height: 32px;
+      font-size: 9px;
     }
   }
 
