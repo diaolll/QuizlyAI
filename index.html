@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz AI — Kecerdasan Buatan</title>
+<title>Quiz — Manajemen Proyek Perangkat Lunak</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -583,20 +583,21 @@
 <div class="app">
 
   <header class="header">
-    <div class="header-brand">Kecerdasan Buatan</div>
-    <h1>Quiz <span>AI</span></h1>
+    <div class="header-brand">SIR207 — Kuis 2</div>
+    <h1>Manajemen <span>Proyek</span></h1>
     <div class="header-topics">
-      <span class="topic">Sistem Pakar</span>
-      <span class="topic">Fuzzy Logic</span>
-      <span class="topic">PSO</span>
-      <span class="topic">Evolutionary Algorithm</span>
+      <span class="topic">Risk Management</span>
+      <span class="topic">Quality Management</span>
+      <span class="topic">Schedule</span>
+      <span class="topic">Project Closure</span>
+      <span class="topic">Change Control</span>
     </div>
   </header>
 
   <div class="stats-bar">
     <div class="stat">
       <div class="stat-label">Soal</div>
-      <div class="stat-value" id="currentStat">1<span style="font-size: 16px; color: var(--text-muted);">/50</span></div>
+      <div class="stat-value" id="currentStat">1<span style="font-size: 16px; color: var(--text-muted);">/37</span></div>
     </div>
     <div class="stat">
       <div class="stat-label">Skor</div>
@@ -623,11 +624,11 @@
   <div id="quizArea"></div>
 
   <div id="resultArea" class="card result hidden">
-    <div class="result-brand">Hasil Quiz</div>
+    <div class="result-brand">Hasil Kuis 2</div>
     <h2 id="resultTitle">Selesai</h2>
     <div class="score">
       <span id="scoreText">0</span>
-      <span class="score-label">/ 50</span>
+      <span class="score-label">/ 37</span>
     </div>
     <p class="result-message" id="resultDesc"></p>
 
@@ -647,7 +648,7 @@
     </div>
 
     <div class="nav" style="justify-content: center;">
-      <button class="primary" onclick="restartQuiz()">Ulangi Quiz</button>
+      <button class="primary" onclick="restartQuiz()">Ulangi Kuis</button>
     </div>
   </div>
 
@@ -655,205 +656,534 @@
 
 <script>
 const questions = [
-{q:"Sistem pakar menggunakan Backward Chaining dengan tujuan akhir (goal) DBD Berat.\nLangkah pertama yang dilakukan mesin inferensi adalah ....",
- opts:["Menelusuri aturan yang memiliki konsekuen DBD Berat.","Mengumpulkan seluruh fakta dari pengguna.","Memilih aturan dengan jumlah premis paling sedikit","Mengevaluasi semua aturan dari R01 sampai R12 secara berurutan","Menentukan nilai probabilitas setiap aturan"],
- correct:0, explain:"Backward chaining dimulai dari goal, lalu cari rule yang konsekuennya cocok dengan goal tersebut."},
-
-{q:"Konsep penelusuran graf atau pohon keputusan pada metode penalaran Backward Chaining murni secara struktural identik dengan metode pencarian pada struktur data graf, yaitu...",
- opts:["Greedy Best-First Search, karena memilih premis yang paling pendek kata-katanya","Kruskal's Algorithm, karena membentuk minimum spanning tree dari fakta-fakta yang valid","Breadth-First Search (BFS), karena memeriksa seluruh sub-goal pada level yang sama sebelum turun ke level di bawahnya","Depth-First Search (DFS) dengan backtracking untuk menelusuri satu cabang hingga fakta dasar sebelum beralih ke cabang lain","Dijkstra's Algorithm, karena selalu menghitung bobot efisiensi dari setiap premis aturan"],
- correct:3, explain:"Backward chaining menelusuri satu cabang sub-goal sampai fakta dasar, baru backtrack ke cabang lain — perilaku DFS."},
-
-{q:"Perhatikan skema seleksi 'Tournament Selection' dengan ukuran turnamen k = 3. A (Fitness=12), B (Fitness=45), C (Fitness=28). Untuk max-optimization, siapa pemenang turnamen?",
- opts:["Individu C","Individu A dan C secara bersamaan membagi gen mereka","Tidak ada pemenang, turnamen harus diulang kembali dari awal","Individu B","Individu A"],
- correct:3, explain:"Max-optimization → fitness tertinggi menang. B (45) tertinggi."},
-
-{q:"Prinsip kerja utama algoritma RETE dalam meningkatkan performa inferensi forward chaining adalah...",
- opts:["Mengevaluasi ulang seluruh aturan dari awal setiap kali ada perubahan fakta di working memory","Menggunakan fungsi heuristik berbasis algoritma A* untuk memprediksi aturan yang paling cepat mencapai goal","Mengubah struktur aturan IF-THEN menjadi matriks biner untuk dikalikan vektor fakta","Menghapus fakta-fakta lama yang tidak digunakan agar memori tetap hemat","Menggunakan graf jaringan untuk memproses hanya perubahan fakta yang relevan"],
- correct:4, explain:"RETE menyimpan state matching sebelumnya dalam network, sehingga hanya perubahan inkremental yang diproses."},
-
-{q:"Mengapa ANFIS memilih model Sugeno, bukan Mamdani?",
- opts:["Model Sugeno membutuhkan memori harddisk yang jauh lebih kecil","Karena model Mamdani tidak mematuhi hukum kalkulus dasar","Karena Sugeno ditemukan oleh peneliti yang merancang ANN pertama kali","Konsekuen Sugeno bersifat linier/konstan sehingga dapat diturunkan, mendukung gradient descent","Model Mamdani tidak stabil pada arsitektur multi-core"],
- correct:3, explain:"Output Sugeno bisa didiferensiasi karena berupa fungsi matematis — memungkinkan training via backpropagation."},
-
-{q:"Perhatikan rule berikut:\nR01: IF demam tinggi AND demam berlangsung 2-7 hari THEN suspek demam dengue\nR02: IF demam tinggi AND nyeri kepala AND nyeri otot/sendi THEN gejala infeksi virus\nR03: IF suspek demam dengue AND mual/muntah AND badan lemas THEN kemungkinan dengue ringan\nR04: IF suspek demam dengue AND muncul bintik merah pada kulit THEN kemungkinan DBD\nR05: IF kemungkinan DBD AND trombosit rendah THEN DBD terindikasi kuat\nR06: IF DBD terindikasi kuat AND hematokrit meningkat THEN DBD dengan risiko kebocoran plasma\nR07: IF kemungkinan DBD AND mimisan/gusi berdarah THEN DBD dengan tanda perdarahan\nR08: IF DBD terindikasi kuat AND nyeri perut THEN DBD dengan tanda bahaya\nR09: IF demam tinggi AND demam 2-7 hari AND bintik merah AND trombosit rendah THEN Demam Berdarah Dengue\nR10: IF demam tinggi AND demam 2-7 hari AND mimisan/gusi berdarah AND trombosit rendah THEN Demam Berdarah Dengue\nR11: IF DBD dengan tanda bahaya AND mimisan/gusi berdarah THEN DBD berat\nR12: IF DBD dengan risiko kebocoran plasma AND nyeri perut THEN DBD berat\n\nDiketahui fakta: Demam tinggi, demam berlangsung 5 hari, bintik merah, trombosit rendah, hematokrit meningkat. Jika sistem menggunakan Forward Chaining, aturan terakhir yang akan dieksekusi adalah ....",
- opts:["R04","R05","R09","R05 (duplikat)","R12"],
- correct:1, explain:"Trace: R01→R04→R05→R06. Karena opsi R06 tak tersedia di pilihan, jawaban terdekat dari pilihan adalah R05 (catatan: secara penuh seharusnya R06)."},
-
-{q:"Metode Sugeno lebih banyak digunakan pada sistem kendali real-time karena ....",
- opts:["Proses komputasinya lebih sederhana dan cepat","Seluruh aturan menggunakan operator OR","Tidak menggunakan aturan IF–THEN","Menghasilkan keluaran berupa himpunan fuzzy","Tidak memerlukan fungsi keanggotaan"],
- correct:0, explain:"Output Sugeno berupa angka, tidak perlu defuzzifikasi berat seperti Mamdani."},
-
-{q:"Karakteristik masalah optimasi mana yang menunjukkan PSO lebih unggul dibanding Newton-Raphson?",
- opts:["Grafik fungsi berupa garis lurus gradien","Hanya satu variabel tunggal biner","Fungsi kendala deterministik linier konstan","Fungsi objektif kuadratik kontinu sempurna dan mudah diturunkan","Ruang solusi banyak optimum lokal, tidak kontinu, dan tidak diferensiabel"],
- correct:4, explain:"PSO tidak butuh fungsi diferensiabel — cocok untuk landscape kompleks dengan banyak local optima."},
-
-{q:"Mekanisme kerja strategi 'Elitism' pada algoritma evolusioner adalah...",
- opts:["Menghapus setengah populasi berkinerja buruk dan diganti individu buatan pakar","Membuat semua individu mengadopsi struktur genetik pemimpin populasi","Menjamin individu terbaik tetap dipertahankan ke generasi berikutnya tanpa crossover/mutasi","Menggunakan fungsi eksponensial untuk menaikkan probabilitas mutasi","Membatasi nilai fitness agar tidak melampaui batas maksimum"],
- correct:2, explain:"Elitism mengkopi langsung individu terbaik ke generasi selanjutnya tanpa diubah oleh operator genetik."},
-
-{q:"Output kontrol fuzzy Mamdani robot berkaki terlalu kasar di sekitar titik ekuilibrium. Modifikasi paling efektif?",
- opts:["Mengganti semua operator AND menjadi OR (MAX) pada premis","Mengganti fungsi keanggotaan segitiga dengan Gaussian dan menambah himpunan fuzzy di area ekuilibrium","Mengubah defuzzifikasi dari Centroid ke Largest of Maxima (LOM)","Mengurangi jumlah aturan fuzzy menjadi setengahnya","Meningkatkan parameter input tegas secara linear tanpa batas"],
- correct:1, explain:"Gaussian lebih smooth tanpa sudut tajam, dan penambahan himpunan fuzzy di area kritis membuat transisi lebih halus."},
-
-{q:"Perhatikan rule berikut:\nR01: IF demam tinggi AND demam berlangsung 2-7 hari THEN suspek demam dengue\nR02: IF demam tinggi AND nyeri kepala AND nyeri otot/sendi THEN gejala infeksi virus\nR03: IF suspek demam dengue AND mual/muntah AND badan lemas THEN kemungkinan dengue ringan\nR04: IF suspek demam dengue AND muncul bintik merah pada kulit THEN kemungkinan DBD\nR05: IF kemungkinan DBD AND trombosit rendah THEN DBD terindikasi kuat\nR06: IF DBD terindikasi kuat AND hematokrit meningkat THEN DBD dengan risiko kebocoran plasma\nR07: IF kemungkinan DBD AND mimisan/gusi berdarah THEN DBD dengan tanda perdarahan\nR08: IF DBD terindikasi kuat AND nyeri perut THEN DBD dengan tanda bahaya\nR09: IF demam tinggi AND demam 2-7 hari AND bintik merah AND trombosit rendah THEN Demam Berdarah Dengue\nR10: IF demam tinggi AND demam 2-7 hari AND mimisan/gusi berdarah AND trombosit rendah THEN Demam Berdarah Dengue\nR11: IF DBD dengan tanda bahaya AND mimisan/gusi berdarah THEN DBD berat\nR12: IF DBD dengan risiko kebocoran plasma AND nyeri perut THEN DBD berat\n\nDiketahui fakta awal: demam tinggi, demam berlangsung 4 hari, bintik merah pada kulit, trombosit rendah. Kesimpulan akhir pertama yang diperoleh via Forward Chaining adalah ....",
- opts:["Demam Berdarah Dengue","DBD dengan tanda perdarahan","DBD berat","DBD dengan risiko kebocoran plasma","Kemungkinan dengue ringan"],
- correct:0, explain:"R09 langsung fired karena semua 4 premisnya terpenuhi sekaligus tanpa proses intermediate."},
-
-{q:"Dalam konteks kecerdasan buatan, apa yang dimaksud dengan 'optimasi'?",
- opts:["Proses mengurangi kompleksitas algoritma","Proses melatih model dengan data lebih besar","Proses menemukan solusi optimal dalam ruang solusi","Proses mengidentifikasi bias dalam data","Proses meningkatkan akurasi algoritma"],
- correct:2, explain:"Optimasi = mencari solusi terbaik (optimal) dalam ruang solusi yang tersedia."},
-
-{q:"Dalam metode Mamdani, konsekuen pada setiap aturan IF–THEN direpresentasikan sebagai ....",
- opts:["Persamaan linear","Himpunan fuzzy","Nilai probabilitas","Matriks bobot","Nilai konstanta"],
- correct:1, explain:"Mamdani: konsekuen berupa himpunan fuzzy (bukan angka/fungsi linear seperti Sugeno)."},
-
-{q:"Fungsi invers keanggotaan pada Tsukamoto digunakan untuk ....",
- opts:["Menghasilkan nilai tegas dari setiap aturan","Mengubah input menjadi himpunan fuzzy","Mengaktifkan seluruh aturan","Menentukan operator logika","Menghitung jumlah aturan"],
- correct:0, explain:"Fungsi invers dipakai untuk mendapatkan nilai crisp (z) dari α-predikat setiap aturan."},
-
-{q:"Keunggulan Evolutionary Algorithm dibanding metode optimasi berbasis gradien adalah ....",
- opts:["Mampu mengoptimalkan fungsi yang tidak kontinu dan non-diferensiabel","Tidak memerlukan fungsi fitness","Tidak menggunakan populasi","Memerlukan turunan pertama fungsi objektif","Selalu mampu menemukan solusi optimum global tanpa terjebak lokal optima"],
- correct:0, explain:"EA tidak butuh fungsi diferensiabel, cocok untuk masalah kompleks/diskontinu."},
-
-{q:"Perhatikan rule berikut:\nR01: IF demam tinggi AND demam 2-7 hari THEN suspek demam dengue\nR04: IF suspek demam dengue AND bintik merah THEN kemungkinan DBD\nR05: IF kemungkinan DBD AND trombosit rendah THEN DBD terindikasi kuat\nR06: IF DBD terindikasi kuat AND hematokrit meningkat THEN DBD risiko kebocoran plasma\nR07: IF kemungkinan DBD AND mimisan/gusi berdarah THEN DBD tanda perdarahan\nR08: IF DBD terindikasi kuat AND nyeri perut THEN DBD tanda bahaya\nR11: IF DBD tanda bahaya AND mimisan/gusi berdarah THEN DBD berat\nR12: IF DBD risiko kebocoran plasma AND nyeri perut THEN DBD berat\n\nMisalkan goal adalah DBD dengan tanda bahaya. Sub-goal pertama yang harus dibuktikan dalam Backward Chaining adalah ....",
- opts:["Demam tinggi dan trombosit rendah","Suspek demam dengue dan trombosit rendah","DBD terindikasi kuat dan nyeri perut","Demam tinggi dan bintik merah","Hematokrit meningkat dan nyeri perut"],
- correct:2, explain:"R08: IF DBD terindikasi kuat AND nyeri perut THEN DBD dengan tanda bahaya — itu sub-goal pertamanya."},
-
-{q:"Partikel PSO: x=5.0, v=2.0, pbest=8.0, gbest=10.0, w=0.5, c1=2.0, c2=2.0, r1=0.5, r2=0.5. Berapa posisi baru x_new?",
- opts:["10.5","12.0","8.5","7.0","14.0"],
- correct:4, explain:"v_new = 0.5(2)+2(0.5)(8-5)+2(0.5)(10-5) = 1+3+5 = 9. x_new = 5+9 = 14.0"},
-
-{q:"Strategi mana yang secara teoritis mereduksi 'Premature Convergence' pada PSO?",
- opts:["Menggunakan topologi lokal (Lbest) seperti ring, sehingga solusi terbaik menyebar bertahap antartetangga","Meningkatkan c2 maksimal dan menolkan c1","Mengurangi swarm menjadi dua partikel saja","Menghapus komponen acak r1 dan r2","Menghentikan pergerakan partikel jika kecepatan mendekati nol"],
- correct:0, explain:"Lbest membuat partikel hanya mengikuti tetangga lokal, menjaga diversitas lebih lama."},
-
-{q:"Jika α-predikat berada di luar rentang fungsi keanggotaan monoton (Tsukamoto), konsekuensinya adalah ....",
- opts:["Seluruh aturan tetap memenuhi kondisi aktivasi","Sistem otomatis menggunakan Centroid","Semua aturan menghasilkan nilai maksimum","Output menjadi himpunan fuzzy","Nilai invers fungsi keanggotaan tidak dapat dihitung"],
- correct:4, explain:"Invers fungsi monoton tidak terdefinisi di luar rentangnya — nilai crisp tidak bisa dihitung."},
-
-{q:"R1: IF Kabel_Rusak OR Tegangan_Drop THEN Kelistrikan_Mati. User jawab TIDAK untuk Kabel_Rusak, YA untuk Tegangan_Drop. Apa yang terjadi pada sub-goal Kelistrikan_Mati?",
- opts:["Sistem error/loop karena tidak ada data awal","Sistem mengabaikan R1, langsung tanya Starter_Rusak","Kelistrikan_Mati GAGAL dibuktikan karena salah satu premis salah","Kelistrikan_Mati ditunda sampai semua aturan diperiksa","Kelistrikan_Mati berhasil karena OR hanya perlu satu premis benar"],
- correct:4, explain:"Operator OR hanya butuh satu premis true — Tegangan_Drop=YA sudah cukup."},
-
-{q:"Perhatikan rule berikut:\nR01: IF demam tinggi AND demam berlangsung 2-7 hari THEN suspek demam dengue\nR02: IF demam tinggi AND nyeri kepala AND nyeri otot/sendi THEN gejala infeksi virus\nR03: IF suspek demam dengue AND mual/muntah AND badan lemas THEN kemungkinan dengue ringan\nR04: IF suspek demam dengue AND muncul bintik merah pada kulit THEN kemungkinan DBD\nR05: IF kemungkinan DBD AND trombosit rendah THEN DBD terindikasi kuat\nR06: IF DBD terindikasi kuat AND hematokrit meningkat THEN DBD dengan risiko kebocoran plasma\nR07: IF kemungkinan DBD AND mimisan/gusi berdarah THEN DBD dengan tanda perdarahan\nR08: IF DBD terindikasi kuat AND nyeri perut THEN DBD dengan tanda bahaya\nR09: IF demam tinggi AND demam 2-7 hari AND bintik merah AND trombosit rendah THEN Demam Berdarah Dengue\nR10: IF demam tinggi AND demam 2-7 hari AND mimisan/gusi berdarah AND trombosit rendah THEN Demam Berdarah Dengue\nR11: IF DBD dengan tanda bahaya AND mimisan/gusi berdarah THEN DBD berat\nR12: IF DBD dengan risiko kebocoran plasma AND nyeri perut THEN DBD berat\n\nFakta: demam tinggi, demam berlangsung 4 hari, bintik merah, trombosit rendah, nyeri perut. Berapa jumlah aturan yang dapat aktif selama proses inferensi?",
- opts:["6","4","2","5","3"],
- correct:3, explain:"R01→R04→R05→R08→R09 = total 5 aturan aktif."},
-
-{q:"Situasi mana yang paling efisien diselesaikan dengan Forward Chaining dibanding Backward Chaining?",
- opts:["Mengonstruksi silsilah keluarga untuk membuktikan hubungan darah","Mendiagnosis penyakit langka dari satu keluhan spesifik yang jarang","Troubleshooting komputer dimulai dari 'Apakah komputer menyala?'","Membuktikan kesalahan terdakwa berdasarkan pasal hukum tertentu","Sistem monitoring kilang minyak dengan ratusan data sensor real-time"],
- correct:4, explain:"Forward chaining cocok saat fakta sudah banyak tersedia di awal dan perlu ditarik kesimpulannya."},
-
-{q:"Perbedaan fungsional utama Crossover dan Mutation dalam EA?",
- opts:["Crossover beroperasi pada satu individu, Mutation butuh lima individu","Tidak ada perbedaan, keduanya pengacakan biner yang sama","Crossover merusak solusi bagus, Mutation menyatukan potongan solusi","Crossover mengeksploitasi solusi yang ada, Mutation mengeksplorasi solusi baru","Crossover dijalankan di akhir iterasi, Mutation wajib di awal inisialisasi"],
- correct:3, explain:"Crossover = eksploitasi (gabungkan gen existing), Mutation = eksplorasi (cegah premature convergence)."},
-
-{q:"Sugeno Orde-1: IF x Rendah AND y Tinggi THEN z=2x+3y-5. x=4, y=5, α=0.5. Nilai output implikasi z (sebelum digabung) adalah ....",
- opts:["18.0","9.0","23.0","11.5","36.0"],
- correct:1, explain:"z = 2(4)+3(5)-5 = 18. Output implikasi = α × z = 0.5 × 18 = 9.0"},
-
-{q:"R1: z1=10, α1=0.6. R2: z2=20, α2=0.4 (Sugeno Orde-0). Nilai crisp output (weighted average)?",
- opts:["14.0","17.0","15.0","13.0","16.0"],
- correct:0, explain:"z = (0.6×10+0.4×20)/(0.6+0.4) = (6+8)/1 = 14.0"},
-
-{q:"Proses defuzzifikasi pada metode Sugeno dilakukan menggunakan ....",
- opts:["Mean of Maximum","Bisector","Weighted Average","Centroid","Smallest of Maximum"],
- correct:2, explain:"Sugeno menggunakan Weighted Average, bukan Centroid (yang dipakai Mamdani)."},
-
-{q:"Apa yang dimaksud dengan Particle Swarm Optimization (PSO)?",
- opts:["Algoritma optimasi berbasis simulated annealing","Algoritma yang menggabungkan brute force dan heuristik","Algoritma optimasi terinspirasi perilaku kawanan burung dan ikan","Algoritma berbasis teori matematika klasik","Algoritma berbasis proses evolusi alami"],
- correct:2, explain:"PSO terinspirasi dari swarm intelligence (kawanan burung/ikan)."},
-
-{q:"Apa peran komponen kognitif dalam PSO?",
- opts:["Mempertimbangkan posisi awal partikel","Mempertimbangkan pengalaman terbaik dari partikel itu sendiri","Mempertimbangkan pengalaman terbaik dari keseluruhan kawanan","Mempertimbangkan pengaruh kecepatan partikel lain","Mempertimbangkan pengaruh posisi terbaik partikel lain"],
- correct:1, explain:"Komponen kognitif = pbest (personal best partikel itu sendiri)."},
-
-{q:"Keunggulan Backward Chaining dibanding Forward Chaining dalam interaksi pengguna sistem pakar diagnostik?",
- opts:["Tidak memerlukan pembuatan pertanyaan kepada pengguna","Mampu menampilkan seluruh basis pengetahuan dalam grafik 3D","Menjamin jumlah pertanyaan selalu konstan","Mampu memberikan jawaban instan tanpa komputasi logika","Pertanyaan difokuskan pada hipotesis yang diuji sehingga relevan"],
- correct:4, explain:"BC hanya tanya fakta yang dibutuhkan untuk membuktikan goal — lebih terarah dan efisien."},
-
-{q:"Mengapa defuzzifikasi Centroid pada Mamdani lebih berat komputasinya dibanding Sugeno?",
- opts:["Mamdani punya matriks aturan berpangkat dua dari Sugeno","Centroid melakukan iterasi acak dengan algoritma genetika","Centroid memproses string teks diubah ke biner","Centroid memerlukan akar kuadrat dari persamaan diferensial non-linear","Centroid memerlukan perhitungan integral/diskretisasi area hasil agregasi"],
- correct:4, explain:"Output Mamdani berupa himpunan fuzzy — perlu hitung luas area (integral) untuk cari centroid."},
-
-{q:"Dalam PSO, apa yang dimaksud dengan 'partikel'?",
- opts:["Titik data dalam ruang pencarian","Himpunan aturan untuk evaluasi","Parameter yang disetel selama pelatihan model","Solusi potensial dalam ruang pencarian","Fungsi objektif yang dioptimalkan"],
- correct:3, explain:"Partikel = representasi solusi potensial yang bergerak di ruang pencarian."},
-
-{q:"Kelemahan utama Forward Chaining murni saat fakta awal sangat besar dan tidak terarah?",
- opts:["Sistem tidak pernah mencapai kesimpulan (infinite loop)","Tidak mampu menangani aturan dengan operator AND","Combinatorial explosion menghasilkan banyak kesimpulan tak relevan","Memory stack penuh karena backtracking terus-menerus","Sistem terpaksa berubah jadi deduktif murni tidak valid"],
- correct:2, explain:"Banyak fakta tak terarah → banyak rule fired → ledakan kombinatorial kesimpulan antara."},
-
-{q:"Algoritma optimasi yang sering digunakan dalam machine learning untuk menemukan parameter terbaik disebut...",
- opts:["K-Nearest Neighbors","Algoritma genetika","Gradient descent","Naive Bayes","Algoritma Dijkstra"],
- correct:2, explain:"Gradient descent adalah algoritma optimasi parameter paling umum dalam ML."},
-
-{q:"Urutan tahapan yang benar dalam metode Fuzzy Mamdani adalah ....",
- opts:["Inferensi → Fuzzifikasi → Defuzzifikasi → Agregasi","Defuzzifikasi → Inferensi → Fuzzifikasi → Agregasi","Fuzzifikasi → Defuzzifikasi → Inferensi → Agregasi","Agregasi → Fuzzifikasi → Inferensi → Defuzzifikasi","Fuzzifikasi → Inferensi → Agregasi → Defuzzifikasi"],
- correct:4, explain:"Urutan Mamdani: Fuzzifikasi → Inferensi (MIN/MAX) → Agregasi → Defuzzifikasi."},
-
-{q:"Pada metode Sugeno Orde-0, konsekuen setiap aturan direpresentasikan sebagai ....",
- opts:["Himpunan fuzzy","Fungsi trapesium","Fungsi Gaussian","Fungsi sigmoid","Nilai konstanta"],
- correct:4, explain:"Sugeno Orde-0: konsekuen berupa nilai konstanta tunggal (bukan fungsi linear)."},
-
-{q:"Komponen mana yang BUKAN bagian dari pembaruan kecepatan partikel PSO?",
- opts:["Komponen inersia","Komponen kognitif","Komponen global","Komponen mutasi","Komponen sosial"],
- correct:3, explain:"PSO punya 3 komponen: inersia, kognitif (pbest), sosial (gbest). Mutasi adalah konsep EA, bukan PSO."},
-
-{q:"Makna penggunaan operator MIN pada proses inferensi Mamdani adalah ....",
- opts:["Menghasilkan keluaran berupa nilai tegas","Mengambil nilai keanggotaan paling kecil untuk mengaktifkan aturan","Menghasilkan nilai rata-rata seluruh premis","Mengambil derajat keanggotaan terbesar","Menambahkan seluruh nilai derajat keanggotaan tiap premis"],
- correct:1, explain:"Operator MIN (AND) mengambil nilai keanggotaan terkecil sebagai α-predikat rule."},
-
-{q:"Apabila seluruh aturan Mamdani menghasilkan derajat aktivasi nol, kondisi yang paling mungkin terjadi?",
- opts:["Sistem otomatis beralih ke metode Sugeno","Sistem tetap menghasilkan nilai keluaran maksimum","Tidak ada aturan yang cocok dengan fakta/data masukan","Proses defuzzifikasi tetap menghasilkan nilai rata-rata","Seluruh fungsi keanggotaan berubah menjadi linear"],
- correct:2, explain:"Derajat aktivasi nol semua → tidak ada rule yang match dengan input."},
-
-{q:"Dalam Evolutionary Algorithm, fungsi fitness digunakan untuk ....",
- opts:["Menentukan jumlah populasi","Menentukan struktur representasi kromosom","Mengubah kromosom menjadi aturan","Menghasilkan operator mutasi","Mengukur kualitas setiap individu terhadap tujuan optimasi"],
- correct:4, explain:"Fitness function = ukuran kualitas individu terhadap objective optimasi."},
-
-{q:"Apa yang dimaksud dengan 'swarm intelligence' dalam konteks PSO?",
- opts:["AI hasil penggabungan algoritma evolusi","Kecerdasan kolektif yang muncul dari interaksi antar partikel dalam kawanan","AI yang digunakan dalam jaringan saraf tiruan","Kecerdasan dari komponen mutasi dan crossover","Kecerdasan individu untuk mengoptimalkan fungsi objektif"],
- correct:1, explain:"Swarm intelligence = kecerdasan kolektif/emergent dari interaksi antarpartikel."},
-
-{q:"Prinsip dasar keunikan metode Tsukamoto dibanding Mamdani dan Sugeno adalah konsekuennya berupa...",
- opts:["Persamaan polinomial derajat dua","Nilai probabilitas acak terdistribusi normal","Matriks transformasi linier berdimensi tiga","Himpunan fuzzy segitiga murni simetris tanpa kelandaian","Himpunan fuzzy dengan fungsi keanggotaan monoton (naik/turun)"],
- correct:4, explain:"Tsukamoto wajib pakai fungsi keanggotaan monoton agar bisa dihitung inversnya."},
-
-{q:"Tahapan akhir defuzzifikasi pada metode Tsukamoto untuk menghasilkan nilai crisp tunggal adalah ....",
- opts:["Memilih nilai z dengan keanggotaan paling tinggi (Max-premis)","Mengalikan seluruh nilai z lalu dibagi jumlah total aturan","Clustering K-Means pada sebaran titik potong kurva output","Rata-rata berbobot (weighted average) dari α-predikat dan hasil invers z","Perhitungan luas area dengan integrasi Simpson"],
- correct:3, explain:"z_final = Σ(αi·zi) / Σ(αi) — weighted average dari α-predikat dan z hasil invers."},
-
-{q:"Salah satu keterbatasan metode Tsukamoto adalah ....",
- opts:["Tidak menghasilkan keluaran numerik","Konsekuen dibatasi hanya pada fungsi keanggotaan monoton","Tidak dapat digunakan pada sistem kendali","Tidak menggunakan inferensi","Tidak dapat menggunakan fungsi keanggotaan monoton"],
- correct:1, explain:"Keterbatasan utama: semua konsekuen wajib monoton, membatasi fleksibilitas desain."},
-
-{q:"Perbedaan mendasar Sugeno Orde-1 dari Orde-0 pada bagian konsekuen?",
- opts:["Orde-0 kurva lonceng, Orde-1 kurva trapesium","Orde-0 bilangan imajiner kompleks, Orde-1 bilangan real tunggal","Orde-0 defuzzifikasi Centroid, Orde-1 binerisasi murni","Orde-0 keluaran konstanta, Orde-1 fungsi linear dari variabel input","Orde-0 hanya satu input, Orde-1 lebih dari sepuluh input simultan"],
- correct:3, explain:"Orde-0: output konstanta. Orde-1: output fungsi linear dari input (misal z=ax+by+c)."},
-
-{q:"Roulette Wheel Selection dalam EA mendasarkan pemilihan individu pada ....",
- opts:["Jumlah gen","Panjang kromosom","Urutan kromosom","Nilai fitness sebagai peluang pemilihan","Posisi individu dalam populasi"],
- correct:3, explain:"Fitness lebih tinggi → porsi roda lebih besar → peluang terpilih lebih besar."},
-
-{q:"Perhatikan rule berikut:\nR01: IF demam tinggi AND demam 2-7 hari THEN suspek demam dengue\nR04: IF suspek demam dengue AND bintik merah THEN kemungkinan DBD\nR05: IF kemungkinan DBD AND trombosit rendah THEN DBD terindikasi kuat\n\nSistem ingin membuktikan goal: DBD terindikasi kuat. Fakta minimal sebelum R05 dapat dijalankan dalam Backward Chaining?",
- opts:["Demam tinggi dan nyeri kepala","Kemungkinan DBD dan trombosit rendah","Nyeri perut dan trombosit rendah","Mimisan dan trombosit rendah","Demam tinggi dan hematokrit meningkat"],
- correct:1, explain:"R05: IF kemungkinan DBD AND trombosit rendah THEN DBD terindikasi kuat."},
-
-{q:"Salah satu keunggulan Fuzzy Mamdani dibandingkan metode inferensi fuzzy lainnya adalah ...",
- opts:["Aturan inferensi mudah dipahami karena menggunakan istilah linguistik","Tidak memerlukan basis aturan","Tidak memerlukan proses inferensi","Menggunakan konsekuen berupa fungsi linear","Selalu menghasilkan komputasi paling cepat"],
- correct:0, explain:"Mamdani intuitif karena memakai istilah linguistik (Rendah/Tinggi, dsb), lebih mudah dipahami manusia."},
-
-{q:"Karakteristik utama Mamdani berbeda dari Sugeno/Tsukamoto terletak pada konsekuen yang berupa...",
- opts:["Nilai peluang variabel acak diskret via fungsi massa peluang","Himpunan fuzzy dengan fungsi keanggotaan kontinu (segitiga/trapesium)","Nilai konstanta biner (0 atau 1) tegas","Data berupa label/kategori teks tanpa nilai numerik","Persamaan linear linier multi-variabel"],
- correct:1, explain:"Mamdani: konsekuen berupa himpunan fuzzy dengan fungsi keanggotaan kontinu."},
-
-{q:"Pada metode Forward Chaining, proses inferensi akan dimulai apabila tersedia ....",
- opts:["Nilai probabilitas setiap aturan","Bobot setiap aturan","Fakta awal yang diketahui","Tujuan akhir (goal)","Hipotesis diagnosis"],
- correct:2, explain:"Forward chaining data-driven — dimulai dari fakta awal, bukan dari goal."},
-
-{q:"Tahapan EA mana yang jadi motor utama 'Survival of the Fittest' dengan menyeleksi individu berkualitas untuk reproduksi?",
- opts:["Evaluasi fitness dilanjutkan seleksi induk (Roulette Wheel/Tournament Selection)","Pertukaran potongan gen pada Crossover satu titik","Pembentukan populasi awal generasi ke-0 secara acak","Pemberhentian iterasi berdasarkan kriteria konvergensi","Proses Mutasi biner acak"],
- correct:0, explain:"Evaluasi fitness + seleksi induk adalah mekanisme langsung dari survival of the fittest."}
+  {
+    q: "Lag time adalah:",
+    opts: [
+      "Total waktu proyek",
+      "Waktu ekstra untuk menyelesaikan aktivitas",
+      "Slack total proyek",
+      "Durasi kegiatan",
+      "Waktu minimum antar dua aktivitas"
+    ],
+    correct: 1,
+    explain: "Lag time adalah penundaan yang disengaja antara dua aktivitas yang saling bergantung — waktu ekstra sebelum aktivitas berikutnya bisa dimulai."
+  },
+  {
+    q: "Plan-Do-Check-Act (PDCA) adalah pendekatan dalam:",
+    opts: [
+      "Quality management",
+      "Risk management",
+      "Time management",
+      "Communication management",
+      "Cost control"
+    ],
+    correct: 0,
+    explain: "PDCA (siklus Deming) adalah inti dari quality management / manajemen kualitas untuk perbaikan berkelanjutan."
+  },
+  {
+    q: "Teknik apa yang digunakan untuk menghitung dampak risiko secara numerik terhadap tujuan proyek?",
+    opts: [
+      "Risk Treatment (Menangani Risiko)",
+      "Perform Quantitative Risk Analysis (Melakukan Analisis Risiko Kuantitatif)",
+      "Brainstorming (Curah Pendapat)",
+      "Expert Judgment (Pertimbangan Ahli)",
+      "SWOT Analysis (Analisis SWOT)"
+    ],
+    correct: 1,
+    explain: "Perform Quantitative Risk Analysis menggunakan angka/probabilitas untuk menghitung dampak risiko terhadap tujuan proyek (contoh: Monte Carlo, EMV)."
+  },
+  {
+    q: "Selama penutupan proyek, sponsor meminta laporan akhir yang membandingkan hasil aktual dengan target biaya, jadwal, dan ruang lingkup. Tujuan utama laporan tersebut adalah:",
+    opts: [
+      "Mengevaluasi kinerja proyek secara keseluruhan",
+      "Menentukan anggaran proyek berikutnya",
+      "Mengembangkan WBS baru",
+      "Mengidentifikasi stakeholder baru",
+      "Menentukan reward dan punishment"
+    ],
+    correct: 0,
+    explain: "Laporan akhir yang membandingkan aktual vs target bertujuan untuk mengevaluasi performa/kinerja proyek secara keseluruhan."
+  },
+  {
+    q: "Seorang manajer proyek menemukan bahwa seluruh deliverable telah selesai, tetapi pelanggan belum memberikan persetujuan akhir. Apa yang sebaiknya dilakukan?",
+    opts: [
+      "Membubarkan tim proyek segera",
+      "Menunggu dan memperoleh penerimaan formal dari pelanggan",
+      "Melakukan pengujian tambahan",
+      "Menutup proyek karena pekerjaan telah selesai",
+      "Menghapus dokumentasi proyek"
+    ],
+    correct: 1,
+    explain: "Proyek belum bisa ditutup tanpa formal acceptance dari pelanggan. Persetujuan formal adalah syarat wajib sebelum project closure."
+  },
+  {
+    q: "Dokumen pelajaran yang dipetik dalam proyek disebut:",
+    opts: [
+      "Issue log",
+      "Lessons learned",
+      "Project notebook",
+      "Control sheet",
+      "Risk register"
+    ],
+    correct: 1,
+    explain: "Lessons learned adalah dokumen yang mencatat pelajaran/pengalaman yang dipetik selama proyek untuk referensi proyek mendatang."
+  },
+  {
+    q: "Seorang pelanggan menerima sistem yang telah memenuhi seluruh spesifikasi teknis, tetapi antarmukanya sulit digunakan sehingga tidak memenuhi harapan pengguna. Pelajaran utama dari kasus ini adalah:",
+    opts: [
+      "Memenuhi persyaratan teknis belum tentu memenuhi kebutuhan pelanggan",
+      "Kualitas hanya ditentukan oleh spesifikasi teknis",
+      "Jadwal proyek lebih penting daripada kualitas",
+      "Pengujian harus dilakukan untuk semua kriteria kualitas",
+      "Pengujian tidak diperlukan"
+    ],
+    correct: 0,
+    explain: "Sistem yang memenuhi spesifikasi teknis tapi sulit digunakan membuktikan bahwa spesifikasi teknis ≠ kebutuhan pengguna sesungguhnya."
+  },
+  {
+    q: "Sebuah proyek memiliki target tingkat kesalahan maksimum sebesar 2%. Target ini merupakan contoh:",
+    opts: [
+      "Risk Register (Daftar Risiko)",
+      "Assumption Log (Log Asumsi)",
+      "Quality Metric (Metrik Kualitas)",
+      "Change Request (Permintaan Perubahan)",
+      "Requirements (Persyaratan)"
+    ],
+    correct: 2,
+    explain: "Target tingkat kesalahan maksimum 2% adalah ukuran/standar kualitas yang ingin dicapai — itu definisi quality metric."
+  },
+  {
+    q: "Komite yang menilai permintaan perubahan disebut:",
+    opts: [
+      "Quality Assurance Team",
+      "Change Control Board",
+      "Executive Team",
+      "Risk Committee",
+      "Project Board"
+    ],
+    correct: 1,
+    explain: "Change Control Board (CCB) adalah komite yang bertugas mengevaluasi dan menyetujui/menolak permintaan perubahan proyek."
+  },
+  {
+    q: "Dokumen yang disebut ........ dibuat dengan cara menguraikan (decomposing) ruang lingkup proyek menjadi elemen-elemen yang lebih kecil dan lebih mudah dikelola.",
+    opts: [
+      "Data Flow Diagram (Diagram Aliran Data)",
+      "WBS (Work Breakdown Structure)",
+      "Network Logic Diagram (Diagram Logika Jaringan)",
+      "Requested Change (Permintaan Perubahan)",
+      "Scope Statement (Pernyataan Ruang Lingkup)"
+    ],
+    correct: 1,
+    explain: "WBS (Work Breakdown Structure) adalah dokumen yang dibuat dengan mendekomposisi scope proyek menjadi elemen-elemen yang lebih kecil dan mudah dikelola."
+  },
+  {
+    q: "Strategi respons risiko positif (opportunity) adalah, kecuali:",
+    opts: [
+      "Enhance",
+      "Exploit",
+      "Avoid",
+      "Share",
+      "Accept"
+    ],
+    correct: 2,
+    explain: "Strategi respons risiko positif (opportunity): Exploit, Enhance, Share, Accept. Avoid adalah strategi untuk risiko negatif (threat), bukan opportunity."
+  },
+  {
+    q: "Risk register berisi informasi tentang:",
+    opts: [
+      "Scope proyek",
+      "Deliverables proyek",
+      "Durasi proyek",
+      "Risiko dan respons yang direncanakan",
+      "Anggota tim"
+    ],
+    correct: 3,
+    explain: "Risk register berisi daftar risiko yang teridentifikasi beserta respons/strategi yang direncanakan untuk menghadapinya."
+  },
+  {
+    q: "Selama pelaksanaan proyek, manajemen meminta manajer proyek untuk mempercepat tanggal penyelesaian lingkup (scope). Tindakan apa yang sebaiknya dipertimbangkan terlebih dahulu?",
+    opts: [
+      "Menambah contingency reserve",
+      "Melakukan analisis kompresi jadwal (schedule compression analysis)",
+      "Menambah jumlah resource",
+      "Menambah management reserve",
+      "Mengurangi persyaratan kualitas"
+    ],
+    correct: 1,
+    explain: "Sebelum ambil tindakan apapun, manajer proyek harus analisis dulu opsi percepatan (crashing/fast-tracking) melalui schedule compression analysis."
+  },
+  {
+    q: "Risiko yang berada di luar wewenang manajer proyek dan perlu ditangani pada tingkat organisasi sebaiknya:",
+    opts: [
+      "Mitigate (Mitigasi)",
+      "Escalate (Dieskalasikan)",
+      "Avoid (Menghindari)",
+      "Transfer (Mengalihkan)",
+      "Accept (Menerima)"
+    ],
+    correct: 1,
+    explain: "Risiko di luar wewenang manajer proyek harus di-escalate ke tingkat organisasi yang lebih tinggi."
+  },
+  {
+    q: "Contoh risiko eksternal adalah:",
+    opts: [
+      "Perubahan regulasi",
+      "Kegagalan teknologi developer",
+      "Konflik antar tim",
+      "Kurangnya keterampilan tim",
+      "Kesalahan input data"
+    ],
+    correct: 0,
+    explain: "Perubahan regulasi berasal dari luar organisasi/proyek = risiko eksternal. Pilihan lainnya adalah risiko internal."
+  },
+  {
+    q: "Manakah yang merupakan output dari proses Validate Scope?",
+    opts: [
+      "Activity List",
+      "Accepted Deliverables",
+      "Cost Baseline",
+      "Scope Statement",
+      "Risk Report"
+    ],
+    correct: 1,
+    explain: "Output utama dari proses Validate Scope adalah Accepted Deliverables — deliverable yang sudah diterima/disetujui oleh pelanggan."
+  },
+  {
+    q: "Teknik yang digunakan untuk memperkirakan durasi kegiatan adalah, kecuali:",
+    opts: [
+      "Monte Carlo",
+      "SWOT",
+      "PERT",
+      "Analogous",
+      "Delphi"
+    ],
+    correct: 1,
+    explain: "SWOT adalah alat analisis strategis, bukan teknik estimasi durasi. Teknik estimasi durasi: Monte Carlo, PERT, Analogous, dan Delphi."
+  },
+  {
+    q: "Proses yang memastikan produk sesuai dengan standar kualitas disebut:",
+    opts: [
+      "Quality Planning",
+      "Quality Improvement",
+      "Configuration Management",
+      "Quality Assurance",
+      "Quality Control"
+    ],
+    correct: 4,
+    explain: "Quality Control adalah proses memeriksa/memastikan produk/deliverable sesuai standar kualitas yang ditetapkan."
+  },
+  {
+    q: "Analisis risiko kualitatif bertujuan untuk:",
+    opts: [
+      "Menghitung dampak biaya",
+      "Menentukan prioritas risiko",
+      "Menghindari semua risiko",
+      "Menggunakan simulasi",
+      "Menyusun jadwal proyek"
+    ],
+    correct: 1,
+    explain: "Analisis risiko kualitatif bertujuan menilai dan memprioritaskan risiko berdasarkan probabilitas dan dampaknya — bukan menghitung angka (itu kuantitatif)."
+  },
+  {
+    q: "Sebuah risiko memiliki peluang tinggi untuk memberikan manfaat besar bagi proyek. Strategi respons yang bertujuan memastikan peluang tersebut terjadi disebut:",
+    opts: [
+      "Mitigate (Mitigasi)",
+      "Exploit (Memanfaatkan)",
+      "Accept (Menerima)",
+      "Transfer (Mengalihkan)",
+      "Avoid (Menghindari)"
+    ],
+    correct: 1,
+    explain: "Exploit = strategi untuk memastikan peluang pasti terjadi. Cocok untuk risiko positif dengan peluang tinggi dan manfaat besar."
+  },
+  {
+    q: "Perubahan proyek harus dilakukan melalui proses:",
+    opts: [
+      "Lewat email",
+      "Tertutup dan informal",
+      "Lewat presentasi",
+      "Formal dan terdokumentasi",
+      "Langsung ke developer"
+    ],
+    correct: 3,
+    explain: "Semua perubahan proyek harus melalui proses formal dan terdokumentasi melalui Change Control Board."
+  },
+  {
+    q: "Audit proyek dilakukan untuk:",
+    opts: [
+      "Mempertanggungjawabkan proyek",
+      "Menentukan WBS",
+      "Menentukan scope",
+      "Mengevaluasi keberhasilan proyek",
+      "Menambah biaya"
+    ],
+    correct: 3,
+    explain: "Audit proyek dilakukan untuk mengevaluasi apakah proyek berjalan sesuai rencana, standar, dan tujuan yang ditetapkan."
+  },
+  {
+    q: "Apa tujuan utama dari proses Close Project or Phase?",
+    opts: [
+      "Memutus kontrak pekerjaan dengan vendor",
+      "Mengidentifikasi risiko proyek",
+      "Menetapkan ruang lingkup proyek",
+      "Menyelesaikan seluruh aktivitas proyek atau fase secara formal",
+      "Memperoleh sumber daya proyek"
+    ],
+    correct: 3,
+    explain: "Tujuan utama Close Project or Phase adalah menyelesaikan seluruh aktivitas proyek atau fase secara formal."
+  },
+  {
+    q: "Manfaat dari penjadwalan proyek adalah, kecuali:",
+    opts: [
+      "Menentukan estimasi waktu",
+      "Memantau progres proyek",
+      "Mengidentifikasi aktivitas penting",
+      "Mengatur urutan aktivitas",
+      "Menentukan risiko proyek"
+    ],
+    correct: 4,
+    explain: "Menentukan risiko proyek adalah fungsi risk management, bukan penjadwalan. Manfaat penjadwalan: estimasi waktu, memantau progres, identifikasi aktivitas penting, mengatur urutan."
+  },
+  {
+    q: "Apa tujuan utama dari Project Quality Management?",
+    opts: [
+      "Mempercepat penyelesaian proyek",
+      "Memuaskan semua stakeholder",
+      "Menghilangkan seluruh risiko proyek",
+      "Mengurangi biaya proyek semaksimal mungkin",
+      "Memastikan proyek memenuhi kebutuhan dan harapan pemangku kepentingan"
+    ],
+    correct: 4,
+    explain: "Tujuan utama Project Quality Management adalah memastikan proyek memenuhi kebutuhan dan harapan pemangku kepentingan."
+  },
+  {
+    q: "Setelah strategi respons diterapkan, manajer proyek secara berkala meninjau efektivitas respons tersebut dan mengidentifikasi risiko baru. Aktivitas ini merupakan bagian dari:",
+    opts: [
+      "Manage Quality (Mengelola Kualitas)",
+      "Monitor Risks (Memantau Risiko)",
+      "Mitigate Risk (Mitigasi Risiko)",
+      "Perform Qualitative Risk Analysis (Melakukan Analisis Risiko Kualitatif)",
+      "Plan Risk Responses (Merencanakan Respons Risiko)"
+    ],
+    correct: 1,
+    explain: "Meninjau efektivitas respons dan mengidentifikasi risiko baru secara berkala = aktivitas Monitor Risks."
+  },
+  {
+    q: "Manakah yang biasanya dilakukan selama proses penutupan proyek?",
+    opts: [
+      "Monitoring Risiko",
+      "Mendokumentasikan lessons learned",
+      "Menentukan WBS",
+      "Mengembangkan jadwal proyek",
+      "Melakukan estimasi biaya"
+    ],
+    correct: 1,
+    explain: "Mendokumentasikan lessons learned adalah salah satu aktivitas utama dalam proses penutupan proyek."
+  },
+  {
+    q: "Apa perbedaan utama antara Manage Quality dan Control Quality?",
+    opts: [
+      "Dilakukan oleh tim yang berbeda",
+      "Tidak ada perbedaan",
+      "Manage Quality berfokus pada biaya, sedangkan Control Quality berfokus pada jadwal",
+      "Manage Quality dilakukan oleh pelanggan, sedangkan Control Quality dilakukan oleh tim proyek",
+      "Manage Quality berfokus pada proses, sedangkan Control Quality berfokus pada hasil kerja (deliverables)"
+    ],
+    correct: 4,
+    explain: "Manage Quality = fokus pada proses/prosedur. Control Quality = fokus pada hasil kerja/deliverables (memeriksa apakah output memenuhi standar)."
+  },
+  {
+    q: "Float atau slack adalah:",
+    opts: [
+      "Waktu yang dibutuhkan untuk rework",
+      "Aktivitas yang tidak perlu dilakukan",
+      "Biaya tambahan",
+      "Waktu yang tersedia tanpa mempengaruhi jadwal",
+      "Estimasi kasar"
+    ],
+    correct: 3,
+    explain: "Float/slack adalah jumlah waktu suatu aktivitas dapat ditunda tanpa mempengaruhi jadwal keseluruhan proyek."
+  },
+  {
+    q: "Milestone pada proyek adalah:",
+    opts: [
+      "Tugas akhir proyek",
+      "Poin penting dalam jadwal proyek",
+      "Biaya proyek",
+      "Deadline akhir proyek",
+      "Tugas yang ditunda"
+    ],
+    correct: 1,
+    explain: "Milestone adalah poin/tonggak penting dalam jadwal proyek yang menandai pencapaian signifikan."
+  },
+  {
+    q: "Diantara pilihan di bawah ini, manakah yang termasuk proses dalam Project Quality Management?",
+    opts: [
+      "Identify Risks, Perform Risk Analysis, Monitor Risks",
+      "Plan Quality Management, Manage Quality, Control Quality",
+      "Estimate Costs, Determine Budget, Control Costs",
+      "Plan Scope Management, Validate Scope, Control Scope",
+      "Plan, Execute, Monitor, Close"
+    ],
+    correct: 1,
+    explain: "Tiga proses dalam Project Quality Management: Plan Quality Management, Manage Quality, dan Control Quality."
+  },
+  {
+    q: "Setelah proyek selesai, ditemukan beberapa pelajaran penting terkait keterlambatan vendor. Apa manfaat utama mendokumentasikan informasi tersebut?",
+    opts: [
+      "Membantu proyek-proyek di masa depan menghindari masalah yang sama",
+      "Menambah ruang lingkup proyek",
+      "Menghilangkan seluruh risiko organisasi",
+      "Mengurangi biaya proyek yang sudah selesai",
+      "Menentukan denda untuk vendor"
+    ],
+    correct: 0,
+    explain: "Dokumentasi lessons learned bermanfaat untuk membantu proyek masa depan menghindari masalah serupa."
+  },
+  {
+    q: "Tujuan utama dari manajemen perubahan adalah:",
+    opts: [
+      "Mengelola permintaan perubahan",
+      "Menyusun laporan harian",
+      "Menghindari konflik",
+      "Menyusun jadwal",
+      "Menyediakan anggaran"
+    ],
+    correct: 0,
+    explain: "Tujuan utama manajemen perubahan adalah mengelola permintaan perubahan secara terstruktur dan terkontrol."
+  },
+  {
+    q: "Lead time dalam penjadwalan adalah:",
+    opts: [
+      "Waktu tunda antar aktivitas",
+      "Waktu rework",
+      "Waktu lebih cepat dari estimasi",
+      "Waktu untuk istirahat",
+      "Tambahan waktu untuk quality control"
+    ],
+    correct: 2,
+    explain: "Lead time = memulai aktivitas berikutnya lebih awal sebelum aktivitas sebelumnya selesai (overlap/percepatan dari estimasi normal)."
+  },
+  {
+    q: "Siapa yang biasanya bertanggung jawab memberikan penerimaan formal terhadap deliverable proyek?",
+    opts: [
+      "Manajer Proyek",
+      "Manajer Fungsional",
+      "Sponsor dan Tim Proyek",
+      "Tim Proyek",
+      "Klien atau Sponsor"
+    ],
+    correct: 4,
+    explain: "Klien atau sponsor adalah pihak yang berwenang memberikan penerimaan formal (formal acceptance) terhadap deliverable proyek."
+  },
+  {
+    q: "Perubahan tanpa persetujuan resmi disebut:",
+    opts: [
+      "Unauthorized change",
+      "Scope alignment",
+      "Change order",
+      "Critical change",
+      "Risk event"
+    ],
+    correct: 0,
+    explain: "Unauthorized change adalah perubahan yang dilakukan tanpa melalui proses persetujuan resmi (Change Control Board)."
+  },
+  {
+    q: "Teknik yang paling umum digunakan dalam proses Validate Scope adalah:",
+    opts: [
+      "Resource Leveling",
+      "Critical Path Method",
+      "Audit",
+      "Monte Carlo Analysis",
+      "Inspeksi (Inspection)"
+    ],
+    correct: 4,
+    explain: "Teknik utama dalam Validate Scope adalah Inspection — memeriksa/mereview deliverable bersama pelanggan untuk mendapatkan persetujuan formal."
+  },
+  {
+    q: "Metode yang sering digunakan untuk analisis kuantitatif risiko adalah:",
+    opts: [
+      "Delphi",
+      "Gantt Chart",
+      "Monte Carlo",
+      "RACI",
+      "SWOT"
+    ],
+    correct: 2,
+    explain: "Monte Carlo simulation adalah metode analisis risiko kuantitatif yang paling umum digunakan untuk menghitung dampak risiko secara numerik."
+  },
+  {
+    q: "Contoh alat kontrol kualitas adalah:",
+    opts: [
+      "Scope baseline",
+      "Rencana anggaran",
+      "Gantt chart",
+      "Diagram pareto",
+      "Risk log"
+    ],
+    correct: 3,
+    explain: "Diagram Pareto adalah alat kontrol kualitas (quality control tool) yang digunakan untuk mengidentifikasi penyebab utama masalah kualitas."
+  },
+  {
+    q: "Tim proyek menilai setiap risiko berdasarkan probabilitas terjadinya dan dampaknya terhadap proyek. Proses ini disebut:",
+    opts: [
+      "Control Risks (Mengendalikan Risiko)",
+      "Perform Quantitative Risk Analysis (Melakukan Analisis Risiko Kuantitatif)",
+      "Perform Qualitative Risk Analysis (Melakukan Analisis Risiko Kualitatif)",
+      "Plan Risk Management (Merencanakan Manajemen Risiko)",
+      "Monitor Risks (Memantau Risiko)"
+    ],
+    correct: 2,
+    explain: "Menilai risiko berdasarkan probabilitas dan dampak = Perform Qualitative Risk Analysis (menggunakan probability & impact matrix)."
+  },
+  {
+    q: "Proses quality assurance fokus pada:",
+    opts: [
+      "Memastikan hasil akhir sesuai standar",
+      "Memastikan pelaksanaan proyek sesuai standar",
+      "Menentukan biaya",
+      "Menyusun WBS",
+      "Memeriksa hasil kerja"
+    ],
+    correct: 1,
+    explain: "Quality Assurance fokus pada proses — memastikan pelaksanaan/prosedur proyek sesuai standar, bukan memeriksa hasil akhirnya."
+  },
+  {
+    q: "Dokumen apa yang menyediakan kriteria untuk menentukan apakah suatu deliverable dapat diterima?",
+    opts: [
+      "Communications Management Plan",
+      "Project Charter",
+      "Risk Register",
+      "Project Scope Statement",
+      "Issue Log"
+    ],
+    correct: 3,
+    explain: "Project Scope Statement berisi acceptance criteria — kriteria yang menentukan apakah suatu deliverable dapat diterima atau tidak."
+  },
+  {
+    q: "Network diagram digunakan untuk:",
+    opts: [
+      "Menyusun jadwal proyek",
+      "Menentukan organisasi tim",
+      "Menentukan budget",
+      "Menganalisis lintasan kritis",
+      "Menentukan risiko proyek"
+    ],
+    correct: 3,
+    explain: "Network diagram (CPM/PERT) digunakan untuk menggambarkan urutan aktivitas dan menganalisis critical path (lintasan kritis)."
+  },
+  {
+    q: "Selama proyek pengembangan sistem informasi, tim mengidentifikasi risiko bahwa server utama dapat mengalami kegagalan. Tim memutuskan untuk menyiapkan server cadangan agar dampaknya berkurang jika risiko terjadi. Strategi respons yang digunakan adalah:",
+    opts: [
+      "Avoid (Menghindari)",
+      "Mitigate (Memitigasi)",
+      "Transfer (Mengalihkan)",
+      "Exploit (Memanfaatkan)",
+      "Accept (Menerima)"
+    ],
+    correct: 1,
+    explain: "Menyiapkan server cadangan = mengurangi dampak jika risiko terjadi = strategi Mitigate (mitigasi)."
+  }
 ];
 
 let current = 0;
@@ -1004,10 +1334,10 @@ function showResult() {
 
   if (pct >= 80) {
     resultTitle.textContent = 'Luar Biasa';
-    resultDesc.textContent = 'Kamu menguasai materi Kecerdasan Buatan dengan sangat baik. Pertahankan prestasimu!';
+    resultDesc.textContent = 'Kamu menguasai materi Manajemen Proyek Perangkat Lunak dengan sangat baik. Pertahankan prestasimu!';
   } else if (pct >= 60) {
     resultTitle.textContent = 'Bagus Sekali';
-    resultDesc.textContent = 'Kamu sudah memahami konsep dasar AI. Terus belajar untuk meningkatkan pemahamanmu.';
+    resultDesc.textContent = 'Kamu sudah memahami konsep dasar. Terus belajar untuk meningkatkan pemahamanmu.';
   } else {
     resultTitle.textContent = 'Tetap Semangat';
     resultDesc.textContent = 'Jangan menyerah! Review materi dan coba lagi untuk meningkatkan pemahamanmu.';
