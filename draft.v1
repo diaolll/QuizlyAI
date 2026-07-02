@@ -263,7 +263,7 @@
     background: var(--surface-light);
     border: 1px solid transparent;
     cursor: pointer;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    transition: all 0.2s ease;
   }
 
   .option:hover:not(.disabled) {
@@ -278,7 +278,6 @@
   .option.correct {
     background: rgba(0, 200, 83, 0.1);
     border-color: var(--success);
-    animation: pulseCorrect 0.5s ease;
   }
 
   .option.correct .option-letter {
@@ -289,7 +288,6 @@
   .option.wrong {
     background: rgba(255, 23, 68, 0.1);
     border-color: var(--error);
-    animation: shakeWrong 0.45s ease;
   }
 
   .option.wrong .option-letter {
@@ -299,22 +297,6 @@
 
   .option.disabled {
     cursor: default;
-  }
-
-  @keyframes shakeWrong {
-    0%, 100% { transform: translateX(0); }
-    15% { transform: translateX(-9px); }
-    30% { transform: translateX(8px); }
-    45% { transform: translateX(-6px); }
-    60% { transform: translateX(5px); }
-    75% { transform: translateX(-3px); }
-    90% { transform: translateX(2px); }
-  }
-
-  @keyframes pulseCorrect {
-    0% { transform: scale(1); }
-    35% { transform: scale(1.025); }
-    100% { transform: scale(1); }
   }
 
   .option-letter {
@@ -425,33 +407,6 @@
   button.primary:hover:not(:disabled) {
     background: var(--accent-hover);
     border-color: var(--accent-hover);
-  }
-
-  /* Sound toggle */
-  .sound-toggle {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    cursor: pointer;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .sound-toggle .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--border-light);
-    transition: background 0.2s ease;
-  }
-
-  .sound-toggle.on .dot {
-    background: var(--accent);
   }
 
   /* Result Screen */
@@ -810,14 +765,6 @@
     outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
-
-  /* Reduced motion */
-  @media (prefers-reduced-motion: reduce) {
-    .option.wrong,
-    .option.correct {
-      animation: none;
-    }
-  }
 </style>
 </head>
 <body>
@@ -853,13 +800,7 @@
   <div class="progress-section">
     <div class="progress-info">
       <span class="progress-label" id="progressLabel">Kemajuan</span>
-      <div style="display:flex; align-items:center; gap:20px;">
-        <div class="sound-toggle on" id="soundToggle" onclick="toggleSound()">
-          <span class="dot"></span>
-          <span id="soundToggleLabel">Suara On</span>
-        </div>
-        <span class="progress-label" id="progressPercent">0%</span>
-      </div>
+      <span class="progress-label" id="progressPercent">0%</span>
     </div>
     <div class="progress-track">
       <div class="progress-bar" id="progressFill"></div>
@@ -1435,78 +1376,7 @@ const questions = [
 
 let current = 0;
 let score = 0;
-let answered = [];      // answered[qIdx] = original option index yang dipilih user
-let shuffleMap = [];    // shuffleMap[qIdx] = array urutan index asli opsi yang sudah diacak
-let soundOn = true;
-let audioCtx = null;
-
-function getAudioCtx() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  if (audioCtx.state === 'suspended') audioCtx.resume();
-  return audioCtx;
-}
-
-function playTone(freq, startTime, duration, type, gainPeak) {
-  const ctx = getAudioCtx();
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-  osc.type = type;
-  osc.frequency.setValueAtTime(freq, startTime);
-  gain.gain.setValueAtTime(0, startTime);
-  gain.gain.linearRampToValueAtTime(gainPeak, startTime + 0.015);
-  gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
-  osc.connect(gain);
-  gain.connect(ctx.destination);
-  osc.start(startTime);
-  osc.stop(startTime + duration + 0.02);
-}
-
-function playCorrectSound() {
-  if (!soundOn) return;
-  const ctx = getAudioCtx();
-  const t = ctx.currentTime;
-  // Ceria naik: C-E-G arpeggio pendek
-  playTone(523.25, t, 0.14, 'triangle', 0.18);
-  playTone(659.25, t + 0.08, 0.14, 'triangle', 0.18);
-  playTone(783.99, t + 0.16, 0.22, 'triangle', 0.2);
-}
-
-function playWrongSound() {
-  if (!soundOn) return;
-  const ctx = getAudioCtx();
-  const t = ctx.currentTime;
-  // Buzz turun pendek
-  playTone(220, t, 0.16, 'sawtooth', 0.15);
-  playTone(164.81, t + 0.1, 0.22, 'sawtooth', 0.15);
-}
-
-function toggleSound() {
-  soundOn = !soundOn;
-  const toggle = document.getElementById('soundToggle');
-  const label = document.getElementById('soundToggleLabel');
-  toggle.classList.toggle('on', soundOn);
-  label.textContent = soundOn ? 'Suara On' : 'Suara Off';
-  if (soundOn) getAudioCtx();
-}
-
-function shuffleArray(arr) {
-  const a = arr.slice();
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-function getShuffledOrder(qIdx) {
-  if (!shuffleMap[qIdx]) {
-    const indices = questions[qIdx].opts.map((_, i) => i);
-    shuffleMap[qIdx] = shuffleArray(indices);
-  }
-  return shuffleMap[qIdx];
-}
+let answered = [];
 
 function init() {
   renderQuestionNav();
@@ -1544,21 +1414,20 @@ function goToQuestion(idx) {
 function renderQuiz() {
   const area = document.getElementById('quizArea');
   const q = questions[current];
-  const userAns = answered[current]; // original index
-  const order = getShuffledOrder(current); // array of original indices, in display order
+  const userAns = answered[current];
 
   const letters = ['A', 'B', 'C', 'D', 'E'];
 
-  let optsHtml = order.map((origIdx, displayIdx) => {
+  let optsHtml = q.opts.map((opt, i) => {
     let cls = 'option';
     if (userAns !== undefined) {
       cls += ' disabled';
-      if (origIdx === q.correct) cls += ' correct';
-      else if (origIdx === userAns) cls += ' wrong';
+      if (i === q.correct) cls += ' correct';
+      else if (i === userAns) cls += ' wrong';
     }
-    return `<div class="${cls}" onclick="selectOption(${origIdx})" data-orig="${origIdx}" tabindex="0">
-      <div class="option-letter">${letters[displayIdx]}</div>
-      <div class="option-text">${q.opts[origIdx]}</div>
+    return `<div class="${cls}" onclick="selectOption(${i})" data-idx="${i}" tabindex="0">
+      <div class="option-letter">${letters[i]}</div>
+      <div class="option-text">${opt}</div>
     </div>`;
   }).join('');
 
@@ -1598,15 +1467,11 @@ function renderQuiz() {
   updateQuestionNav();
 }
 
-function selectOption(origIdx) {
+function selectOption(idx) {
   if (answered[current] !== undefined) return;
-  answered[current] = origIdx;
-  const isCorrect = origIdx === questions[current].correct;
-  if (isCorrect) {
+  answered[current] = idx;
+  if (idx === questions[current].correct) {
     score++;
-    playCorrectSound();
-  } else {
-    playWrongSound();
   }
   renderQuiz();
 }
@@ -1675,7 +1540,6 @@ function restartQuiz() {
   current = 0;
   score = 0;
   answered = [];
-  shuffleMap = []; // reset supaya urutan opsi diacak ulang tiap kuis diulang
   document.getElementById('resultArea').classList.add('hidden');
   document.getElementById('quizArea').classList.remove('hidden');
   renderQuiz();
@@ -1687,17 +1551,15 @@ document.addEventListener('keydown', (e) => {
   const key = e.key.toUpperCase();
 
   if (['A', 'B', 'C', 'D', 'E'].includes(key)) {
-    const displayIdx = key.charCodeAt(0) - 65;
-    const order = getShuffledOrder(current);
-    if (displayIdx < order.length) {
-      const origIdx = order[displayIdx];
-      selectOption(origIdx);
+    const idx = key.charCodeAt(0) - 65;
+    if (idx < questions[current].opts.length) {
+      selectOption(idx);
       // Auto advance to next question after selecting answer
       setTimeout(() => {
         if (answered[current] !== undefined) {
           nextQuestion();
         }
-      }, 400); // delay sedikit lebih lama supaya animasi & suara kelihatan/kedengaran
+      }, 300); // Small delay for visual feedback
     }
   }
 
