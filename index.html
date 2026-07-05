@@ -243,6 +243,14 @@
     color: var(--text);
   }
 
+  .question-image {
+    max-width: 100%;
+    height: auto;
+    margin: clamp(16px, 3vw, 24px) 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
   .options {
     display: flex;
     flex-direction: column;
@@ -1332,6 +1340,7 @@ const questions = [
   },
   {
     q: "\"Berapa minimal test case untuk branch coverage pada kode berikut?\"\n\nif x > 0:\n    print(\"Positif\")\nelse:\n    print(\"Non-positif\")",
+    image: "gambar/soal1.png",
     opts: ["3", "2", "1", "4"],
     correct: 1,
     explain: "1 decision (if-else) menghasilkan 2 branch, jadi minimal butuh 2 test case untuk mencakup branch coverage (satu untuk kondisi true, satu untuk false)."
@@ -1370,7 +1379,8 @@ const questions = [
     explain: "Black box testing menguji perilaku sistem lewat input-output tanpa melihat struktur kode internal. Opsi B, C, D memerlukan pengetahuan struktur internal kode (white box testing)."
   },
   {
-    q: "Berdasarkan diagram state (SS→S1→S2→S3→ES, dengan lompatan S1→S3, S2→ES, serta S2→S4→S1 dan S4→S3), kasus uji manakah yang merupakan rangkaian minimum transisi yang valid untuk mencakup setiap state?",
+    q: "Berdasarkan diagram state pada Gambar, kasus uji manakah yang merupakan rangkaian minimum transisi yang valid untuk mencakup setiap state?",
+    image: "gambar/soal5.png",
     opts: [
       "SS-S1-S2-S4-S1-S3-S4-S1-S3-ES",
       "SS-S1-S2-S4-S1-S3-ES",
@@ -1403,16 +1413,16 @@ const questions = [
     explain: "Acceptance, System, dan Component testing adalah test level. Functional testing adalah test type (berdasarkan ISTQB: functional, non-functional, structural, dan change-related testing)."
   },
   {
-    q: "Code review modul autentikasi:\n\ndef validate_login(username, password):\n    if not username:  # Decision 1\n        return \"Username tidak boleh kosong\"\n    elif len(password) < 8:  # Decision 2\n        return \"Password minimal 8 karakter\"\n    elif not any(char.isdigit() for char in password):  # Decision 3\n        return \"Password harus mengandung angka\"\n    elif not any(char.isupper() for char in password):  # Decision 4\n        return \"Password harus mengandung huruf kapital\"\n    else:\n        return \"Login berhasil\"\n\nBerapa Cyclomatic Complexity (V(G)) dari kode di atas?",
-    opts: ["3", "4", "5", "6"],
+    q: "Anda adalah seorang software engineer yang sedang melakukan code review terhadap modul autentikasi. Berikut potongan kode Python untuk validasi login:\n\ndef validate_login(username, password):\n    if not username:  # Decision 1\n        return \"Username tidak boleh kosong\"\n    elif len(password) < 8:  # Decision 2\n        return \"Password minimal 8 karakter\"\n    elif not any(char.isdigit() for char in password):  # Decision 3\n        return \"Password harus mengandung angka\"\n    elif not any(char.isupper() for char in password):  # Decision 4\n        return \"Password harus mengandung huruf kapital\"\n    else:\n        return \"Login berhasil\"\n\nPertanyaan:\n1. Berapa Cyclomatic Complexity (V(G)) dari kode di atas?\n2. Berapa minimal jumlah test case yang diperlukan untuk mencapai branch coverage?",
+    image: "gambar/soal8.png",
+    opts: [
+      "V(G)=3, Test Case=3",
+      "V(G)=4, Test Case=4",
+      "V(G)=5, Test Case=5",
+      "V(G)=6, Test Case=6"
+    ],
     correct: 2,
-    explain: "V(G) = jumlah decision + 1 = 4 decision (if-elif-elif-elif) + 1 = 5."
-  },
-  {
-    q: "Dari kode validate_login yang sama, berapa minimal jumlah test case yang diperlukan untuk mencapai branch coverage?",
-    opts: ["3", "4", "5", "6"],
-    correct: 2,
-    explain: "Untuk rangkaian if-elif-else dengan 4 decision, minimal butuh 5 test case: satu untuk tiap kondisi bernilai true (4 test case) plus satu untuk jalur else / semua false."
+    explain: "V(G) = jumlah decision + 1 = 4 decision (if-elif-elif-elif) + 1 = 5. Untuk branch coverage dengan 4 decision, butuh 5 test case: 4 untuk tiap kondisi true, 1 untuk jalur else."
   },
   {
     q: "Aplikasi pemesanan tiket pesawat punya parameter: Kelas Penerbangan (3 nilai), Jenis Penumpang (3 nilai), Jumlah Bagasi (4 nilai), Metode Pembayaran (3 nilai). Dengan teknik pairwise testing, berapa jumlah test case optimal yang diperlukan?",
@@ -1620,6 +1630,7 @@ function renderQuiz() {
         <div class="question-number">Soal <span>${current + 1}</span> / ${questions.length}</div>
       </div>
       <p class="question-text">${q.q}</p>
+      ${q.image ? `<img src="${q.image}" alt="Gambar soal" class="question-image">` : ''}
       <div class="options">${optsHtml}</div>
       <div class="explain ${userAns !== undefined ? 'show' : ''} ${explainClass}">
         <div class="explain-label">Analisis Opsi</div>
