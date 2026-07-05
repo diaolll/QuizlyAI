@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz — Manajemen Proyek Perangkat Lunak</title>
+<title>Quiz — Pengujian Perangkat Lunak</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
     --border-light: #333333;
     --text: #f5f5f5;
     --text-muted: #888888;
-    --accent: #FF3D00; /* Vibrant orange-red */
+    --accent: #FF3D00;
     --accent-hover: #FF5722;
     --success: #00C853;
     --error: #FF1744;
@@ -44,7 +44,6 @@
     width: 100%;
   }
 
-  /* Header */
   .header {
     border-bottom: 1px solid var(--border);
     padding-bottom: clamp(20px, 5vw, 32px);
@@ -92,7 +91,6 @@
     border-radius: 100px;
   }
 
-  /* Stats Bar */
   .stats-bar {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -129,7 +127,6 @@
     font-weight: 700;
   }
 
-  /* Progress Bar */
   .progress-section {
     margin-bottom: 40px;
   }
@@ -161,7 +158,6 @@
     transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* Question Navigation */
   .question-nav {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
@@ -210,7 +206,6 @@
     color: var(--bg);
   }
 
-  /* Question Card */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -248,7 +243,6 @@
     color: var(--text);
   }
 
-  /* Options */
   .options {
     display: flex;
     flex-direction: column;
@@ -340,7 +334,6 @@
     overflow-wrap: break-word;
   }
 
-  /* Explanation */
   .explain {
     margin-top: 32px;
     padding: 24px;
@@ -382,7 +375,6 @@
     color: var(--text-muted);
   }
 
-  /* Navigation */
   .nav {
     display: flex;
     justify-content: space-between;
@@ -427,7 +419,6 @@
     border-color: var(--accent-hover);
   }
 
-  /* Sound toggle */
   .sound-toggle {
     display: flex;
     align-items: center;
@@ -454,7 +445,6 @@
     background: var(--accent);
   }
 
-  /* Result Screen */
   .result {
     text-align: center;
     padding: clamp(32px, 8vw, 60px) clamp(20px, 5vw, 40px);
@@ -541,12 +531,10 @@
     margin: 0 auto 40px;
   }
 
-  /* Utility */
   .hidden {
     display: none !important;
   }
 
-  /* Keyboard hints */
   .keyboard-hint {
     display: flex;
     align-items: center;
@@ -578,7 +566,6 @@
     color: var(--text);
   }
 
-  /* Responsive */
   @media (max-width: 768px) {
     .header {
       padding-bottom: 24px;
@@ -803,7 +790,6 @@
     }
   }
 
-  /* Focus styles */
   button:focus-visible,
   .option:focus-visible,
   .nav-dot:focus-visible {
@@ -811,7 +797,6 @@
     outline-offset: 2px;
   }
 
-  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .option.wrong,
     .option.correct {
@@ -825,20 +810,22 @@
 
   <header class="header">
     <div class="header-brand">SIR207 — Kuis 2</div>
-    <h1>Manajemen <span>Proyek</span></h1>
+    <h1>Pengujian <span>Perangkat Lunak</span></h1>
     <div class="header-topics">
-      <span class="topic">Risk Management</span>
-      <span class="topic">Quality Management</span>
-      <span class="topic">Schedule</span>
-      <span class="topic">Project Closure</span>
-      <span class="topic">Change Control</span>
+      <span class="topic">Black Box & White Box</span>
+      <span class="topic">BVA & ECP</span>
+      <span class="topic">Use Case</span>
+      <span class="topic">State Transition</span>
+      <span class="topic">Decision Table</span>
+      <span class="topic">Pairwise</span>
+      <span class="topic">Manajemen Pengujian</span>
     </div>
   </header>
 
   <div class="stats-bar">
     <div class="stat">
       <div class="stat-label">Soal</div>
-      <div class="stat-value" id="currentStat">1<span style="font-size: 16px; color: var(--text-muted);">/37</span></div>
+      <div class="stat-value" id="currentStat">1<span style="font-size: 16px; color: var(--text-muted);">/56</span></div>
     </div>
     <div class="stat">
       <div class="stat-label">Skor</div>
@@ -871,11 +858,11 @@
   <div id="quizArea"></div>
 
   <div id="resultArea" class="card result hidden">
-    <div class="result-brand">Hasil Kuis 2</div>
+    <div class="result-brand">Hasil Kuis</div>
     <h2 id="resultTitle">Selesai</h2>
     <div class="score">
       <span id="scoreText">0</span>
-      <span class="score-label">/ 37</span>
+      <span class="score-label">/ 56</span>
     </div>
     <p class="result-message" id="resultDesc"></p>
 
@@ -904,539 +891,603 @@
 <script>
 const questions = [
   {
-    q: "Lag time adalah:",
+    q: "Apa perbedaan utama yang paling mendasar antara teknik pengujian Black Box dan White Box Testing?",
     opts: [
-      "Total waktu proyek",
-      "Waktu ekstra untuk menyelesaikan aktivitas",
-      "Slack total proyek",
-      "Durasi kegiatan",
-      "Waktu minimum antar dua aktivitas"
+      "Black Box menguji struktur kode internal, sedangkan White Box menguji antarmuka pengguna.",
+      "Black Box berfokus pada spesifikasi fungsional tanpa melihat struktur internal, sedangkan White Box menguji jalur logika internal kode program.",
+      "Black Box hanya dilakukan oleh tim pengembang, sedangkan White Box hanya dilakukan oleh pengguna akhir (user).",
+      "Black Box membutuhkan akses penuh ke source code, sedangkan White Box mengabaikan source code sepenuhnya."
     ],
     correct: 1,
-    explain: "Lag time adalah penundaan yang disengaja antara dua aktivitas yang saling bergantung — waktu ekstra sebelum aktivitas berikutnya bisa dimulai."
+    explain: "<strong>B (Benar):</strong> Sesuai definisi, Black Box mengabaikan struktur kontrol/internal dan fokus pada fungsionalitas eksternal, sedangkan White Box meramalkan cara kerja rinci dan jalur logika internal.<br><strong>A, C, D (Salah):</strong> Terbalik secara konsep; Black Box tidak melihat kode internal dan justru White Box yang membutuhkan akses source code serta sering dilakukan oleh yang paham QA/code."
   },
   {
-    q: "Plan-Do-Check-Act (PDCA) adalah pendekatan dalam:",
+    q: "Teknik Equivalence Class Partitioning (ECP) membagi domain input menjadi kelas-kelas data. Apa tujuan utama dari pembagian kelas tersebut?",
     opts: [
-      "Quality management",
-      "Risk management",
-      "Time management",
-      "Communication management",
-      "Cost control"
+      "Untuk memastikan semua baris kode dieksekusi minimal satu kali.",
+      "Mengurangi jumlah test case dengan memilih satu nilai perwakilan yang mewakili seluruh kelompok data valid atau invalid.",
+      "Menguji transisi status dari suatu sistem berbasis menu dinamis.",
+      "Menghitung Cyclomatic Complexity dari fungsi matematika yang kompleks."
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> ECP mereduksi jumlah kasus uji dengan berasumsi semua nilai dalam satu partisi akan menghasilkan perilaku sistem yang sama (valid atau invalid).<br><strong>A, C, D (Salah):</strong> Poin A adalah tujuan White Box; C adalah State Transition; D adalah Basis Path Testing."
+  },
+  {
+    q: "Sebuah form pendaftaran seminar membatasi input 'Jumlah Tiket' antara 1 hingga 5 tiket per transaksi. Berdasarkan Boundary Value Analysis (BVA), berapakah nilai batas (boundaries) yang harus diuji?",
+    opts: [
+      "1, 3, 5",
+      "0, 1, 5, 6",
+      "-1, 0, 1, 2, 5, 6",
+      "Hanya nilai 1 dan 5 saja"
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> BVA menguji batas bawah (1) dan batas atas (5), serta nilai tepat di luar batas bawah (0) dan tepat di luar batas atas (6).<br><strong>A, C, D (Salah):</strong> Poin A adalah nilai tengah/acak; C terlalu berlebihan; D mengabaikan nilai invalid di luar batas luar."
+  },
+  {
+    q: "Jika pada kasus form 'Jumlah Tiket' (1-5) di atas kita menggunakan ECP, bagaimana klasifikasi partisi yang terbentuk?",
+    opts: [
+      "1 Kelas Valid (1-5) dan 2 Kelas Invalid (<1 dan >5)",
+      "5 Kelas Valid (1, 2, 3, 4, 5)",
+      "2 Kelas Valid (1 dan 5) serta 1 Kelas Invalid (0)",
+      "Tidak bisa ditentukan tanpa melihat baris source code program"
     ],
     correct: 0,
-    explain: "PDCA (siklus Deming) adalah inti dari quality management / manajemen kualitas untuk perbaikan berkelanjutan."
+    explain: "<strong>A (Benar):</strong> Sesuai panduan ECP, rentang 1-5 membentuk satu kelas valid. Angka di bawah 1 membentuk kelas invalid pertama, dan angka di atas 5 membentuk kelas invalid kedua.<br><strong>B, C, D (Salah):</strong> Tidak efisien memecah nilai per angka jika perilakunya sama, dan penentuan ECP murni dari spesifikasi input (Black Box), bukan source code."
   },
   {
-    q: "Teknik apa yang digunakan untuk menghitung dampak risiko secara numerik terhadap tujuan proyek?",
+    q: "Mengapa pengujian Boundary Value Analysis (BVA) sangat disarankan untuk melengkapi teknik Equivalence Class Partitioning (ECP)?",
     opts: [
-      "Risk Treatment (Menangani Risiko)",
-      "Perform Quantitative Risk Analysis (Melakukan Analisis Risiko Kuantitatif)",
-      "Brainstorming (Curah Pendapat)",
-      "Expert Judgment (Pertimbangan Ahli)",
-      "SWOT Analysis (Analisis SWOT)"
+      "Karena BVA dapat mendeteksi kesalahan penulisan algoritma looping internal.",
+      "Karena kesalahan pemrograman paling sering terjadi pada kondisi batas (seperti keliru menggunakan operator < yang seharusnya <=).",
+      "Karena BVA tidak membutuhkan skenario atau test case tertulis.",
+      "Karena BVA otomatis menghasilkan nilai persentase code coverage yang tinggi."
     ],
     correct: 1,
-    explain: "Perform Quantitative Risk Analysis menggunakan angka/probabilitas untuk menghitung dampak risiko terhadap tujuan proyek (contoh: Monte Carlo, EMV)."
+    explain: "<strong>B (Benar):</strong> Pengalaman menunjukkan defect berkumpul pada batas nilai input karena kekeliruan logika relasional kode pengembang.<br><strong>A, C, D (Salah):</strong> Mendeteksi loop internal adalah ranah White Box; BVA tetap memerlukan dokumentasi formal; BVA tidak mengukur code coverage secara struktural."
   },
   {
-    q: "Selama penutupan proyek, sponsor meminta laporan akhir yang membandingkan hasil aktual dengan target biaya, jadwal, dan ruang lingkup. Tujuan utama laporan tersebut adalah:",
+    q: "Dalam implementasi nyata, jika input form menerima umur pelamar kerja dari rentang 18 sampai 60 tahun. Berapakah contoh nilai pengujian untuk kategori 'Class Invalid Non-Numerik' dalam ECP?",
     opts: [
-      "Mengevaluasi kinerja proyek secara keseluruhan",
-      "Menentukan anggaran proyek berikutnya",
-      "Mengembangkan WBS baru",
-      "Mengidentifikasi stakeholder baru",
-      "Menentukan reward dan punishment"
-    ],
-    correct: 0,
-    explain: "Laporan akhir yang membandingkan aktual vs target bertujuan untuk mengevaluasi performa/kinerja proyek secara keseluruhan."
-  },
-  {
-    q: "Seorang manajer proyek menemukan bahwa seluruh deliverable telah selesai, tetapi pelanggan belum memberikan persetujuan akhir. Apa yang sebaiknya dilakukan?",
-    opts: [
-      "Membubarkan tim proyek segera",
-      "Menunggu dan memperoleh penerimaan formal dari pelanggan",
-      "Melakukan pengujian tambahan",
-      "Menutup proyek karena pekerjaan telah selesai",
-      "Menghapus dokumentasi proyek"
-    ],
-    correct: 1,
-    explain: "Proyek belum bisa ditutup tanpa formal acceptance dari pelanggan. Persetujuan formal adalah syarat wajib sebelum project closure."
-  },
-  {
-    q: "Dokumen pelajaran yang dipetik dalam proyek disebut:",
-    opts: [
-      "Issue log",
-      "Lessons learned",
-      "Project notebook",
-      "Control sheet",
-      "Risk register"
-    ],
-    correct: 1,
-    explain: "Lessons learned adalah dokumen yang mencatat pelajaran/pengalaman yang dipetik selama proyek untuk referensi proyek mendatang."
-  },
-  {
-    q: "Seorang pelanggan menerima sistem yang telah memenuhi seluruh spesifikasi teknis, tetapi antarmukanya sulit digunakan sehingga tidak memenuhi harapan pengguna. Pelajaran utama dari kasus ini adalah:",
-    opts: [
-      "Memenuhi persyaratan teknis belum tentu memenuhi kebutuhan pelanggan",
-      "Kualitas hanya ditentukan oleh spesifikasi teknis",
-      "Jadwal proyek lebih penting daripada kualitas",
-      "Pengujian harus dilakukan untuk semua kriteria kualitas",
-      "Pengujian tidak diperlukan"
-    ],
-    correct: 0,
-    explain: "Sistem yang memenuhi spesifikasi teknis tapi sulit digunakan membuktikan bahwa spesifikasi teknis ≠ kebutuhan pengguna sesungguhnya."
-  },
-  {
-    q: "Sebuah proyek memiliki target tingkat kesalahan maksimum sebesar 2%. Target ini merupakan contoh:",
-    opts: [
-      "Risk Register (Daftar Risiko)",
-      "Assumption Log (Log Asumsi)",
-      "Quality Metric (Metrik Kualitas)",
-      "Change Request (Permintaan Perubahan)",
-      "Requirements (Persyaratan)"
+      "17",
+      "65",
+      '"duapuluh"',
+      "30"
     ],
     correct: 2,
-    explain: "Target tingkat kesalahan maksimum 2% adalah ukuran/standar kualitas yang ingin dicapai — itu definisi quality metric."
+    explain: "<strong>C (Benar):</strong> Nilai string/text seperti 'duapuluh' merepresentasikan tipe data non-numerik yang melanggar tipe data bilangan bulat (integer) yang diharapkan.<br><strong>A, B (Salah):</strong> 17 dan 65 adalah partisi invalid numerik.<br><strong>D (Salah):</strong> 30 adalah nilai valid numerik."
   },
   {
-    q: "Komite yang menilai permintaan perubahan disebut:",
+    q: "Kapan teknik pengujian Black Box paling ideal mulai dirancang dalam siklus pengembangan perangkat lunak (SDLC)?",
     opts: [
-      "Quality Assurance Team",
-      "Change Control Board",
-      "Executive Team",
-      "Risk Committee",
-      "Project Board"
+      "Sesaat setelah coding selesai dilakukan oleh programmer.",
+      "Segera setelah dokumen kebutuhan (SRS / spesifikasi fungsional) disetujui, bahkan sebelum coding dimulai.",
+      "Ketika aplikasi sudah masuk tahap deployment ke server production.",
+      "Saat pengguna mengajukan keluhan bug di sistem yang berjalan."
     ],
     correct: 1,
-    explain: "Change Control Board (CCB) adalah komite yang bertugas mengevaluasi dan menyetujui/menolak permintaan perubahan proyek."
+    explain: "<strong>B (Benar):</strong> Karena Black Box berbasis spesifikasi fungsional, pembuatan skenario uji bisa berjalan paralel dengan proses koding berdasarkan dokumen kebutuhan.<br><strong>A, C, D (Salah):</strong> Menunggu coding selesai memperlambat proses; deployment/keluhan bug adalah tahap penanganan insiden, bukan inisiasi desain pengujian yang ideal."
   },
   {
-    q: "Dokumen yang disebut ........ dibuat dengan cara menguraikan (decomposing) ruang lingkup proyek menjadi elemen-elemen yang lebih kecil dan lebih mudah dikelola.",
+    q: "Keuntungan utama dari penggunaan tim penguji independen (Independent Testers) untuk melakukan Black Box Testing adalah...",
     opts: [
-      "Data Flow Diagram (Diagram Aliran Data)",
-      "WBS (Work Breakdown Structure)",
-      "Network Logic Diagram (Diagram Logika Jaringan)",
-      "Requested Change (Permintaan Perubahan)",
-      "Scope Statement (Pernyataan Ruang Lingkup)"
+      "Mereka tahu pasti baris kode mana yang mengalami kebocoran memori (memory leak).",
+      "Menghilangkan bias konfirmasi karena penguji tidak terikat pada asumsi internal pembuat kode saat menginterpretasikan spesifikasi.",
+      "Mempercepat waktu perbaikan bug karena mereka bisa langsung mengedit source code.",
+      "Mengurangi biaya total proyek karena tidak memerlukan dokumentasi kebutuhan."
     ],
     correct: 1,
-    explain: "WBS (Work Breakdown Structure) adalah dokumen yang dibuat dengan mendekomposisi scope proyek menjadi elemen-elemen yang lebih kecil dan mudah dikelola."
+    explain: "<strong>B (Benar):</strong> Sesuai materi Manajemen Pengujian, independent tester tidak bias dan mampu memverifikasi asumsi implisit yang terlewatkan oleh developer.<br><strong>A, C, D (Salah):</strong> Independent tester biasanya tidak melihat kode langsung; mengedit kode adalah tugas developer; keberadaan mereka justru menuntut dokumentasi yang memadai agar tidak miskomunikasi."
   },
   {
-    q: "Strategi respons risiko positif (opportunity) adalah, kecuali:",
+    q: "Apa fokus utama dari metode pengujian Use Case Testing dalam konteks Black Box Testing?",
     opts: [
-      "Enhance",
-      "Exploit",
-      "Avoid",
-      "Share",
-      "Accept"
+      "Menguji struktur data array internal aplikasi.",
+      "Menguji interaksi antara aktor (pengguna akhir) dengan sistem berdasarkan skenario dan alur langkah fungsional tertentu.",
+      "Menghitung jumlah statement coverage pada function callback.",
+      "Menguji kecepatan transmisi query database SQL."
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Use Case Testing memetakan skenario langkah demi langkah interaksi pengguna eksternal dengan sistem dari awal hingga hasil akhir tercapai.<br><strong>A, C, D (Salah):</strong> Merupakan aspek internal teknis atau non-fungsional yang berada di luar cakupan fungsionalitas skenario Use Case."
+  },
+  {
+    q: "Dalam Use Case Testing, skenario yang menggambarkan alur jalannya sistem secara normal tanpa ada error atau interupsi disebut dengan istilah...",
+    opts: [
+      "Alternate Flow",
+      "Exception Flow",
+      "Main Success Scenario / Basic Flow",
+      "Integration Flow"
     ],
     correct: 2,
-    explain: "Strategi respons risiko positif (opportunity): Exploit, Enhance, Share, Accept. Avoid adalah strategi untuk risiko negatif (threat), bukan opportunity."
+    explain: "<strong>C (Benar):</strong> Basic Flow atau Main Success Scenario adalah jalur ideal di mana pengguna berhasil mencapai tujuan tanpa hambatan.<br><strong>A, B (Salah):</strong> Alternate flow menggambarkan jalur alternatif; Exception flow menangani kondisi error/kegagalan."
   },
   {
-    q: "Risk register berisi informasi tentang:",
+    q: "Perhatikan skenario transaksi penarikan ATM: 'Pengguna meminta nominal Rp500.000, saldo tidak mencukupi, sistem menampilkan pesan kesalahan'. Komponen alur ini dikategorikan sebagai...",
     opts: [
-      "Scope proyek",
-      "Deliverables proyek",
-      "Durasi proyek",
-      "Risiko dan respons yang direncanakan",
-      "Anggota tim"
-    ],
-    correct: 3,
-    explain: "Risk register berisi daftar risiko yang teridentifikasi beserta respons/strategi yang direncanakan untuk menghadapinya."
-  },
-  {
-    q: "Selama pelaksanaan proyek, manajemen meminta manajer proyek untuk mempercepat tanggal penyelesaian lingkup (scope). Tindakan apa yang sebaiknya dipertimbangkan terlebih dahulu?",
-    opts: [
-      "Menambah contingency reserve",
-      "Melakukan analisis kompresi jadwal (schedule compression analysis)",
-      "Menambah jumlah resource",
-      "Menambah management reserve",
-      "Mengurangi persyaratan kualitas"
+      "Basic Flow",
+      "Exception Flow",
+      "Happy Path",
+      "Structural Path"
     ],
     correct: 1,
-    explain: "Sebelum ambil tindakan apapun, manajer proyek harus analisis dulu opsi percepatan (crashing/fast-tracking) melalui schedule compression analysis."
+    explain: "<strong>B (Benar):</strong> Skenario kegagalan pemrosesan akibat validasi bisnis (saldo kurang) masuk ke dalam alur eksepsi (Exception Flow).<br><strong>A, C (Salah):</strong> Skenario normal penarikan sukses adalah Basic Flow / Happy Path.<br><strong>D (Salah):</strong> Istilah pengujian struktural kode (White Box)."
   },
   {
-    q: "Risiko yang berada di luar wewenang manajer proyek dan perlu ditangani pada tingkat organisasi sebaiknya:",
+    q: "Kapan metode State Transition Testing sangat direkomendasikan untuk digunakan dalam pengujian perangkat lunak?",
     opts: [
-      "Mitigate (Mitigasi)",
-      "Escalate (Dieskalasikan)",
-      "Avoid (Menghindari)",
-      "Transfer (Mengalihkan)",
-      "Accept (Menerima)"
-    ],
-    correct: 1,
-    explain: "Risiko di luar wewenang manajer proyek harus di-escalate ke tingkat organisasi yang lebih tinggi."
-  },
-  {
-    q: "Contoh risiko eksternal adalah:",
-    opts: [
-      "Perubahan regulasi",
-      "Kegagalan teknologi developer",
-      "Konflik antar tim",
-      "Kurangnya keterampilan tim",
-      "Kesalahan input data"
+      "Ketika fungsionalitas sistem dipengaruhi oleh riwayat kondisi internal sebelumnya atau perubahan status objek berdasarkan event tertentu.",
+      "Ketika sistem hanya berisi formulir statis satu halaman tanpa dependensi antar field.",
+      "Ketika penguji ingin mengetahui performa konkurensi database server.",
+      "Ketika kita ingin menguji rumus aritmatika di level unit pemrograman."
     ],
     correct: 0,
-    explain: "Perubahan regulasi berasal dari luar organisasi/proyek = risiko eksternal. Pilihan lainnya adalah risiko internal."
+    explain: "<strong>A (Benar):</strong> Sesuai materi, State Transition menguji bagaimana event eksternal memicu transisi antar status internal sistem (contoh: status akun Terkunci setelah 3x salah PIN).<br><strong>B, C, D (Salah):</strong> Form statis cukup pakai BVA/ECP; performa diuji dengan Performance Testing; unit rumus memakai White Box."
   },
   {
-    q: "Manakah yang merupakan output dari proses Validate Scope?",
+    q: "Di dalam pengujian State Transition, empat komponen utama yang wajib didefinisikan adalah...",
     opts: [
-      "Activity List",
-      "Accepted Deliverables",
-      "Cost Baseline",
-      "Scope Statement",
-      "Risk Report"
+      "Class, Object, Method, Attribute",
+      "State (kondisi), Event (peristiwa), Transition (transisi), Action (aksi)",
+      "Input, Output, Source, Destination",
+      "Node, Edge, Region, Predicate"
     ],
     correct: 1,
-    explain: "Output utama dari proses Validate Scope adalah Accepted Deliverables — deliverable yang sudah diterima/disetujui oleh pelanggan."
+    explain: "<strong>B (Benar):</strong> Dokumen materi menegaskan 4 pilar ini: State (kondisi internal), Event (pemicu), Transition (perubahan status), dan Action (konsekuensi atau output sistem).<br><strong>A, C, D (Salah):</strong> A adalah konsep OOP; C istilah komunikasi data; D komponen struktur graf White Box."
   },
   {
-    q: "Teknik yang digunakan untuk memperkirakan durasi kegiatan adalah, kecuali:",
+    q: "Kasus Siklus Pesanan E-Commerce: Pesanan berstatus 'DIBAYAR'. Jika event 'Kurir Mengambil Barang' terjadi, status berubah menjadi 'DIKIRIM'. Dalam skema State Transition, proses berubahnya status disebut...",
     opts: [
-      "Monte Carlo",
-      "SWOT",
-      "PERT",
-      "Analogous",
-      "Delphi"
-    ],
-    correct: 1,
-    explain: "SWOT adalah alat analisis strategis, bukan teknik estimasi durasi. Teknik estimasi durasi: Monte Carlo, PERT, Analogous, dan Delphi."
-  },
-  {
-    q: "Proses yang memastikan produk sesuai dengan standar kualitas disebut:",
-    opts: [
-      "Quality Planning",
-      "Quality Improvement",
-      "Configuration Management",
-      "Quality Assurance",
-      "Quality Control"
-    ],
-    correct: 4,
-    explain: "Quality Control adalah proses memeriksa/memastikan produk/deliverable sesuai standar kualitas yang ditetapkan."
-  },
-  {
-    q: "Analisis risiko kualitatif bertujuan untuk:",
-    opts: [
-      "Menghitung dampak biaya",
-      "Menentukan prioritas risiko",
-      "Menghindari semua risiko",
-      "Menggunakan simulasi",
-      "Menyusun jadwal proyek"
-    ],
-    correct: 1,
-    explain: "Analisis risiko kualitatif bertujuan menilai dan memprioritaskan risiko berdasarkan probabilitas dan dampaknya — bukan menghitung angka (itu kuantitatif)."
-  },
-  {
-    q: "Sebuah risiko memiliki peluang tinggi untuk memberikan manfaat besar bagi proyek. Strategi respons yang bertujuan memastikan peluang tersebut terjadi disebut:",
-    opts: [
-      "Mitigate (Mitigasi)",
-      "Exploit (Memanfaatkan)",
-      "Accept (Menerima)",
-      "Transfer (Mengalihkan)",
-      "Avoid (Menghindari)"
-    ],
-    correct: 1,
-    explain: "Exploit = strategi untuk memastikan peluang pasti terjadi. Cocok untuk risiko positif dengan peluang tinggi dan manfaat besar."
-  },
-  {
-    q: "Perubahan proyek harus dilakukan melalui proses:",
-    opts: [
-      "Lewat email",
-      "Tertutup dan informal",
-      "Lewat presentasi",
-      "Formal dan terdokumentasi",
-      "Langsung ke developer"
-    ],
-    correct: 3,
-    explain: "Semua perubahan proyek harus melalui proses formal dan terdokumentasi melalui Change Control Board."
-  },
-  {
-    q: "Audit proyek dilakukan untuk:",
-    opts: [
-      "Mempertanggungjawabkan proyek",
-      "Menentukan WBS",
-      "Menentukan scope",
-      "Mengevaluasi keberhasilan proyek",
-      "Menambah biaya"
-    ],
-    correct: 3,
-    explain: "Audit proyek dilakukan untuk mengevaluasi apakah proyek berjalan sesuai rencana, standar, dan tujuan yang ditetapkan."
-  },
-  {
-    q: "Apa tujuan utama dari proses Close Project or Phase?",
-    opts: [
-      "Memutus kontrak pekerjaan dengan vendor",
-      "Mengidentifikasi risiko proyek",
-      "Menetapkan ruang lingkup proyek",
-      "Menyelesaikan seluruh aktivitas proyek atau fase secara formal",
-      "Memperoleh sumber daya proyek"
-    ],
-    correct: 3,
-    explain: "Tujuan utama Close Project or Phase adalah menyelesaikan seluruh aktivitas proyek atau fase secara formal."
-  },
-  {
-    q: "Manfaat dari penjadwalan proyek adalah, kecuali:",
-    opts: [
-      "Menentukan estimasi waktu",
-      "Memantau progres proyek",
-      "Mengidentifikasi aktivitas penting",
-      "Mengatur urutan aktivitas",
-      "Menentukan risiko proyek"
-    ],
-    correct: 4,
-    explain: "Menentukan risiko proyek adalah fungsi risk management, bukan penjadwalan. Manfaat penjadwalan: estimasi waktu, memantau progres, identifikasi aktivitas penting, mengatur urutan."
-  },
-  {
-    q: "Apa tujuan utama dari Project Quality Management?",
-    opts: [
-      "Mempercepat penyelesaian proyek",
-      "Memuaskan semua stakeholder",
-      "Menghilangkan seluruh risiko proyek",
-      "Mengurangi biaya proyek semaksimal mungkin",
-      "Memastikan proyek memenuhi kebutuhan dan harapan pemangku kepentingan"
-    ],
-    correct: 4,
-    explain: "Tujuan utama Project Quality Management adalah memastikan proyek memenuhi kebutuhan dan harapan pemangku kepentingan."
-  },
-  {
-    q: "Setelah strategi respons diterapkan, manajer proyek secara berkala meninjau efektivitas respons tersebut dan mengidentifikasi risiko baru. Aktivitas ini merupakan bagian dari:",
-    opts: [
-      "Manage Quality (Mengelola Kualitas)",
-      "Monitor Risks (Memantau Risiko)",
-      "Mitigate Risk (Mitigasi Risiko)",
-      "Perform Qualitative Risk Analysis (Melakukan Analisis Risiko Kualitatif)",
-      "Plan Risk Responses (Merencanakan Respons Risiko)"
-    ],
-    correct: 1,
-    explain: "Meninjau efektivitas respons dan mengidentifikasi risiko baru secara berkala = aktivitas Monitor Risks."
-  },
-  {
-    q: "Manakah yang biasanya dilakukan selama proses penutupan proyek?",
-    opts: [
-      "Monitoring Risiko",
-      "Mendokumentasikan lessons learned",
-      "Menentukan WBS",
-      "Mengembangkan jadwal proyek",
-      "Melakukan estimasi biaya"
-    ],
-    correct: 1,
-    explain: "Mendokumentasikan lessons learned adalah salah satu aktivitas utama dalam proses penutupan proyek."
-  },
-  {
-    q: "Apa perbedaan utama antara Manage Quality dan Control Quality?",
-    opts: [
-      "Dilakukan oleh tim yang berbeda",
-      "Tidak ada perbedaan",
-      "Manage Quality berfokus pada biaya, sedangkan Control Quality berfokus pada jadwal",
-      "Manage Quality dilakukan oleh pelanggan, sedangkan Control Quality dilakukan oleh tim proyek",
-      "Manage Quality berfokus pada proses, sedangkan Control Quality berfokus pada hasil kerja (deliverables)"
-    ],
-    correct: 4,
-    explain: "Manage Quality = fokus pada proses/prosedur. Control Quality = fokus pada hasil kerja/deliverables (memeriksa apakah output memenuhi standar)."
-  },
-  {
-    q: "Float atau slack adalah:",
-    opts: [
-      "Waktu yang dibutuhkan untuk rework",
-      "Aktivitas yang tidak perlu dilakukan",
-      "Biaya tambahan",
-      "Waktu yang tersedia tanpa mempengaruhi jadwal",
-      "Estimasi kasar"
-    ],
-    correct: 3,
-    explain: "Float/slack adalah jumlah waktu suatu aktivitas dapat ditunda tanpa mempengaruhi jadwal keseluruhan proyek."
-  },
-  {
-    q: "Milestone pada proyek adalah:",
-    opts: [
-      "Tugas akhir proyek",
-      "Poin penting dalam jadwal proyek",
-      "Biaya proyek",
-      "Deadline akhir proyek",
-      "Tugas yang ditunda"
-    ],
-    correct: 1,
-    explain: "Milestone adalah poin/tonggak penting dalam jadwal proyek yang menandai pencapaian signifikan."
-  },
-  {
-    q: "Diantara pilihan di bawah ini, manakah yang termasuk proses dalam Project Quality Management?",
-    opts: [
-      "Identify Risks, Perform Risk Analysis, Monitor Risks",
-      "Plan Quality Management, Manage Quality, Control Quality",
-      "Estimate Costs, Determine Budget, Control Costs",
-      "Plan Scope Management, Validate Scope, Control Scope",
-      "Plan, Execute, Monitor, Close"
-    ],
-    correct: 1,
-    explain: "Tiga proses dalam Project Quality Management: Plan Quality Management, Manage Quality, dan Control Quality."
-  },
-  {
-    q: "Setelah proyek selesai, ditemukan beberapa pelajaran penting terkait keterlambatan vendor. Apa manfaat utama mendokumentasikan informasi tersebut?",
-    opts: [
-      "Membantu proyek-proyek di masa depan menghindari masalah yang sama",
-      "Menambah ruang lingkup proyek",
-      "Menghilangkan seluruh risiko organisasi",
-      "Mengurangi biaya proyek yang sudah selesai",
-      "Menentukan denda untuk vendor"
-    ],
-    correct: 0,
-    explain: "Dokumentasi lessons learned bermanfaat untuk membantu proyek masa depan menghindari masalah serupa."
-  },
-  {
-    q: "Tujuan utama dari manajemen perubahan adalah:",
-    opts: [
-      "Mengelola permintaan perubahan",
-      "Menyusun laporan harian",
-      "Menghindari konflik",
-      "Menyusun jadwal",
-      "Menyediakan anggaran"
-    ],
-    correct: 0,
-    explain: "Tujuan utama manajemen perubahan adalah mengelola permintaan perubahan secara terstruktur dan terkontrol."
-  },
-  {
-    q: "Lead time dalam penjadwalan adalah:",
-    opts: [
-      "Waktu tunda antar aktivitas",
-      "Waktu rework",
-      "Waktu lebih cepat dari estimasi",
-      "Waktu untuk istirahat",
-      "Tambahan waktu untuk quality control"
+      "State",
+      "Action",
+      "Transition",
+      "Event"
     ],
     correct: 2,
-    explain: "Lead time = memulai aktivitas berikutnya lebih awal sebelum aktivitas sebelumnya selesai (overlap/percepatan dari estimasi normal)."
+    explain: "<strong>C (Benar):</strong> Transisi (Transition) adalah pergeseran atau perubahan aktual dari satu state (kondisi) ke state berikutnya.<br><strong>A, B, D (Salah):</strong> 'DIBAYAR' adalah State; 'Kurir Mengambil' adalah Event; efek samping operasionalnya adalah Action."
   },
   {
-    q: "Siapa yang biasanya bertanggung jawab memberikan penerimaan formal terhadap deliverable proyek?",
+    q: "Sebuah mesin ATM mengunci kartu pengguna (Status: KARTU_TERKUNCI) setelah aksi memasukkan PIN salah berturut-turut sebanyak 3 kali. Mana yang berperan sebagai 'Event' dalam siklus ini?",
     opts: [
-      "Manajer Proyek",
-      "Manajer Fungsional",
-      "Sponsor dan Tim Proyek",
-      "Tim Proyek",
-      "Klien atau Sponsor"
+      "Menampilkan pesan kesalahan di layar",
+      "Pengguna memasukkan PIN yang salah",
+      "KARTU_TERKUNCI",
+      "Mekanisme internal penahanan kartu fisik"
     ],
-    correct: 4,
-    explain: "Klien atau sponsor adalah pihak yang berwenang memberikan penerimaan formal (formal acceptance) terhadap deliverable proyek."
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Event adalah stimulus atau interaksi masukan luar yang memicu mesin bergerak merespons (memasukkan data PIN salah).<br><strong>A, C, D (Salah):</strong> A dan D adalah aksi/respons sistem; C adalah target akhir State."
   },
   {
-    q: "Perubahan tanpa persetujuan resmi disebut:",
+    q: "Apa kegunaan utama dari metode pengujian Decision Table Testing?",
     opts: [
-      "Unauthorized change",
-      "Scope alignment",
-      "Change order",
-      "Critical change",
-      "Risk event"
+      "Untuk melacak alur eksekusi baris kode bersarang (nested loops).",
+      "Menguji kombinasi dari berbagai kondisi input bisnis yang berbeda untuk menghasilkan tindakan (actions) yang sesuai aturan (rules).",
+      "Mempercepat pengujian UI dengan metode drag-and-drop.",
+      "Menghilangkan kebutuhan pengujian integrasi antarmuka."
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Sesuai materi, tabel keputusan memetakan matriks kondisi logika boolean (True/False) kompleks untuk memastikan kejelasan aturan bisnis produk.<br><strong>A, C, D (Salah):</strong> Poin A adalah tujuan White box; C dan D tidak relevan dengan esensi matematis Decision Table."
+  },
+  {
+    q: "Jika sebuah sistem memiliki 3 kondisi input independen, di mana setiap kondisi hanya bernilai True atau False. Berapa jumlah aturan logika dasar (Rules) maksimal yang dihasilkan dalam tabel keputusan utuh?",
+    opts: [
+      "3 Rules",
+      "6 Rules",
+      "8 Rules",
+      "9 Rules"
+    ],
+    correct: 2,
+    explain: "<strong>C (Benar):</strong> Jumlah kombinasi aturan biner dihitung dengan rumus 2^n, di mana n adalah jumlah kondisi. 2^3 = 8.<br><strong>A, B, D (Salah):</strong> Kesalahan umum mengalikan langsung (3 × 2 = 6) atau menjumlahkan (3+3+3)."
+  },
+  {
+    q: "Di dalam sebuah Decision Table, baris yang mendefinisikan variabel-variabel input yang mempengaruhi keluaran sistem disebut...",
+    opts: [
+      "Action Stub",
+      "Condition Stub",
+      "Rule Entry",
+      "Condition Entry"
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Condition Stub mendaftar semua faktor/kondisi input. (Condition Entry berisi nilai Y/N atau T/F nya).<br><strong>A (Salah):</strong> Action Stub mendaftar jenis tindakan/output sistem.<br><strong>C, D (Salah):</strong> Bagian pengisian nilai, bukan pendefinisian nama variabel induk."
+  },
+  {
+    q: "Apa kelemahan utama dari teknik Decision Table Testing jika jumlah kondisi input sangat banyak (misal lebih dari 10 kondisi)?",
+    opts: [
+      "Tabel keputusan tidak lagi valid secara logika matematika.",
+      "Ukuran tabel meledak secara eksponensial (Combinatorial Explosion), menghasilkan jumlah rules yang terlalu besar (2^10 = 1024 rules) sehingga sulit dikelola.",
+      "Tidak dapat diaplikasikan pada platform berbasis web.",
+      "Memerlukan compiler khusus untuk mengeksekusi tabel."
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Masalah utama kombinatorik murni adalah pertumbuhan eksponensial yang melahirkan ratusan skenario uji yang tidak mungkin dieksekusi manual secara ekonomis.<br><strong>A, C, D (Salah):</strong> Logikanya tetap valid secara teori, tidak ada hubungan dengan tipe deployment web maupun kebutuhan compiler khusus."
+  },
+  {
+    q: "Mengapa teknik Pairwise Testing (All-Pairs Testing) sering digunakan bersamaan atau sebagai solusi alternatif penyederhanaan dari Decision Table?",
+    opts: [
+      "Karena Pairwise menguji seluruh kombinasi nilai secara mutlak tanpa tersisa.",
+      "Karena sebagian besar bug disebabkan oleh interaksi maksimal dua parameter input (pasangan), sehingga pengujian pasangan nilai dapat memangkas jumlah test case secara signifikan.",
+      "Karena Pairwise otomatis menuliskan source code unit test secara mandiri.",
+      "Karena Pairwise khusus ditujukan untuk menguji kerentanan keamanan (security)."
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Berdasarkan teori ortogonal, pengujian pasangan kombinasi (all-pairs) terbukti efektif menangkap mayoritas defect fungsional tanpa harus menguji ribuan rule penuh.<br><strong>A, C, D (Salah):</strong> Kebalikan dari A (Pairwise sengaja membuang kombinasi tingkat tinggi); C dan D adalah klaim yang keliru."
+  },
+  {
+    q: "Berdasarkan dokumentasi studi kasus pelacakan kombinasi pengujian pesanan (Product, Order Category, City, Validation, Order Time), apa langkah yang diambil jika dijumpai baris kosong atau sepasang kombinasi penting yang belum terwakili setelah pengurutan manual?",
+    opts: [
+      "Menghapus seluruh tabel dan memulai ulang dari awal.",
+      "Menambahkan baris test case kustom baru secara spesifik untuk memuat pasangan nilai yang hilang tersebut.",
+      "Membiarkan baris kosong tersebut karena tidak akan mempengaruhi hasil pengujian akhir.",
+      "Memaksa mengubah nilai validasi sistem menjadi selalu bernilai benar."
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Sesuai materi 'Decision Table & Pairwise', jika penukaran posisi row (swapping) tidak bisa memenuhi missing pairs karena resiko merusak kombinasi terurut lain, maka ditambahkan baris baru khusus.<br><strong>A, C, D (Salah):</strong> Tidak perlu destruktif, dan membiarkan kosong akan menghilangkan coverage skenario kritis."
+  },
+  {
+    q: "Apa yang dimaksud dengan 'Independent Path' di dalam konteks pengujian White Box Testing?",
+    opts: [
+      "Jalur kode yang dieksekusi secara otomatis oleh framework testing pihak ketiga.",
+      "Jalur di dalam program yang menunjukkan paling sedikit satu kumpulan proses ataupun kondisi baru (minimal melewati satu edge baru).",
+      "Semua fungsi atau method yang tidak memiliki parameter input sama sekali.",
+      "Alur perpindahan data antar server staging menuju server production."
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Definisi materi Whitebox Testing menegaskan independent path adalah jalur unik dalam program yang memperkenalkan setidaknya satu kondisi atau instruksi baru.<br><strong>A, C, D (Salah):</strong> Tidak ada kaitan dengan otomatisasi eksternal, ketiadaan parameter, atau infrastruktur deployment jaringan."
+  },
+  {
+    q: "Salah satu tujuan dari pengujian White Box adalah menjamin 'Logical Decision' dijalani pada dua sisi. Apa makna dari pernyataan tersebut?",
+    opts: [
+      "Menjalankan fungsi matematika pada angka positif dan negatif.",
+      "Mengeksekusi setiap percabangan kondisi logika pada sisi True dan juga pada sisi False.",
+      "Menjamin program dapat berjalan di sistem operasi Windows dan Linux.",
+      "Memastikan database dapat menyimpan data string dan integer secara bersamaan."
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Branch / decision coverage menuntut setiap ekspresi boolean diuji perilakunya saat menghasilkan keputusan True maupun False.<br><strong>A, C, D (Salah):</strong> Tidak menggambarkan esensi cakupan percabangan logika percabangan if-else program."
+  },
+  {
+    q: "Manakah di bawah ini yang merupakan struktur kontrol aliran program yang memicu terbentuknya percabangan logika (logical path) dalam White Box?",
+    opts: [
+      "echo, print, printf",
+      "if...then...else, switch...case, while...do",
+      "import, include, require",
+      "integer, float, boolean"
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Sesuai materi, percabangan (Condition) dan perulangan (Looping) adalah konstruksi utama yang membentuk simpul keputusan (predicate node) aliran graf logika.<br><strong>A, C, D (Salah):</strong> A adalah instruksi output; C adalah manajemen file modular; D adalah jenis tipe data primitif."
+  },
+  {
+    q: "Rumus Cyclomatic Complexity pada Basis Path Testing dapat dinyatakan melalui tiga cara. Manakah opsi di bawah ini yang menunjukkan rumus Cyclomatic Complexity V(G) yang BENAR berdasarkan representasi Flow Graph?",
+    opts: [
+      "V(G) = E - N + 2",
+      "V(G) = N - E + 2",
+      "V(G) = P - 1",
+      "V(G) = E + N - 2"
     ],
     correct: 0,
-    explain: "Unauthorized change adalah perubahan yang dilakukan tanpa melalui proses persetujuan resmi (Change Control Board)."
+    explain: "<strong>A (Benar):</strong> Rumus baku Cyclomatic Complexity adalah V(G) = E - N + 2, di mana E adalah jumlah edge (garis alur) dan N adalah jumlah node (simpul proses). Rumus lainnya adalah V(G) = P + 1 (P = Predicate node).<br><strong>B, C, D (Salah):</strong> Penempatan variabel terbalik atau salah tanda operasi aritmatika."
   },
   {
-    q: "Teknik yang paling umum digunakan dalam proses Validate Scope adalah:",
+    q: "Jika sebuah program memiliki Flow Graph dengan jumlah Edge (E) = 4, dan jumlah Node (N) = 5. Berapakah nilai Cyclomatic Complexity V(G) dari program tersebut?",
     opts: [
-      "Resource Leveling",
-      "Critical Path Method",
-      "Audit",
-      "Monte Carlo Analysis",
-      "Inspeksi (Inspection)"
-    ],
-    correct: 4,
-    explain: "Teknik utama dalam Validate Scope adalah Inspection — memeriksa/mereview deliverable bersama pelanggan untuk mendapatkan persetujuan formal."
-  },
-  {
-    q: "Metode yang sering digunakan untuk analisis kuantitatif risiko adalah:",
-    opts: [
-      "Delphi",
-      "Gantt Chart",
-      "Monte Carlo",
-      "RACI",
-      "SWOT"
-    ],
-    correct: 2,
-    explain: "Monte Carlo simulation adalah metode analisis risiko kuantitatif yang paling umum digunakan untuk menghitung dampak risiko secara numerik."
-  },
-  {
-    q: "Contoh alat kontrol kualitas adalah:",
-    opts: [
-      "Scope baseline",
-      "Rencana anggaran",
-      "Gantt chart",
-      "Diagram pareto",
-      "Risk log"
-    ],
-    correct: 3,
-    explain: "Diagram Pareto adalah alat kontrol kualitas (quality control tool) yang digunakan untuk mengidentifikasi penyebab utama masalah kualitas."
-  },
-  {
-    q: "Tim proyek menilai setiap risiko berdasarkan probabilitas terjadinya dan dampaknya terhadap proyek. Proses ini disebut:",
-    opts: [
-      "Control Risks (Mengendalikan Risiko)",
-      "Perform Quantitative Risk Analysis (Melakukan Analisis Risiko Kuantitatif)",
-      "Perform Qualitative Risk Analysis (Melakukan Analisis Risiko Kualitatif)",
-      "Plan Risk Management (Merencanakan Manajemen Risiko)",
-      "Monitor Risks (Memantau Risiko)"
-    ],
-    correct: 2,
-    explain: "Menilai risiko berdasarkan probabilitas dan dampak = Perform Qualitative Risk Analysis (menggunakan probability & impact matrix)."
-  },
-  {
-    q: "Proses quality assurance fokus pada:",
-    opts: [
-      "Memastikan hasil akhir sesuai standar",
-      "Memastikan pelaksanaan proyek sesuai standar",
-      "Menentukan biaya",
-      "Menyusun WBS",
-      "Memeriksa hasil kerja"
+      "0",
+      "1",
+      "2",
+      "3"
     ],
     correct: 1,
-    explain: "Quality Assurance fokus pada proses — memastikan pelaksanaan/prosedur proyek sesuai standar, bukan memeriksa hasil akhirnya."
+    explain: "<strong>B (Benar):</strong> Menghitung dengan rumus V(G) = E - N + 2 → 4 - 5 + 2 = 1. Sesuai dengan contoh studi kasus prosesLogout.php di slide kuliah.<br><strong>A, C, D (Salah):</strong> Hasil kalkulasi matematika yang tidak akurat."
   },
   {
-    q: "Dokumen apa yang menyediakan kriteria untuk menentukan apakah suatu deliverable dapat diterima?",
+    q: "Di dalam representasi Flow Graph White Box Testing, area tertutup yang dibatasi oleh kumpulan edge dan node disebut dengan...",
     opts: [
-      "Communications Management Plan",
-      "Project Charter",
-      "Risk Register",
-      "Project Scope Statement",
-      "Issue Log"
-    ],
-    correct: 3,
-    explain: "Project Scope Statement berisi acceptance criteria — kriteria yang menentukan apakah suatu deliverable dapat diterima atau tidak."
-  },
-  {
-    q: "Network diagram digunakan untuk:",
-    opts: [
-      "Menyusun jadwal proyek",
-      "Menentukan organisasi tim",
-      "Menentukan budget",
-      "Menganalisis lintasan kritis",
-      "Menentukan risiko proyek"
-    ],
-    correct: 3,
-    explain: "Network diagram (CPM/PERT) digunakan untuk menggambarkan urutan aktivitas dan menganalisis critical path (lintasan kritis)."
-  },
-  {
-    q: "Selama proyek pengembangan sistem informasi, tim mengidentifikasi risiko bahwa server utama dapat mengalami kegagalan. Tim memutuskan untuk menyiapkan server cadangan agar dampaknya berkurang jika risiko terjadi. Strategi respons yang digunakan adalah:",
-    opts: [
-      "Avoid (Menghindari)",
-      "Mitigate (Memitigasi)",
-      "Transfer (Mengalihkan)",
-      "Exploit (Memanfaatkan)",
-      "Accept (Menerima)"
+      "Predicate",
+      "Region",
+      "Hub",
+      "Connector"
     ],
     correct: 1,
-    explain: "Menyiapkan server cadangan = mengurangi dampak jika risiko terjadi = strategi Mitigate (mitigasi)."
+    explain: "<strong>B (Benar):</strong> Nilai V(G) juga sama dengan jumlah Region (R) yang ada pada grafik termasuk area luar luar graf.<br><strong>A, C, D (Salah):</strong> Predicate merujuk pada simpul yang berisi kondisi percabangan; Hub dan Connector bukan istilah standar materi flowgraph."
+  },
+  {
+    q: "Jika diketahui nilai Cyclomatic Complexity V(G) dari sebuah fungsi adalah 4, hal ini mengindikasikan bahwa...",
+    opts: [
+      "Ada 4 bug di dalam fungsi tersebut yang harus segera diperbaiki.",
+      "Terdapat tepat 4 jalur independen (Independent Paths) yang harus dilalui oleh test case untuk menjamin coverage 100% basis path.",
+      "Fungsi tersebut memerlukan waktu 4 detik untuk selesai dieksekusi.",
+      "Fungsi tersebut memiliki 4 parameter input wajib."
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Kompleksitas siklomatis secara langsung mendefinisikan jumlah batas atas kasus uji minimum yang diperlukan untuk mengeksekusi setiap jalur independen satu kali.<br><strong>A, C, D (Salah):</strong> Kompleksitas mengukur struktur logika/skenario uji, bukan jumlah kerusakan kode aktual, durasi performa, ataupun parameter fungsi."
+  },
+  {
+    q: "Pengujian basis path merupakan salah satu teknik dalam White Box Testing. Apa langkah awal yang harus dilakukan sebelum membuat test case basis path?",
+    opts: [
+      "Membuat mock database connection.",
+      "Menggambar grafik alir (Flow Graph) berdasarkan urutan instruksi logika dari kode program atau pseudocode.",
+      "Melakukan stress testing pada server API.",
+      "Membeli lisensi automated tools komersial."
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Alur resmi pengujian Whitebox adalah memetakan alur logika kode ke bentuk representasi graf (node dan edge) untuk dihitung kompleksitasnya baru ditarik skenario jalurnya.<br><strong>A, C, D (Salah):</strong> Tidak relevan dengan urutan pembuatan skenario uji struktural internal basis path."
+  },
+  {
+    q: "Mengapa terdapat kecenderungan persepsi yang kurang objektif jika seorang developer menguji kodenya sendiri tanpa melibatkan independent tester?",
+    opts: [
+      "Karena developer tidak memiliki hak akses untuk menjalankan aplikasi.",
+      "Karena adanya bias psikologis/perasaan 'sudah hafal' isi coding sehingga mengabaikan asumsi implisit atau skenario kesalahan yang tidak terduga.",
+      "Karena developer tidak mengerti cara kerja aplikasi yang dibuatnya.",
+      "Karena komputer developer melarang jalannya aplikasi testing internal."
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Slide Manajemen Pengujian menyebutkan kecenderungan persepsi dikaburkan rasa hafal kode, sehingga penguji independen diperlukan untuk melihat celah di luar alur berpikir developer.<br><strong>A, C, D (Salah):</strong> Developer justru memegang hak akses tertinggi dan paham sistem kodenya, namun keterbatasan objektivitas psikologis menjadi hambatan utama dalam mencari kerusakan."
+  },
+  {
+    q: "Apa salah satu kekurangan atau risiko utama jika tim penguji independen (Independent Testers) bekerja terlalu terisolasi dari tim pengembang?",
+    opts: [
+      "Aplikasi akan menjadi lebih lambat saat dirilis.",
+      "Rawan terjadi miskomunikasi dan hambatan pengujian apabila dokumen spesifikasi kebutuhan sistem tidak memadai/tidak update.",
+      "Penguji independen akan menghapus seluruh database utama perusahaan.",
+      "Developer akan kehilangan kemampuan menulis kode program."
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Sesuai kelemahan Independent Tester di dokumen: jika terisolasi penuh, miskomunikasi tinggi dan kerja terhambat jika resource/dokumentasi minim.<br><strong>A, C, D (Salah):</strong> Merupakan asumsi ekstrem yang tidak berdasar pada materi manajemen pengujian."
+  },
+  {
+    q: "Model pengujian independent di mana terdapat 'tim khusus penguji di dalam tim pengembang' sangat direkomendasikan untuk digunakan pada tingkat pengujian apa?",
+    opts: [
+      "Murni Unit Testing saja",
+      "System Testing dan User Acceptance Testing (UAT)",
+      "Hanya pada saat instalasi hardware server",
+      "Saat perancangan arsitektur database di awal proyek"
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Berdasarkan matriks pemodelan pengujian di slide kuliah, Unit testing cocok memakai model 1-2 (buddy/dev), sedangkan tahapan System Testing & UAT wajib memakai model independen 3-5 (tim khusus/eksternal).<br><strong>A, C, D (Salah):</strong> Tidak efisien atau salah penempatan fase aktivitas pengujian independen formal."
+  },
+  {
+    q: "Siapakah yang bertanggung jawab penuh dalam mengkoordinasikan pengujian, memilih tim, menentukan metode dan lingkup pengujian, serta mengelola dokumentasi laporan pengujian secara keseluruhan?",
+    opts: [
+      "Database Administrator",
+      "Test Manager",
+      "UI/UX Designer",
+      "System Analyst"
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Sesuai slide deskripsi peran, Test Manager bertugas memimpin tata kelola, perencanaan, penentuan metodologi, budget, serta pelaporan aktivitas pengujian.<br><strong>A, C, D (Salah):</strong> Merupakan peran dalam SDLC dengan fokus fungsional masing-masing yang berbeda dari manajemen testing."
+  },
+  {
+    q: "Berdasarkan standar internasional IEEE 829-1998, dokumen komprehensif yang memuat perencanaan detail pengujian mulai dari item uji, fitur yang diuji/tidak diuji, kriteria kelulusan, jadwal, hingga risiko disebut...",
+    opts: [
+      "Test Case Specifications",
+      "Test Plan",
+      "Test Log",
+      "Bug Report"
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Slide 9 menjabarkan 16 poin isi dari 'Test Plan according to IEEE 829-1998' sebagai cetak biru tata kelola pengujian.<br><strong>A, C, D (Salah):</strong> Dokumen turunan operasional; Test Case berisi detail step input; Test Log mencatat riwayat eksekusi; Bug Report mendokumentasikan defect."
+  },
+  {
+    q: "Di dalam dokumen Test Plan, istilah 'Exit Criteria' (atau Item Pass/Fail Criteria) merujuk pada...",
+    opts: [
+      "Jam kerja ketika para tester diperbolehkan pulang dari kantor.",
+      "Kriteria atau metrik tertentu yang harus terpenuhi untuk menyatakan bahwa aktivitas pengujian suatu fitur telah selesai dan sukses dilalui.",
+      "Tombol untuk menutup aplikasi (Close App) saat terjadi crash.",
+      "Prosedur pemecatan anggota tim penguji yang tidak produktif."
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Exit criteria menetapkan standar pencapaian (misal: 100% critical test cases pass) sebagai indikator formal pengujian boleh dihentikan.<br><strong>A, C, D (Salah):</strong> Jawaban pengecoh yang tidak bermakna profesional dalam rekayasa perangkat lunak."
+  },
+  {
+    q: "Faktor apa yang mendasari penentuan skala prioritas skenario pengujian apabila tim memiliki keterbatasan waktu dan sumber daya manusia?",
+    opts: [
+      "Selera pribadi dari Test Manager.",
+      "Frekuensi penggunaan fitur, risiko kegagalan, kompleksitas fitur, dan seberapa terlihat dampak kegagalannya di mata pengguna.",
+      "Berdasarkan urutan alfabetis nama komponen modul aplikasi.",
+      "Mengutamakan fitur yang paling sedikit menggunakan baris kode program."
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Slide 10 ('Memprioritaskan Pengujian') menyebutkan kriteria: frekuensi pakai, risiko gagal, visibilitas di mata user, kompleksitas, dan arsitektur sistem.<br><strong>A, C, D (Salah):</strong> Pendekatan subjektif atau teknis sepihak yang membahayakan kualitas rilis produk perangkat lunak."
+  },
+  {
+    q: "Mengapa 'Features not to be tested' (Fitur yang tidak diuji) perlu dituliskan secara eksplisit di dalam dokumen Test Plan IEEE 829?",
+    opts: [
+      "Untuk menyembunyikan bagian aplikasi yang masih belum selesai dikerjakan.",
+      "Menyamakan ekspektasi pemangku kepentingan (stakeholder) dan memberikan batasan lingkup tanggung jawab yang jelas bagi tim penguji.",
+      "Agar pengembang tidak perlu membuat fitur tersebut.",
+      "Untuk memotong budget pengujian secara sepihak tanpa sepengetahuan klien."
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Manajemen ruang lingkup menuntut transparansi area mana yang di luar tanggung jawab QA (misal: modul payment gateway pihak ketiga) demi menghindari sengketa jaminan kualitas.<br><strong>A, C, D (Salah):</strong> Bukan bermaksud manipulatif, malas, ataupun fraud anggaran proyek."
+  },
+  {
+    q: "Manakah yang termasuk ke dalam kategori pengujian non-fungsional yang biasanya dikerjakan oleh penguji independen spesialis?",
+    opts: [
+      "Use Case Testing dan ECP",
+      "Performance Testing, Security Testing, dan Load Testing",
+      "Unit Testing dan Code Review",
+      "CRUD (Create, Read, Update, Delete) Data Validation"
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Sesuai slide 4 model pengujian independen poin 4, penguji independen fokus pada aspek non-fungsional seperti performa, ketahanan beban, dan keamanan aplikasi.<br><strong>A, C, D (Salah):</strong> Merupakan jenis pengujian fungsional dasar atau struktural internal kode."
+  },
+  {
+    q: "Dalam skenario pengujian alur login (prosesLogin.php), jika terdapat 3 kondisi validasi berurutan yang semuanya harus bernilai TRUE agar login sukses, berapakah jumlah minimum test case yang ideal untuk menguji skenario kegagalan di setiap tingkat validasi tersebut?",
+    opts: [
+      "1 Test Case",
+      "2 Test Case",
+      "4 Test Case",
+      "12 Test Case"
+    ],
+    correct: 2,
+    explain: "<strong>C (Benar):</strong> Berdasarkan studi kasus prosesLogin.php pada slide Whitebox halaman 35, dibutuhkan 4 test case: 1 untuk jalur sukses (semua TRUE) dan 3 untuk mendeteksi kegagalan bertahap di masing-masing dari 3 validasi logika percabangan.<br><strong>A, B, D (Salah):</strong> Jumlah kasus uji tidak mencukupi untuk mengcover seluruh variasi kombinasi gugurnya kondisi if berjenjang."
+  },
+  {
+    q: "Apa yang harus dilakukan oleh tim jika kriteria penundaan pengujian ('Suspension Criteria') yang tertulis di Test Plan terpenuhi selama proses QA berlangsung?",
+    opts: [
+      "Mengabaikan kriteria tersebut dan terus memaksa menjalankan pengujian apa adanya.",
+      "Menghentikan aktivitas pengujian untuk sementara waktu hingga masalah kritis pemicu teratasi, lalu melanjutkan kembali sesuai 'Resumption Requirements'.",
+      "Menghapus modul yang bermasalah dari source code produksi secara permanen.",
+      "Membubarkan seluruh tim QA dan membatalkan kontrak proyek sepihak."
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Sesuai standar IEEE 829 poin 8, jika terjadi blocker parah (misal server down total), testing dihentikan sementara (suspended) dan hanya dilanjutkan jika syarat pemulihan (resumption) terpenuhi.<br><strong>A, C, D (Salah):</strong> Tindakan tidak profesional yang menyalahi dokumen manajemen tata kelola pengujian formal."
+  },
+  {
+    q: "\"Berapa minimal test case untuk branch coverage pada kode berikut?\"\n\nif x > 0:\n    print(\"Positif\")\nelse:\n    print(\"Non-positif\")",
+    opts: ["3", "2", "1", "4"],
+    correct: 1,
+    explain: "1 decision (if-else) menghasilkan 2 branch, jadi minimal butuh 2 test case untuk mencakup branch coverage (satu untuk kondisi true, satu untuk false)."
+  },
+  {
+    q: "Tarif pos untuk 'surat ringan' adalah: Rp250 untuk berat 10g, Rp350 untuk 50g, tambahan Rp100 untuk setiap 25g hingga maksimal 100g. Input pengujian manakah (dalam gram) yang akan dipilih menggunakan Equivalence Partitioning?",
+    opts: [
+      "5g, 10g, 30g, 50g, 75g, 100g",
+      "1g, 25g, 50g, 75g, 100g, 150g",
+      "10g, 50g, 75g, 100g, 125g",
+      "10g, 30g, 55g, 80g, 105g"
+    ],
+    correct: 0,
+    explain: "Equivalence Partitioning butuh satu nilai representatif dari tiap partisi valid (1-10g, 11-50g, 51-75g, 76-100g). Opsi lain memuat nilai di luar batas valid (150g, 125g, 105g) yang melebihi maksimum 100g."
+  },
+  {
+    q: "Pengujian Use Case berguna untuk hal berikut ini?\nP Merancang acceptance tests dengan pengguna atau pelanggan\nQ Memastikan bahwa proses bisnis arus utama telah diuji\nR Menemukan cacat pada interaksi antar komponen\nS Mengidentifikasi nilai maksimum dan minimum untuk setiap kolom masukan\nT Mengidentifikasi persentase pernyataan yang dilaksanakan oleh serangkaian tes",
+    opts: [
+      "S, Q, dan T",
+      "P, Q, dan R",
+      "Q, R, dan S",
+      "P, R, dan T"
+    ],
+    correct: 1,
+    explain: "Use case testing bermanfaat untuk merancang acceptance test (P), memastikan proses bisnis utama teruji (Q), dan menemukan cacat integrasi antar komponen (R). S adalah domain BVA, T adalah statement coverage (white box) - bukan tujuan use case testing."
+  },
+  {
+    q: "Situasi yang tepat menggunakan Black Box Testing:",
+    opts: [
+      "Menguji respons sistem terhadap input invalid",
+      "Memeriksa algoritma enkripsi custom",
+      "Mencari memory leak pada modul",
+      "Mengoptimalkan performa query database"
+    ],
+    correct: 0,
+    explain: "Black box testing menguji perilaku sistem lewat input-output tanpa melihat struktur kode internal. Opsi B, C, D memerlukan pengetahuan struktur internal kode (white box testing)."
+  },
+  {
+    q: "Berdasarkan diagram state (SS→S1→S2→S3→ES, dengan lompatan S1→S3, S2→ES, serta S2→S4→S1 dan S4→S3), kasus uji manakah yang merupakan rangkaian minimum transisi yang valid untuk mencakup setiap state?",
+    opts: [
+      "SS-S1-S2-S4-S1-S3-S4-S1-S3-ES",
+      "SS-S1-S2-S4-S1-S3-ES",
+      "SS-S1-S4-S2-S1-S3-ES",
+      "SS-S1-S2-S3-S4-ES"
+    ],
+    correct: 1,
+    explain: "Opsi B mencakup semua 6 state (SS,S1,S2,S4,S3,ES) dengan transisi paling minimal yang semuanya valid sesuai diagram (SS→S1→S2→S4→S1→S3→ES). Opsi C dan D memakai transisi yang tidak ada di diagram (S1→S4 dan S3→S4 arahnya terbalik), sedangkan opsi A valid tapi tidak minimal (mengulang alur yang tidak perlu)."
+  },
+  {
+    q: "Manakah pernyataan yang benar untuk pengujian state transitioning?\nV Semua state telah dicakup\nW Waktu respon setiap transisi cukup\nX Setiap transisi telah diuji\nY Setiap batasan telah diuji\nZ Transisi dari \"Spesific sequence\" telah diuji",
+    opts: [
+      "V, W, dan X",
+      "W, X, dan Y",
+      "X, Y, dan Z",
+      "V, X, dan Z"
+    ],
+    correct: 3,
+    explain: "State transition testing yang lengkap mencakup semua state (V), semua transisi diuji (X), dan urutan transisi spesifik diuji (Z). W (waktu respons) adalah performance testing, Y (batasan nilai) adalah domain BVA - bukan kriteria state transition testing."
+  },
+  {
+    q: "Manakah dari berikut ini yang merupakan test type?",
+    opts: [
+      "Acceptance testing",
+      "System testing",
+      "Component testing",
+      "Functional testing"
+    ],
+    correct: 3,
+    explain: "Acceptance, System, dan Component testing adalah test level. Functional testing adalah test type (berdasarkan ISTQB: functional, non-functional, structural, dan change-related testing)."
+  },
+  {
+    q: "Code review modul autentikasi:\n\ndef validate_login(username, password):\n    if not username:  # Decision 1\n        return \"Username tidak boleh kosong\"\n    elif len(password) < 8:  # Decision 2\n        return \"Password minimal 8 karakter\"\n    elif not any(char.isdigit() for char in password):  # Decision 3\n        return \"Password harus mengandung angka\"\n    elif not any(char.isupper() for char in password):  # Decision 4\n        return \"Password harus mengandung huruf kapital\"\n    else:\n        return \"Login berhasil\"\n\nBerapa Cyclomatic Complexity (V(G)) dari kode di atas?",
+    opts: ["3", "4", "5", "6"],
+    correct: 2,
+    explain: "V(G) = jumlah decision + 1 = 4 decision (if-elif-elif-elif) + 1 = 5."
+  },
+  {
+    q: "Dari kode validate_login yang sama, berapa minimal jumlah test case yang diperlukan untuk mencapai branch coverage?",
+    opts: ["3", "4", "5", "6"],
+    correct: 2,
+    explain: "Untuk rangkaian if-elif-else dengan 4 decision, minimal butuh 5 test case: satu untuk tiap kondisi bernilai true (4 test case) plus satu untuk jalur else / semua false."
+  },
+  {
+    q: "Aplikasi pemesanan tiket pesawat punya parameter: Kelas Penerbangan (3 nilai), Jenis Penumpang (3 nilai), Jumlah Bagasi (4 nilai), Metode Pembayaran (3 nilai). Dengan teknik pairwise testing, berapa jumlah test case optimal yang diperlukan?",
+    opts: ["9", "10", "12", "16"],
+    correct: 2,
+    explain: "Estimasi minimal pairwise testing kira-kira sama dengan hasil kali dua faktor dengan level terbanyak: 4 x 3 = 12 test case (sesuai perkiraan covering array standar)."
+  },
+  {
+    q: "Berikut adalah cara-cara yang tepat untuk meningkatkan komunikasi yang baik antara penguji dengan tim:\nA. Menyampaikan fakta dengan cara konstruktif\nB. Mencoba memahami perasaan pihak lain dan kenapa mereka bereaksi demikian\nC. Selalu menggunakan pihak outsourcing untuk pengujian\nD. Tidak menyimpan informasi atau fakta yang dapat membuat seseorang menjadi kambing hitam",
+    opts: ["A, B", "B, C", "A, C", "B, D"],
+    correct: 0,
+    explain: "Prinsip komunikasi baik (ISTQB): sampaikan fakta secara netral/konstruktif (A) dan coba pahami perasaan pihak lain (B). Menggunakan outsourcing (C) bukan prinsip komunikasi."
+  },
+  {
+    q: "Mesin cuci punya tiga rentang suhu: bahan halus 10-30°C, bahan biasa 31-60°C, bahan sangat kotor/kaku 61-100°C. Dengan Equivalence Partitioning, input test case yang sesuai adalah....",
+    opts: [
+      "25, 45, 77",
+      "20, 65, 90",
+      "15, 30, 60",
+      "10, 31, 55"
+    ],
+    correct: 0,
+    explain: "EP butuh satu nilai representatif dari tiap partisi (10-30, 31-60, 61-100). Hanya opsi pertama yang punya satu wakil valid dari ketiga partisi; opsi lain melewatkan salah satu partisi atau memakai nilai boundary bukan representatif."
+  },
+  {
+    q: "Termometer digital 7 warna, tiap warna rentang 5°C, suhu operasional minimum -15°C dan maksimum 60°C. Manakah nilai berikut yang PALING TIDAK MUNGKIN dipilih sebagai test case dengan metode pengujian BVA?",
+    opts: ["12", "25", "0", "60"],
+    correct: 0,
+    explain: "Batas pita 5°C dari -15°C jatuh pada kelipatan 5 dari titik awal (...,-15,-10,-5,0,5,...,25,...,60). 0, 25, dan 60 adalah batas pita yang valid, sedangkan 12 tidak jatuh di batas manapun sehingga paling tidak mungkin dipilih sebagai test case BVA."
+  },
+  {
+    q: "Manakah di antara tugas-tugas berikut ini yang dikerjakan oleh TESTER dan dikerjakan oleh TEST LEADER?\na) Penentuan strategi pengujian\nb) Penentuan spesifikasi pelaksanaan pengujian\nc) Membuat laporan insiden\nd) Menulis laporan rekap pengujian",
+    opts: [
+      "a dan b dikerjakan oleh test leader, c dan d dikerjakan oleh tester",
+      "a dan c dikerjakan oleh test leader, b dan d dikerjakan oleh tester",
+      "b dan c dikerjakan oleh test leader, a dan d dikerjakan oleh tester",
+      "a dan d dikerjakan oleh test leader, b dan c dikerjakan oleh tester"
+    ],
+    correct: 3,
+    explain: "Test leader bertanggung jawab atas strategi pengujian (a) dan laporan rekap pengujian (d). Tester bertanggung jawab menulis spesifikasi pelaksanaan pengujian (b) dan laporan insiden (c)."
+  },
+  {
+    q: "Manakah di antara pernyataan berikut yang paling TEPAT untuk mendeskripsikan hubungan antara test planning dan test execution?",
+    opts: [
+      "Test planning mendefinisikan pendekatan pengujian tanpa menjadwalkan secara mendetil aktifitas-aktifitasnya, termasuk test execution",
+      "Test planning menentukan jadwal untuk test execution tapi tidak mengalokasikan sumber daya",
+      "Test planning menentukan level pengujian dan tingkat ketelitian yang sesuai untuk test execution",
+      "Test planning membuat laporan pengujian dan mendefinisikan tujuan pengujian dari test execution"
+    ],
+    correct: 2,
+    explain: "Test planning menentukan cakupan, pendekatan, dan tingkat ketelitian pengujian (berdasarkan risiko) yang menjadi acuan bagi test execution."
+  },
+  {
+    q: "Cost for defect correction merupakan biaya yang timbul pada user sebagai akibat dari kegagalan selama pengoperasian aplikasi perangkat lunak",
+    opts: ["True", "False"],
+    correct: 1,
+    explain: "Ini sebenarnya definisi 'external failure cost' / biaya yang dialami user akibat kegagalan operasional. 'Cost for defect correction' merujuk pada biaya memperbaiki defect (biasanya ditemukan selama dev/testing), bukan biaya yang ditanggung user."
+  },
+  {
+    q: "Sebuah sistem yang sedang dikembangkan memiliki perhitungan dan logika keputusan yang cukup kompleks, dan dikatakan memiliki resiko tinggi karena tim yang mengembangkan masih belum memiliki pengalaman yang cukup pada domain aplikasi. Manakah di antara jenis pengujian ini yang paling sesuai untuk kasus tersebut?",
+    opts: [
+      "Equivalence Partitioning",
+      "State Transition Testing",
+      "Basis Path Testing",
+      "Decision Table Testing"
+    ],
+    correct: 3,
+    explain: "Decision Table Testing dirancang khusus untuk menguji kombinasi aturan bisnis/kondisi keputusan yang rumit, cocok untuk sistem dengan logika keputusan kompleks."
   }
 ];
 
 let current = 0;
 let score = 0;
-let answered = [];      // answered[qIdx] = original option index yang dipilih user
-let shuffleMap = [];    // shuffleMap[qIdx] = array urutan index asli opsi yang sudah diacak
+let answered = [];
+let shuffleMap = [];
 let soundOn = true;
 let audioCtx = null;
 
@@ -1467,7 +1518,6 @@ function playCorrectSound() {
   if (!soundOn) return;
   const ctx = getAudioCtx();
   const t = ctx.currentTime;
-  // Ceria naik: C-E-G arpeggio pendek
   playTone(523.25, t, 0.14, 'triangle', 0.18);
   playTone(659.25, t + 0.08, 0.14, 'triangle', 0.18);
   playTone(783.99, t + 0.16, 0.22, 'triangle', 0.2);
@@ -1477,7 +1527,6 @@ function playWrongSound() {
   if (!soundOn) return;
   const ctx = getAudioCtx();
   const t = ctx.currentTime;
-  // Buzz turun pendek
   playTone(220, t, 0.16, 'sawtooth', 0.15);
   playTone(164.81, t + 0.1, 0.22, 'sawtooth', 0.15);
 }
@@ -1544,10 +1593,10 @@ function goToQuestion(idx) {
 function renderQuiz() {
   const area = document.getElementById('quizArea');
   const q = questions[current];
-  const userAns = answered[current]; // original index
-  const order = getShuffledOrder(current); // array of original indices, in display order
+  const userAns = answered[current];
+  const order = getShuffledOrder(current);
 
-  const letters = ['A', 'B', 'C', 'D', 'E'];
+  const letters = ['A', 'B', 'C', 'D'];
 
   let optsHtml = order.map((origIdx, displayIdx) => {
     let cls = 'option';
@@ -1573,14 +1622,14 @@ function renderQuiz() {
       <p class="question-text">${q.q}</p>
       <div class="options">${optsHtml}</div>
       <div class="explain ${userAns !== undefined ? 'show' : ''} ${explainClass}">
-        <div class="explain-label">Penjelasan</div>
+        <div class="explain-label">Analisis Opsi</div>
         <div class="explain-text">${userAns !== undefined ? q.explain : ''}</div>
       </div>
     </div>
     <div class="nav">
       <button onclick="prevQuestion()" ${current === 0 ? 'disabled' : ''}>← Sebelumnya</button>
       <button class="primary" onclick="nextQuestion()" ${userAns === undefined ? 'disabled' : ''}>
-        ${current === questions.length - 1 ? 'Lihat Hasil' : 'Selanjutnya →'}
+        ${current === questions.length - 1 ? 'Lihat Hasil' : 'Selanjiutnya →'}
       </button>
     </div>
     <div class="keyboard-hint">
@@ -1589,7 +1638,6 @@ function renderQuiz() {
       <span class="key">B</span>
       <span class="key">C</span>
       <span class="key">D</span>
-      <span class="key">E</span>
       <span>untuk menjawab</span>
     </div>
   `;
@@ -1657,7 +1705,7 @@ function showResult() {
 
   if (pct >= 80) {
     resultTitle.textContent = 'Luar Biasa';
-    resultDesc.textContent = 'Kamu menguasai materi Manajemen Proyek Perangkat Lunak dengan sangat baik. Pertahankan prestasimu!';
+    resultDesc.textContent = 'Kamu menguasai materi Pengujian Perangkat Lunak dengan sangat baik. Pertahankan prestasimu!';
   } else if (pct >= 60) {
     resultTitle.textContent = 'Bagus Sekali';
     resultDesc.textContent = 'Kamu sudah memahami konsep dasar. Terus belajar untuk meningkatkan pemahamanmu.';
@@ -1675,29 +1723,27 @@ function restartQuiz() {
   current = 0;
   score = 0;
   answered = [];
-  shuffleMap = []; // reset supaya urutan opsi diacak ulang tiap kuis diulang
+  shuffleMap = [];
   document.getElementById('resultArea').classList.add('hidden');
   document.getElementById('quizArea').classList.remove('hidden');
   renderQuiz();
   updateQuestionNav();
 }
 
-// Keyboard navigation
 document.addEventListener('keydown', (e) => {
   const key = e.key.toUpperCase();
 
-  if (['A', 'B', 'C', 'D', 'E'].includes(key)) {
+  if (['A', 'B', 'C', 'D'].includes(key)) {
     const displayIdx = key.charCodeAt(0) - 65;
     const order = getShuffledOrder(current);
     if (displayIdx < order.length) {
       const origIdx = order[displayIdx];
       selectOption(origIdx);
-      // Auto advance to next question after selecting answer
       setTimeout(() => {
         if (answered[current] !== undefined) {
           nextQuestion();
         }
-      }, 400); // delay sedikit lebih lama supaya animasi & suara kelihatan/kedengaran
+      }, 400);
     }
   }
 
@@ -1708,7 +1754,6 @@ document.addEventListener('keydown', (e) => {
     prevQuestion();
   }
 
-  // Enter key to go to next question after answering
   if (e.key === 'Enter' && answered[current] !== undefined) {
     nextQuestion();
   }
