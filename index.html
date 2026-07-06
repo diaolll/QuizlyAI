@@ -1600,6 +1600,32 @@ function goToQuestion(idx) {
   updateQuestionNav();
 }
 
+function getDynamicExplain(q, order) {
+  const letters = ['A', 'B', 'C', 'D'];
+  // Mapping: original index (0-3) -> display letter (A-D)
+  const origToDisplay = {};
+  order.forEach((origIdx, displayIdx) => {
+    origToDisplay[origIdx] = letters[displayIdx];
+  });
+
+  let explain = q.explain;
+
+  // Parse each <strong>...</strong> block and replace letters inside
+  // Pattern matches: <strong>content (Benar/Salah):</strong>
+  explain = explain.replace(/<strong>(.*?)\s*\((Benar|Salah)\):<\/strong>/g, (match, content, status) => {
+    // Split content by comma to get individual letters
+    const letterList = content.split(',').map(s => s.trim());
+    // Replace each letter with its display equivalent
+    const newLetters = letterList.map(origLetter => {
+      const origIdx = origLetter.charCodeAt(0) - 65;
+      return origToDisplay[origIdx] || origLetter;
+    });
+    return `<strong>${newLetters.join(', ')} (${status}):</strong>`;
+  });
+
+  return explain;
+}
+
 function renderQuiz() {
   const area = document.getElementById('quizArea');
   const q = questions[current];
@@ -1634,7 +1660,7 @@ function renderQuiz() {
       <div class="options">${optsHtml}</div>
       <div class="explain ${userAns !== undefined ? 'show' : ''} ${explainClass}">
         <div class="explain-label">Analisis Opsi</div>
-        <div class="explain-text">${userAns !== undefined ? q.explain : ''}</div>
+        <div class="explain-text">${userAns !== undefined ? getDynamicExplain(q, order) : ''}</div>
       </div>
     </div>
     <div class="nav">
