@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz — Pengujian Perangkat Lunak</title>
+<title>Quiz — Quality Assurance</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -817,23 +817,23 @@
 <div class="app">
 
   <header class="header">
-    <div class="header-brand">SIR207 — Kuis 2</div>
-    <h1>Pengujian <span>Perangkat Lunak</span></h1>
+    <div class="header-brand">SQA — Quality Assurance</div>
+    <h1>Quality <span>Assurance</span></h1>
     <div class="header-topics">
-      <span class="topic">Black Box & White Box</span>
-      <span class="topic">BVA & ECP</span>
-      <span class="topic">Use Case</span>
-      <span class="topic">State Transition</span>
-      <span class="topic">Decision Table</span>
-      <span class="topic">Pairwise</span>
-      <span class="topic">Manajemen Pengujian</span>
+      <span class="topic">ISO 25010</span>
+      <span class="topic">SQA & Biaya Kualitas</span>
+      <span class="topic">Defect, Error & Failure</span>
+      <span class="topic">Review & Inspeksi</span>
+      <span class="topic">Budaya Kualitas</span>
+      <span class="topic">Reliability & Portability</span>
+      <span class="topic">Standar & COBIT</span>
     </div>
   </header>
 
   <div class="stats-bar">
     <div class="stat">
       <div class="stat-label">Soal</div>
-      <div class="stat-value" id="currentStat">1<span style="font-size: 16px; color: var(--text-muted);">/56</span></div>
+      <div class="stat-value" id="currentStat">1<span style="font-size: 16px; color: var(--text-muted);">/40</span></div>
     </div>
     <div class="stat">
       <div class="stat-label">Skor</div>
@@ -870,7 +870,7 @@
     <h2 id="resultTitle">Selesai</h2>
     <div class="score">
       <span id="scoreText">0</span>
-      <span class="score-label">/ 56</span>
+      <span class="score-label">/ 40</span>
     </div>
     <p class="result-message" id="resultDesc"></p>
 
@@ -897,600 +897,481 @@
 </div>
 
 <script>
-const questions = [
+let questions = [
   {
-    q: "Apa perbedaan utama yang paling mendasar antara teknik pengujian Black Box dan White Box Testing?",
+    q: "Aplikasi mobile yang baru dirilis sulit digunakan oleh pengguna baru karena menu dan ikon tidak intuitif. Masalah ini terkait dengan subkarakteristik...",
     opts: [
-      "Black Box menguji struktur kode internal, sedangkan White Box menguji antarmuka pengguna.",
-      "Black Box berfokus pada spesifikasi fungsional tanpa melihat struktur internal, sedangkan White Box menguji jalur logika internal kode program.",
-      "Black Box hanya dilakukan oleh tim pengembang, sedangkan White Box hanya dilakukan oleh pengguna akhir (user).",
-      "Black Box membutuhkan akses penuh ke source code, sedangkan White Box mengabaikan source code sepenuhnya."
+      "Appropriateness recognisability",
+      "Learnability",
+      "User error protection",
+      "Aesthetics",
+      "Accessibility"
     ],
     correct: 1,
-    explain: "<strong>B (Benar):</strong> Sesuai definisi, Black Box mengabaikan struktur kontrol/internal dan fokus pada fungsionalitas eksternal, sedangkan White Box meramalkan cara kerja rinci dan jalur logika internal.<br><strong>A, C, D (Salah):</strong> Terbalik secara konsep; Black Box tidak melihat kode internal dan justru White Box yang membutuhkan akses source code serta sering dilakukan oleh yang paham QA/code."
+    explain: "<strong>B (Benar):</strong> Learnability adalah kemampuan produk untuk mudah dipelajari dan digunakan pengguna baru; menu dan ikon yang tidak intuitif langsung menghambat proses pembelajaran ini.<br><strong>A, C, D, E (Salah):</strong> Recognisability soal mengenali kesesuaian fungsi, error protection soal mencegah kesalahan operasi, aesthetics soal keindahan tampilan, dan accessibility soal kemudahan akses bagi pengguna berkebutuhan khusus."
   },
   {
-    q: "Teknik Equivalence Class Partitioning (ECP) membagi domain input menjadi kelas-kelas data. Apa tujuan utama dari pembagian kelas tersebut?",
+    q: "Berikut ini adalah contoh dari \"Critical Software\" KECUALI...",
     opts: [
-      "Untuk memastikan semua baris kode dieksekusi minimal satu kali.",
-      "Mengurangi jumlah test case dengan memilih satu nilai perwakilan yang mewakili seluruh kelompok data valid atau invalid.",
-      "Menguji transisi status dari suatu sistem berbasis menu dinamis.",
-      "Menghitung Cyclomatic Complexity dari fungsi matematika yang kompleks."
+      "Sistem monitoring reaktor nuklir.",
+      "Aplikasi kalkulator sederhana di smartphone.",
+      "Sistem rem mobil elektronik.",
+      "Perangkat lunak kontrol pesawat terbang."
     ],
     correct: 1,
-    explain: "<strong>B (Benar):</strong> ECP mereduksi jumlah kasus uji dengan berasumsi semua nilai dalam satu partisi akan menghasilkan perilaku sistem yang sama (valid atau invalid).<br><strong>A, C, D (Salah):</strong> Poin A adalah tujuan White Box; C adalah State Transition; D adalah Basis Path Testing."
+    explain: "<strong>B (Benar):</strong> Aplikasi kalkulator sederhana kegagalannya tidak membahayakan nyawa, ekonomi, maupun lingkungan sehingga bukan critical software.<br><strong>A, C, D (Salah):</strong> Monitoring reaktor nuklir, rem mobil elektronik, dan kontrol pesawat adalah sistem safety-critical karena kegagalannya berakibat fatal."
   },
   {
-    q: "Sebuah form pendaftaran seminar membatasi input 'Jumlah Tiket' antara 1 hingga 5 tiket per transaksi. Berdasarkan Boundary Value Analysis (BVA), berapakah nilai batas (boundaries) yang harus diuji?",
+    q: "Faktor yang dapat mendorong kualitas perangkat lunak adalah...",
     opts: [
-      "1, 3, 5",
-      "0, 1, 5, 6",
-      "-1, 0, 1, 2, 5, 6",
-      "Hanya nilai 1 dan 5 saja"
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> BVA menguji batas bawah (1) dan batas atas (5), serta nilai tepat di luar batas bawah (0) dan tepat di luar batas atas (6).<br><strong>A, C, D (Salah):</strong> Poin A adalah nilai tengah/acak; C terlalu berlebihan; D mengabaikan nilai invalid di luar batas luar."
-  },
-  {
-    q: "Jika pada kasus form 'Jumlah Tiket' (1-5) di atas kita menggunakan ECP, bagaimana klasifikasi partisi yang terbentuk?",
-    opts: [
-      "1 Kelas Valid (1-5) dan 2 Kelas Invalid (<1 dan >5)",
-      "5 Kelas Valid (1, 2, 3, 4, 5)",
-      "2 Kelas Valid (1 dan 5) serta 1 Kelas Invalid (0)",
-      "Tidak bisa ditentukan tanpa melihat baris source code program"
+      "Teknik SQA yang disesuaikan dengan lingkungan pengembangan.",
+      "Ketidakkonsistenan terminologi masalah perangkat lunak.",
+      "Ketidaktahuan terhadap teknik SQA yang telah dipublikasikan.",
+      "Kurangnya pemahaman tentang sumber kesalahan perangkat lunak."
     ],
     correct: 0,
-    explain: "<strong>A (Benar):</strong> Sesuai panduan ECP, rentang 1-5 membentuk satu kelas valid. Angka di bawah 1 membentuk kelas invalid pertama, dan angka di atas 5 membentuk kelas invalid kedua.<br><strong>B, C, D (Salah):</strong> Tidak efisien memecah nilai per angka jika perilakunya sama, dan penentuan ECP murni dari spesifikasi input (Black Box), bukan source code."
+    explain: "<strong>A (Benar):</strong> Teknik SQA yang disesuaikan dengan lingkungan pengembangan membuat aktivitas jaminan kualitas benar-benar bisa diterapkan dan mendorong kualitas.<br><strong>B, C, D (Salah):</strong> Inkonsistensi terminologi, ketidaktahuan teknik SQA, dan ketidakpahaman sumber kesalahan justru merupakan penghambat kualitas."
   },
   {
-    q: "Mengapa pengujian Boundary Value Analysis (BVA) sangat disarankan untuk melengkapi teknik Equivalence Class Partitioning (ECP)?",
+    q: "Kegagalan (Failure) pada perangkat lunak didefinisikan sebagai...",
     opts: [
-      "Karena BVA dapat mendeteksi kesalahan penulisan algoritma looping internal.",
-      "Karena kesalahan pemrograman paling sering terjadi pada kondisi batas (seperti keliru menggunakan operator < yang seharusnya <=).",
-      "Karena BVA tidak membutuhkan skenario atau test case tertulis.",
-      "Karena BVA otomatis menghasilkan nilai persentase code coverage yang tinggi."
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Pengalaman menunjukkan defect berkumpul pada batas nilai input karena kekeliruan logika relasional kode pengembang.<br><strong>A, C, D (Salah):</strong> Mendeteksi loop internal adalah ranah White Box; BVA tetap memerlukan dokumentasi formal; BVA tidak mengukur code coverage secara struktural."
-  },
-  {
-    q: "Dalam implementasi nyata, jika input form menerima umur pelamar kerja dari rentang 18 sampai 60 tahun. Berapakah contoh nilai pengujian untuk kategori 'Class Invalid Non-Numerik' dalam ECP?",
-    opts: [
-      "17",
-      "65",
-      '"duapuluh"',
-      "30"
+      "Kesalahan manusia dalam penulisan kode program.",
+      "Ketidaksesuaian antara spesifikasi dan implementasi.",
+      "Ketidakmampuan produk untuk melakukan fungsi yang diperlukan dalam batas yang ditentukan.",
+      "Masalah yang ditemukan selama fase pengujian."
     ],
     correct: 2,
-    explain: "<strong>C (Benar):</strong> Nilai string/text seperti 'duapuluh' merepresentasikan tipe data non-numerik yang melanggar tipe data bilangan bulat (integer) yang diharapkan.<br><strong>A, B (Salah):</strong> 17 dan 65 adalah partisi invalid numerik.<br><strong>D (Salah):</strong> 30 adalah nilai valid numerik."
+    explain: "<strong>C (Benar):</strong> Failure adalah ketidakmampuan produk melakukan fungsi yang diperlukan dalam batas yang ditentukan, dan baru teramati saat produk beroperasi.<br><strong>A, B, D (Salah):</strong> Kesalahan manusia menulis kode adalah error, ketidaksesuaian spesifikasi-implementasi adalah defect, sedangkan masalah saat testing belum tentu berujung failure."
   },
   {
-    q: "Kapan teknik pengujian Black Box paling ideal mulai dirancang dalam siklus pengembangan perangkat lunak (SDLC)?",
+    q: "Menurut data sumber kesalahan perangkat lunak (Beizer, 1990), kesalahan paling banyak berasal dari kategori...",
     opts: [
-      "Sesaat setelah coding selesai dilakukan oleh programmer.",
-      "Segera setelah dokumen kebutuhan (SRS / spesifikasi fungsional) disetujui, bahkan sebelum coding dimulai.",
-      "Ketika aplikasi sudah masuk tahap deployment ke server production.",
-      "Saat pengguna mengajukan keluhan bug di sistem yang berjalan."
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Karena Black Box berbasis spesifikasi fungsional, pembuatan skenario uji bisa berjalan paralel dengan proses koding berdasarkan dokumen kebutuhan.<br><strong>A, C, D (Salah):</strong> Menunggu coding selesai memperlambat proses; deployment/keluhan bug adalah tahap penanganan insiden, bukan inisiasi desain pengujian yang ideal."
-  },
-  {
-    q: "Keuntungan utama dari penggunaan tim penguji independen (Independent Testers) untuk melakukan Black Box Testing adalah...",
-    opts: [
-      "Mereka tahu pasti baris kode mana yang mengalami kebocoran memori (memory leak).",
-      "Menghilangkan bias konfirmasi karena penguji tidak terikat pada asumsi internal pembuat kode saat menginterpretasikan spesifikasi.",
-      "Mempercepat waktu perbaikan bug karena mereka bisa langsung mengedit source code.",
-      "Mengurangi biaya total proyek karena tidak memerlukan dokumentasi kebutuhan."
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Sesuai materi Manajemen Pengujian, independent tester tidak bias dan mampu memverifikasi asumsi implisit yang terlewatkan oleh developer.<br><strong>A, C, D (Salah):</strong> Independent tester biasanya tidak melihat kode langsung; mengedit kode adalah tugas developer; keberadaan mereka justru menuntut dokumentasi yang memadai agar tidak miskomunikasi."
-  },
-  {
-    q: "Apa fokus utama dari metode pengujian Use Case Testing dalam konteks Black Box Testing?",
-    opts: [
-      "Menguji struktur data array internal aplikasi.",
-      "Menguji interaksi antara aktor (pengguna akhir) dengan sistem berdasarkan skenario dan alur langkah fungsional tertentu.",
-      "Menghitung jumlah statement coverage pada function callback.",
-      "Menguji kecepatan transmisi query database SQL."
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Use Case Testing memetakan skenario langkah demi langkah interaksi pengguna eksternal dengan sistem dari awal hingga hasil akhir tercapai.<br><strong>A, C, D (Salah):</strong> Merupakan aspek internal teknis atau non-fungsional yang berada di luar cakupan fungsionalitas skenario Use Case."
-  },
-  {
-    q: "Dalam Use Case Testing, skenario yang menggambarkan alur jalannya sistem secara normal tanpa ada error atau interupsi disebut dengan istilah...",
-    opts: [
-      "Alternate Flow",
-      "Exception Flow",
-      "Main Success Scenario / Basic Flow",
-      "Integration Flow"
-    ],
-    correct: 2,
-    explain: "<strong>C (Benar):</strong> Basic Flow atau Main Success Scenario adalah jalur ideal di mana pengguna berhasil mencapai tujuan tanpa hambatan.<br><strong>A, B (Salah):</strong> Alternate flow menggambarkan jalur alternatif; Exception flow menangani kondisi error/kegagalan."
-  },
-  {
-    q: "Perhatikan skenario transaksi penarikan ATM: 'Pengguna meminta nominal Rp500.000, saldo tidak mencukupi, sistem menampilkan pesan kesalahan'. Komponen alur ini dikategorikan sebagai...",
-    opts: [
-      "Basic Flow",
-      "Exception Flow",
-      "Happy Path",
-      "Structural Path"
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Skenario kegagalan pemrosesan akibat validasi bisnis (saldo kurang) masuk ke dalam alur eksepsi (Exception Flow).<br><strong>A, C (Salah):</strong> Skenario normal penarikan sukses adalah Basic Flow / Happy Path.<br><strong>D (Salah):</strong> Istilah pengujian struktural kode (White Box)."
-  },
-  {
-    q: "Kapan metode State Transition Testing sangat direkomendasikan untuk digunakan dalam pengujian perangkat lunak?",
-    opts: [
-      "Ketika fungsionalitas sistem dipengaruhi oleh riwayat kondisi internal sebelumnya atau perubahan status objek berdasarkan event tertentu.",
-      "Ketika sistem hanya berisi formulir statis satu halaman tanpa dependensi antar field.",
-      "Ketika penguji ingin mengetahui performa konkurensi database server.",
-      "Ketika kita ingin menguji rumus aritmatika di level unit pemrograman."
+      "Struktural.",
+      "Konstruksi/koding.",
+      "Arsitektur/desain.",
+      "Spesifikasi kebutuhan."
     ],
     correct: 0,
-    explain: "<strong>A (Benar):</strong> Sesuai materi, State Transition menguji bagaimana event eksternal memicu transisi antar status internal sistem (contoh: status akun Terkunci setelah 3x salah PIN).<br><strong>B, C, D (Salah):</strong> Form statis cukup pakai BVA/ECP; performa diuji dengan Performance Testing; unit rumus memakai White Box."
+    explain: "<strong>A (Benar):</strong> Data Beizer (1990) menempatkan kesalahan kategori struktural sebagai penyumbang terbesar.<br><strong>B, C, D (Salah):</strong> Konstruksi/koding, arsitektur/desain, dan spesifikasi kebutuhan porsinya lebih kecil dalam data tersebut."
   },
   {
-    q: "Di dalam pengujian State Transition, empat komponen utama yang wajib didefinisikan adalah...",
+    q: "Menurut McConnell (2004), hubungan antara kematangan proses dan kesalahan dalam pengembangan perangkat lunak adalah...",
     opts: [
-      "Class, Object, Method, Attribute",
-      "State (kondisi), Event (peristiwa), Transition (transisi), Action (aksi)",
-      "Input, Output, Source, Destination",
-      "Node, Edge, Region, Predicate"
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Dokumen materi menegaskan 4 pilar ini: State (kondisi internal), Event (pemicu), Transition (perubahan status), dan Action (konsekuensi atau output sistem).<br><strong>A, C, D (Salah):</strong> A adalah konsep OOP; C istilah komunikasi data; D komponen struktur graf White Box."
-  },
-  {
-    q: "Kasus Siklus Pesanan E-Commerce: Pesanan berstatus 'DIBAYAR'. Jika event 'Kurir Mengambil Barang' terjadi, status berubah menjadi 'DIKIRIM'. Dalam skema State Transition, proses berubahnya status disebut...",
-    opts: [
-      "State",
-      "Action",
-      "Transition",
-      "Event"
+      "Kematangan proses tidak mempengaruhi jumlah kesalahan.",
+      "Hanya proses testing yang mempengaruhi jumlah kesalahan.",
+      "Semakin matang proses, semakin sedikit kesalahan yang dimasukkan ke dalam siklus hidup pengembangan.",
+      "Semakin matang proses, semakin banyak kesalahan yang muncul."
     ],
     correct: 2,
-    explain: "<strong>C (Benar):</strong> Transisi (Transition) adalah pergeseran atau perubahan aktual dari satu state (kondisi) ke state berikutnya.<br><strong>A, B, D (Salah):</strong> 'DIBAYAR' adalah State; 'Kurir Mengambil' adalah Event; efek samping operasionalnya adalah Action."
+    explain: "<strong>C (Benar):</strong> McConnell (2004) menyatakan semakin matang proses pengembangan, semakin sedikit kesalahan yang dimasukkan ke siklus hidup.<br><strong>A, B, D (Salah):</strong> Kematangan proses jelas berpengaruh, bukan hanya testing yang berperan, dan hubungannya berbanding terbalik dengan jumlah kesalahan."
   },
   {
-    q: "Sebuah mesin ATM mengunci kartu pengguna (Status: KARTU_TERKUNCI) setelah aksi memasukkan PIN salah berturut-turut sebanyak 3 kali. Mana yang berperan sebagai 'Event' dalam siklus ini?",
+    q: "Berikut ini yang bukan termasuk model bisnis dalam industri perangkat lunak...",
     opts: [
-      "Menampilkan pesan kesalahan di layar",
-      "Pengguna memasukkan PIN yang salah",
-      "KARTU_TERKUNCI",
-      "Mekanisme internal penahanan kartu fisik"
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Event adalah stimulus atau interaksi masukan luar yang memicu mesin bergerak merespons (memasukkan data PIN salah).<br><strong>A, C, D (Salah):</strong> A dan D adalah aksi/respons sistem; C adalah target akhir State."
-  },
-  {
-    q: "Apa kegunaan utama dari metode pengujian Decision Table Testing?",
-    opts: [
-      "Untuk melacak alur eksekusi baris kode bersarang (nested loops).",
-      "Menguji kombinasi dari berbagai kondisi input bisnis yang berbeda untuk menghasilkan tindakan (actions) yang sesuai aturan (rules).",
-      "Mempercepat pengujian UI dengan metode drag-and-drop.",
-      "Menghilangkan kebutuhan pengujian integrasi antarmuka."
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Sesuai materi, tabel keputusan memetakan matriks kondisi logika boolean (True/False) kompleks untuk memastikan kejelasan aturan bisnis produk.<br><strong>A, C, D (Salah):</strong> Poin A adalah tujuan White box; C dan D tidak relevan dengan esensi matematis Decision Table."
-  },
-  {
-    q: "Jika sebuah sistem memiliki 3 kondisi input independen, di mana setiap kondisi hanya bernilai True atau False. Berapa jumlah aturan logika dasar (Rules) maksimal yang dihasilkan dalam tabel keputusan utuh?",
-    opts: [
-      "3 Rules",
-      "6 Rules",
-      "8 Rules",
-      "9 Rules"
+      "Commercial software",
+      "Custom systems written on contract",
+      "Open-source gratis tanpa model bisnis",
+      "Commercial and mass-market firmware",
+      "Mass-market software"
     ],
     correct: 2,
-    explain: "<strong>C (Benar):</strong> Jumlah kombinasi aturan biner dihitung dengan rumus 2^n, di mana n adalah jumlah kondisi. 2^3 = 8.<br><strong>A, B, D (Salah):</strong> Kesalahan umum mengalikan langsung (3 × 2 = 6) atau menjumlahkan (3+3+3)."
+    explain: "<strong>C (Benar):</strong> Open-source gratis tanpa model bisnis bukanlah model bisnis; ia justru meniadakan mekanisme pendapatannya.<br><strong>A, B, D, E (Salah):</strong> Commercial software, custom contract, firmware komersial, dan mass-market software semuanya model bisnis yang sah di industri perangkat lunak."
   },
   {
-    q: "Di dalam sebuah Decision Table, baris yang mendefinisikan variabel-variabel input yang mempengaruhi keluaran sistem disebut...",
+    q: "Biaya kualitas perangkat lunak terdiri dari empat komponen utama berikut, KECUALI...",
     opts: [
-      "Action Stub",
-      "Condition Stub",
-      "Rule Entry",
-      "Condition Entry"
+      "Appraisal cost",
+      "Training cost",
+      "Failure cost (internal & external)",
+      "Prevention cost",
+      "Warranty & reputational cost"
     ],
     correct: 1,
-    explain: "<strong>B (Benar):</strong> Condition Stub mendaftar semua faktor/kondisi input. (Condition Entry berisi nilai Y/N atau T/F nya).<br><strong>A (Salah):</strong> Action Stub mendaftar jenis tindakan/output sistem.<br><strong>C, D (Salah):</strong> Bagian pengisian nilai, bukan pendefinisian nama variabel induk."
+    explain: "<strong>B (Benar):</strong> Empat komponen biaya kualitas adalah prevention cost, appraisal cost, failure cost (internal dan eksternal), serta warranty dan reputational cost.<br><strong>A, C, D, E (Salah):</strong> Appraisal, failure, prevention, serta warranty dan reputational cost semuanya komponen biaya kualitas; training cost bukan salah satunya."
   },
   {
-    q: "Apa kelemahan utama dari teknik Decision Table Testing jika jumlah kondisi input sangat banyak (misal lebih dari 10 kondisi)?",
+    q: "Budaya kualitas tidak bisa \"dibeli\", melainkan harus...",
     opts: [
-      "Tabel keputusan tidak lagi valid secara logika matematika.",
-      "Ukuran tabel meledak secara eksponensial (Combinatorial Explosion), menghasilkan jumlah rules yang terlalu besar (2^10 = 1024 rules) sehingga sulit dikelola.",
-      "Tidak dapat diaplikasikan pada platform berbasis web.",
-      "Memerlukan compiler khusus untuk mengeksekusi tabel."
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Masalah utama kombinatorik murni adalah pertumbuhan eksponensial yang melahirkan ratusan skenario uji yang tidak mungkin dieksekusi manual secara ekonomis.<br><strong>A, C, D (Salah):</strong> Logikanya tetap valid secara teori, tidak ada hubungan dengan tipe deployment web maupun kebutuhan compiler khusus."
-  },
-  {
-    q: "Mengapa teknik Pairwise Testing (All-Pairs Testing) sering digunakan bersamaan atau sebagai solusi alternatif penyederhanaan dari Decision Table?",
-    opts: [
-      "Karena Pairwise menguji seluruh kombinasi nilai secara mutlak tanpa tersisa.",
-      "Karena sebagian besar bug disebabkan oleh interaksi maksimal dua parameter input (pasangan), sehingga pengujian pasangan nilai dapat memangkas jumlah test case secara signifikan.",
-      "Karena Pairwise otomatis menuliskan source code unit test secara mandiri.",
-      "Karena Pairwise khusus ditujukan untuk menguji kerentanan keamanan (security)."
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Berdasarkan teori ortogonal, pengujian pasangan kombinasi (all-pairs) terbukti efektif menangkap mayoritas defect fungsional tanpa harus menguji ribuan rule penuh.<br><strong>A, C, D (Salah):</strong> Kebalikan dari A (Pairwise sengaja membuang kombinasi tingkat tinggi); C dan D adalah klaim yang keliru."
-  },
-  {
-    q: "Berdasarkan dokumentasi studi kasus pelacakan kombinasi pengujian pesanan (Product, Order Category, City, Validation, Order Time), apa langkah yang diambil jika dijumpai baris kosong atau sepasang kombinasi penting yang belum terwakili setelah pengurutan manual?",
-    opts: [
-      "Menghapus seluruh tabel dan memulai ulang dari awal.",
-      "Menambahkan baris test case kustom baru secara spesifik untuk memuat pasangan nilai yang hilang tersebut.",
-      "Membiarkan baris kosong tersebut karena tidak akan mempengaruhi hasil pengujian akhir.",
-      "Memaksa mengubah nilai validasi sistem menjadi selalu bernilai benar."
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Sesuai materi 'Decision Table & Pairwise', jika penukaran posisi row (swapping) tidak bisa memenuhi missing pairs karena resiko merusak kombinasi terurut lain, maka ditambahkan baris baru khusus.<br><strong>A, C, D (Salah):</strong> Tidak perlu destruktif, dan membiarkan kosong akan menghilangkan coverage skenario kritis."
-  },
-  {
-    q: "Apa yang dimaksud dengan 'Independent Path' di dalam konteks pengujian White Box Testing?",
-    opts: [
-      "Jalur kode yang dieksekusi secara otomatis oleh framework testing pihak ketiga.",
-      "Jalur di dalam program yang menunjukkan paling sedikit satu kumpulan proses ataupun kondisi baru (minimal melewati satu edge baru).",
-      "Semua fungsi atau method yang tidak memiliki parameter input sama sekali.",
-      "Alur perpindahan data antar server staging menuju server production."
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Definisi materi Whitebox Testing menegaskan independent path adalah jalur unik dalam program yang memperkenalkan setidaknya satu kondisi atau instruksi baru.<br><strong>A, C, D (Salah):</strong> Tidak ada kaitan dengan otomatisasi eksternal, ketiadaan parameter, atau infrastruktur deployment jaringan."
-  },
-  {
-    q: "Salah satu tujuan dari pengujian White Box adalah menjamin 'Logical Decision' dijalani pada dua sisi. Apa makna dari pernyataan tersebut?",
-    opts: [
-      "Menjalankan fungsi matematika pada angka positif dan negatif.",
-      "Mengeksekusi setiap percabangan kondisi logika pada sisi True dan juga pada sisi False.",
-      "Menjamin program dapat berjalan di sistem operasi Windows dan Linux.",
-      "Memastikan database dapat menyimpan data string dan integer secara bersamaan."
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Branch / decision coverage menuntut setiap ekspresi boolean diuji perilakunya saat menghasilkan keputusan True maupun False.<br><strong>A, C, D (Salah):</strong> Tidak menggambarkan esensi cakupan percabangan logika percabangan if-else program."
-  },
-  {
-    q: "Manakah di bawah ini yang merupakan struktur kontrol aliran program yang memicu terbentuknya percabangan logika (logical path) dalam White Box?",
-    opts: [
-      "echo, print, printf",
-      "if...then...else, switch...case, while...do",
-      "import, include, require",
-      "integer, float, boolean"
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Sesuai materi, percabangan (Condition) dan perulangan (Looping) adalah konstruksi utama yang membentuk simpul keputusan (predicate node) aliran graf logika.<br><strong>A, C, D (Salah):</strong> A adalah instruksi output; C adalah manajemen file modular; D adalah jenis tipe data primitif."
-  },
-  {
-    q: "Rumus Cyclomatic Complexity pada Basis Path Testing dapat dinyatakan melalui tiga cara. Manakah opsi di bawah ini yang menunjukkan rumus Cyclomatic Complexity V(G) yang BENAR berdasarkan representasi Flow Graph?",
-    opts: [
-      "V(G) = E - N + 2",
-      "V(G) = N - E + 2",
-      "V(G) = P - 1",
-      "V(G) = E + N - 2"
-    ],
-    correct: 0,
-    explain: "<strong>A (Benar):</strong> Rumus baku Cyclomatic Complexity adalah V(G) = E - N + 2, di mana E adalah jumlah edge (garis alur) dan N adalah jumlah node (simpul proses). Rumus lainnya adalah V(G) = P + 1 (P = Predicate node).<br><strong>B, C, D (Salah):</strong> Penempatan variabel terbalik atau salah tanda operasi aritmatika."
-  },
-  {
-    q: "Jika sebuah program memiliki Flow Graph dengan jumlah Edge (E) = 4, dan jumlah Node (N) = 5. Berapakah nilai Cyclomatic Complexity V(G) dari program tersebut?",
-    opts: [
-      "0",
-      "1",
-      "2",
-      "3"
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Menghitung dengan rumus V(G) = E - N + 2 → 4 - 5 + 2 = 1. Sesuai dengan contoh studi kasus prosesLogout.php di slide kuliah.<br><strong>A, C, D (Salah):</strong> Hasil kalkulasi matematika yang tidak akurat."
-  },
-  {
-    q: "Di dalam representasi Flow Graph White Box Testing, area tertutup yang dibatasi oleh kumpulan edge dan node disebut dengan...",
-    opts: [
-      "Predicate",
-      "Region",
-      "Hub",
-      "Connector"
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Nilai V(G) juga sama dengan jumlah Region (R) yang ada pada grafik termasuk area luar luar graf.<br><strong>A, C, D (Salah):</strong> Predicate merujuk pada simpul yang berisi kondisi percabangan; Hub dan Connector bukan istilah standar materi flowgraph."
-  },
-  {
-    q: "Jika diketahui nilai Cyclomatic Complexity V(G) dari sebuah fungsi adalah 4, hal ini mengindikasikan bahwa...",
-    opts: [
-      "Ada 4 bug di dalam fungsi tersebut yang harus segera diperbaiki.",
-      "Terdapat tepat 4 jalur independen (Independent Paths) yang harus dilalui oleh test case untuk menjamin coverage 100% basis path.",
-      "Fungsi tersebut memerlukan waktu 4 detik untuk selesai dieksekusi.",
-      "Fungsi tersebut memiliki 4 parameter input wajib."
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Kompleksitas siklomatis secara langsung mendefinisikan jumlah batas atas kasus uji minimum yang diperlukan untuk mengeksekusi setiap jalur independen satu kali.<br><strong>A, C, D (Salah):</strong> Kompleksitas mengukur struktur logika/skenario uji, bukan jumlah kerusakan kode aktual, durasi performa, ataupun parameter fungsi."
-  },
-  {
-    q: "Pengujian basis path merupakan salah satu teknik dalam White Box Testing. Apa langkah awal yang harus dilakukan sebelum membuat test case basis path?",
-    opts: [
-      "Membuat mock database connection.",
-      "Menggambar grafik alir (Flow Graph) berdasarkan urutan instruksi logika dari kode program atau pseudocode.",
-      "Melakukan stress testing pada server API.",
-      "Membeli lisensi automated tools komersial."
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Alur resmi pengujian Whitebox adalah memetakan alur logika kode ke bentuk representasi graf (node dan edge) untuk dihitung kompleksitasnya baru ditarik skenario jalurnya.<br><strong>A, C, D (Salah):</strong> Tidak relevan dengan urutan pembuatan skenario uji struktural internal basis path."
-  },
-  {
-    q: "Mengapa terdapat kecenderungan persepsi yang kurang objektif jika seorang developer menguji kodenya sendiri tanpa melibatkan independent tester?",
-    opts: [
-      "Karena developer tidak memiliki hak akses untuk menjalankan aplikasi.",
-      "Karena adanya bias psikologis/perasaan 'sudah hafal' isi coding sehingga mengabaikan asumsi implisit atau skenario kesalahan yang tidak terduga.",
-      "Karena developer tidak mengerti cara kerja aplikasi yang dibuatnya.",
-      "Karena komputer developer melarang jalannya aplikasi testing internal."
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Slide Manajemen Pengujian menyebutkan kecenderungan persepsi dikaburkan rasa hafal kode, sehingga penguji independen diperlukan untuk melihat celah di luar alur berpikir developer.<br><strong>A, C, D (Salah):</strong> Developer justru memegang hak akses tertinggi dan paham sistem kodenya, namun keterbatasan objektivitas psikologis menjadi hambatan utama dalam mencari kerusakan."
-  },
-  {
-    q: "Apa salah satu kekurangan atau risiko utama jika tim penguji independen (Independent Testers) bekerja terlalu terisolasi dari tim pengembang?",
-    opts: [
-      "Aplikasi akan menjadi lebih lambat saat dirilis.",
-      "Rawan terjadi miskomunikasi dan hambatan pengujian apabila dokumen spesifikasi kebutuhan sistem tidak memadai/tidak update.",
-      "Penguji independen akan menghapus seluruh database utama perusahaan.",
-      "Developer akan kehilangan kemampuan menulis kode program."
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Sesuai kelemahan Independent Tester di dokumen: jika terisolasi penuh, miskomunikasi tinggi dan kerja terhambat jika resource/dokumentasi minim.<br><strong>A, C, D (Salah):</strong> Merupakan asumsi ekstrem yang tidak berdasar pada materi manajemen pengujian."
-  },
-  {
-    q: "Model pengujian independent di mana terdapat 'tim khusus penguji di dalam tim pengembang' sangat direkomendasikan untuk digunakan pada tingkat pengujian apa?",
-    opts: [
-      "Murni Unit Testing saja",
-      "System Testing dan User Acceptance Testing (UAT)",
-      "Hanya pada saat instalasi hardware server",
-      "Saat perancangan arsitektur database di awal proyek"
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Berdasarkan matriks pemodelan pengujian di slide kuliah, Unit testing cocok memakai model 1-2 (buddy/dev), sedangkan tahapan System Testing & UAT wajib memakai model independen 3-5 (tim khusus/eksternal).<br><strong>A, C, D (Salah):</strong> Tidak efisien atau salah penempatan fase aktivitas pengujian independen formal."
-  },
-  {
-    q: "Siapakah yang bertanggung jawab penuh dalam mengkoordinasikan pengujian, memilih tim, menentukan metode dan lingkup pengujian, serta mengelola dokumentasi laporan pengujian secara keseluruhan?",
-    opts: [
-      "Database Administrator",
-      "Test Manager",
-      "UI/UX Designer",
-      "System Analyst"
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Sesuai slide deskripsi peran, Test Manager bertugas memimpin tata kelola, perencanaan, penentuan metodologi, budget, serta pelaporan aktivitas pengujian.<br><strong>A, C, D (Salah):</strong> Merupakan peran dalam SDLC dengan fokus fungsional masing-masing yang berbeda dari manajemen testing."
-  },
-  {
-    q: "Berdasarkan standar internasional IEEE 829-1998, dokumen komprehensif yang memuat perencanaan detail pengujian mulai dari item uji, fitur yang diuji/tidak diuji, kriteria kelulusan, jadwal, hingga risiko disebut...",
-    opts: [
-      "Test Case Specifications",
-      "Test Plan",
-      "Test Log",
-      "Bug Report"
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Slide 9 menjabarkan 16 poin isi dari 'Test Plan according to IEEE 829-1998' sebagai cetak biru tata kelola pengujian.<br><strong>A, C, D (Salah):</strong> Dokumen turunan operasional; Test Case berisi detail step input; Test Log mencatat riwayat eksekusi; Bug Report mendokumentasikan defect."
-  },
-  {
-    q: "Di dalam dokumen Test Plan, istilah 'Exit Criteria' (atau Item Pass/Fail Criteria) merujuk pada...",
-    opts: [
-      "Jam kerja ketika para tester diperbolehkan pulang dari kantor.",
-      "Kriteria atau metrik tertentu yang harus terpenuhi untuk menyatakan bahwa aktivitas pengujian suatu fitur telah selesai dan sukses dilalui.",
-      "Tombol untuk menutup aplikasi (Close App) saat terjadi crash.",
-      "Prosedur pemecatan anggota tim penguji yang tidak produktif."
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Exit criteria menetapkan standar pencapaian (misal: 100% critical test cases pass) sebagai indikator formal pengujian boleh dihentikan.<br><strong>A, C, D (Salah):</strong> Jawaban pengecoh yang tidak bermakna profesional dalam rekayasa perangkat lunak."
-  },
-  {
-    q: "Faktor apa yang mendasari penentuan skala prioritas skenario pengujian apabila tim memiliki keterbatasan waktu dan sumber daya manusia?",
-    opts: [
-      "Selera pribadi dari Test Manager.",
-      "Frekuensi penggunaan fitur, risiko kegagalan, kompleksitas fitur, dan seberapa terlihat dampak kegagalannya di mata pengguna.",
-      "Berdasarkan urutan alfabetis nama komponen modul aplikasi.",
-      "Mengutamakan fitur yang paling sedikit menggunakan baris kode program."
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Slide 10 ('Memprioritaskan Pengujian') menyebutkan kriteria: frekuensi pakai, risiko gagal, visibilitas di mata user, kompleksitas, dan arsitektur sistem.<br><strong>A, C, D (Salah):</strong> Pendekatan subjektif atau teknis sepihak yang membahayakan kualitas rilis produk perangkat lunak."
-  },
-  {
-    q: "Mengapa 'Features not to be tested' (Fitur yang tidak diuji) perlu dituliskan secara eksplisit di dalam dokumen Test Plan IEEE 829?",
-    opts: [
-      "Untuk menyembunyikan bagian aplikasi yang masih belum selesai dikerjakan.",
-      "Menyamakan ekspektasi pemangku kepentingan (stakeholder) dan memberikan batasan lingkup tanggung jawab yang jelas bagi tim penguji.",
-      "Agar pengembang tidak perlu membuat fitur tersebut.",
-      "Untuk memotong budget pengujian secara sepihak tanpa sepengetahuan klien."
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Manajemen ruang lingkup menuntut transparansi area mana yang di luar tanggung jawab QA (misal: modul payment gateway pihak ketiga) demi menghindari sengketa jaminan kualitas.<br><strong>A, C, D (Salah):</strong> Bukan bermaksud manipulatif, malas, ataupun fraud anggaran proyek."
-  },
-  {
-    q: "Manakah yang termasuk ke dalam kategori pengujian non-fungsional yang biasanya dikerjakan oleh penguji independen spesialis?",
-    opts: [
-      "Use Case Testing dan ECP",
-      "Performance Testing, Security Testing, dan Load Testing",
-      "Unit Testing dan Code Review",
-      "CRUD (Create, Read, Update, Delete) Data Validation"
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Sesuai slide 4 model pengujian independen poin 4, penguji independen fokus pada aspek non-fungsional seperti performa, ketahanan beban, dan keamanan aplikasi.<br><strong>A, C, D (Salah):</strong> Merupakan jenis pengujian fungsional dasar atau struktural internal kode."
-  },
-  {
-    q: "Dalam skenario pengujian alur login (prosesLogin.php), jika terdapat 3 kondisi validasi berurutan yang semuanya harus bernilai TRUE agar login sukses, berapakah jumlah minimum test case yang ideal untuk menguji skenario kegagalan di setiap tingkat validasi tersebut?",
-    opts: [
-      "1 Test Case",
-      "2 Test Case",
-      "4 Test Case",
-      "12 Test Case"
-    ],
-    correct: 2,
-    explain: "<strong>C (Benar):</strong> Berdasarkan studi kasus prosesLogin.php pada slide Whitebox halaman 35, dibutuhkan 4 test case: 1 untuk jalur sukses (semua TRUE) dan 3 untuk mendeteksi kegagalan bertahap di masing-masing dari 3 validasi logika percabangan.<br><strong>A, B, D (Salah):</strong> Jumlah kasus uji tidak mencukupi untuk mengcover seluruh variasi kombinasi gugurnya kondisi if berjenjang."
-  },
-  {
-    q: "Apa yang harus dilakukan oleh tim jika kriteria penundaan pengujian ('Suspension Criteria') yang tertulis di Test Plan terpenuhi selama proses QA berlangsung?",
-    opts: [
-      "Mengabaikan kriteria tersebut dan terus memaksa menjalankan pengujian apa adanya.",
-      "Menghentikan aktivitas pengujian untuk sementara waktu hingga masalah kritis pemicu teratasi, lalu melanjutkan kembali sesuai 'Resumption Requirements'.",
-      "Menghapus modul yang bermasalah dari source code produksi secara permanen.",
-      "Membubarkan seluruh tim QA dan membatalkan kontrak proyek sepihak."
-    ],
-    correct: 1,
-    explain: "<strong>B (Benar):</strong> Sesuai standar IEEE 829 poin 8, jika terjadi blocker parah (misal server down total), testing dihentikan sementara (suspended) dan hanya dilanjutkan jika syarat pemulihan (resumption) terpenuhi.<br><strong>A, C, D (Salah):</strong> Tindakan tidak profesional yang menyalahi dokumen manajemen tata kelola pengujian formal."
-  },
-  {
-    q: "\"Berapa minimal test case untuk branch coverage pada kode berikut?\"\n\nif x > 0:\n    print(\"Positif\")\nelse:\n    print(\"Non-positif\")",
-    image: "gambar/soal1.png",
-    opts: ["3", "2", "1", "4"],
-    correct: 1,
-    explain: "1 decision (if-else) menghasilkan 2 branch, jadi minimal butuh 2 test case untuk mencakup branch coverage (satu untuk kondisi true, satu untuk false)."
-  },
-  {
-    q: "Tarif pos untuk 'surat ringan' adalah: Rp250 untuk berat 10g, Rp350 untuk 50g, tambahan Rp100 untuk setiap 25g hingga maksimal 100g. Input pengujian manakah (dalam gram) yang akan dipilih menggunakan Equivalence Partitioning?",
-    opts: [
-      "5g, 10g, 30g, 50g, 75g, 100g",
-      "1g, 25g, 50g, 75g, 100g, 150g",
-      "10g, 50g, 75g, 100g, 125g",
-      "10g, 30g, 55g, 80g, 105g"
-    ],
-    correct: 0,
-    explain: "Equivalence Partitioning butuh satu nilai representatif dari tiap partisi valid (1-10g, 11-50g, 51-75g, 76-100g). Opsi lain memuat nilai di luar batas valid (150g, 125g, 105g) yang melebihi maksimum 100g."
-  },
-  {
-    q: "Pengujian Use Case berguna untuk hal berikut ini?\nP Merancang acceptance tests dengan pengguna atau pelanggan\nQ Memastikan bahwa proses bisnis arus utama telah diuji\nR Menemukan cacat pada interaksi antar komponen\nS Mengidentifikasi nilai maksimum dan minimum untuk setiap kolom masukan\nT Mengidentifikasi persentase pernyataan yang dilaksanakan oleh serangkaian tes",
-    opts: [
-      "S, Q, dan T",
-      "P, Q, dan R",
-      "Q, R, dan S",
-      "P, R, dan T"
-    ],
-    correct: 1,
-    explain: "Use case testing bermanfaat untuk merancang acceptance test (P), memastikan proses bisnis utama teruji (Q), dan menemukan cacat integrasi antar komponen (R). S adalah domain BVA, T adalah statement coverage (white box) - bukan tujuan use case testing."
-  },
-  {
-    q: "Situasi yang tepat menggunakan Black Box Testing:",
-    opts: [
-      "Menguji respons sistem terhadap input invalid",
-      "Memeriksa algoritma enkripsi custom",
-      "Mencari memory leak pada modul",
-      "Mengoptimalkan performa query database"
-    ],
-    correct: 0,
-    explain: "Black box testing menguji perilaku sistem lewat input-output tanpa melihat struktur kode internal. Opsi B, C, D memerlukan pengetahuan struktur internal kode (white box testing)."
-  },
-  {
-    q: "Berdasarkan diagram state pada Gambar, kasus uji manakah yang merupakan rangkaian minimum transisi yang valid untuk mencakup setiap state?",
-    image: "gambar/soal5.png",
-    opts: [
-      "SS-S1-S2-S4-S1-S3-S4-S1-S3-ES",
-      "SS-S1-S2-S4-S1-S3-ES",
-      "SS-S1-S4-S2-S1-S3-ES",
-      "SS-S1-S2-S3-S4-ES"
-    ],
-    correct: 1,
-    explain: "Opsi B mencakup semua 6 state (SS,S1,S2,S4,S3,ES) dengan transisi paling minimal yang semuanya valid sesuai diagram (SS→S1→S2→S4→S1→S3→ES). Opsi C dan D memakai transisi yang tidak ada di diagram (S1→S4 dan S3→S4 arahnya terbalik), sedangkan opsi A valid tapi tidak minimal (mengulang alur yang tidak perlu)."
-  },
-  {
-    q: "Manakah pernyataan yang benar untuk pengujian state transitioning?\nV Semua state telah dicakup\nW Waktu respon setiap transisi cukup\nX Setiap transisi telah diuji\nY Setiap batasan telah diuji\nZ Transisi dari \"Spesific sequence\" telah diuji",
-    opts: [
-      "V, W, dan X",
-      "W, X, dan Y",
-      "X, Y, dan Z",
-      "V, X, dan Z"
+      "Diatur oleh regulasi pemerintah",
+      "Ditentukan oleh vendor eksternal",
+      "Datang dari tekanan pasar",
+      "Diciptakan sejak awal berdirinya organisasi",
+      "Ditentukan oleh sponsor proyek"
     ],
     correct: 3,
-    explain: "State transition testing yang lengkap mencakup semua state (V), semua transisi diuji (X), dan urutan transisi spesifik diuji (Z). W (waktu respons) adalah performance testing, Y (batasan nilai) adalah domain BVA - bukan kriteria state transition testing."
+    explain: "<strong>D (Benar):</strong> Budaya kualitas tidak bisa dibeli instan; ia harus ditumbuhkan dan diciptakan sejak awal berdirinya organisasi.<br><strong>A, B, C, E (Salah):</strong> Regulasi pemerintah, vendor eksternal, tekanan pasar, dan sponsor proyek tidak menciptakan budaya kualitas."
   },
   {
-    q: "Manakah dari berikut ini yang merupakan test type?",
+    q: "COBIT berbeda dengan ITIL karena COBIT lebih berfokus pada...",
     opts: [
-      "Acceptance testing",
-      "System testing",
-      "Component testing",
-      "Functional testing"
+      "Availability management",
+      "IT service management",
+      "Service continuity management",
+      "IT Governance and management",
+      "Capacity management"
     ],
     correct: 3,
-    explain: "Acceptance, System, dan Component testing adalah test level. Functional testing adalah test type (berdasarkan ISTQB: functional, non-functional, structural, dan change-related testing)."
+    explain: "<strong>D (Benar):</strong> COBIT berfokus pada tata kelola dan manajemen TI (IT governance and management).<br><strong>A, B, C, E (Salah):</strong> Availability, service, continuity, dan capacity management adalah domain ITIL, bukan COBIT."
   },
   {
-    q: "Anda adalah seorang software engineer yang sedang melakukan code review terhadap modul autentikasi. Berikut potongan kode Python untuk validasi login:\n\n[Pada Gambar]\n\nPertanyaan:\n1. Berapa Cyclomatic Complexity (V(G)) dari kode di atas?\n2. Berapa minimal jumlah test case yang diperlukan untuk mencapai branch coverage?",
-    image: "gambar/soal8.png",
+    q: "Custom software yang ditulis in-house biasanya ditujukan untuk...",
     opts: [
-      "V(G)=3, Test Case=3",
-      "V(G)=4, Test Case=4",
-      "V(G)=5, Test Case=5",
-      "V(G)=6, Test Case=6"
+      "Dikembangkan dengan konsep open source",
+      "Dipasarkan ke perusahaan/organisasi",
+      "Ditanamkan pada hardware",
+      "Dijual ke konsumen umum",
+      "Meningkatkan efisiensi internal organisasi"
     ],
-    correct: 2,
-    explain: "V(G) = jumlah decision + 1 = 4 decision (if-elif-elif-elif) + 1 = 5. Untuk branch coverage dengan 4 decision, butuh 5 test case: 4 untuk tiap kondisi true, 1 untuk jalur else."
+    correct: 4,
+    explain: "<strong>E (Benar):</strong> Software in-house dibuat untuk dipakai sendiri dengan tujuan meningkatkan efisiensi internal organisasi.<br><strong>A, B, C, D (Salah):</strong> Dipasarkan ke perusahaan lain, berkonsep open source, ditanam di hardware, dan dijual ke konsumen umum bukan tujuan pengembangan in-house."
   },
   {
-    q: "Aplikasi pemesanan tiket pesawat punya parameter: Kelas Penerbangan (3 nilai), Jenis Penumpang (3 nilai), Jumlah Bagasi (4 nilai), Metode Pembayaran (3 nilai). Dengan teknik pairwise testing, berapa jumlah test case optimal yang diperlukan?",
-    opts: ["9", "10", "12", "16"],
-    correct: 2,
-    explain: "Estimasi minimal pairwise testing kira-kira sama dengan hasil kali dua faktor dengan level terbanyak: 4 x 3 = 12 test case (sesuai perkiraan covering array standar)."
-  },
-  {
-    q: "Berikut adalah cara-cara yang tepat untuk meningkatkan komunikasi yang baik antara penguji dengan tim:\nA. Menyampaikan fakta dengan cara konstruktif\nB. Mencoba memahami perasaan pihak lain dan kenapa mereka bereaksi demikian\nC. Selalu menggunakan pihak outsourcing untuk pengujian\nD. Tidak menyimpan informasi atau fakta yang dapat membuat seseorang menjadi kambing hitam",
-    opts: ["A, B", "B, C", "A, C", "B, D"],
-    correct: 0,
-    explain: "Prinsip komunikasi baik (ISTQB): sampaikan fakta secara netral/konstruktif (A) dan coba pahami perasaan pihak lain (B). Menggunakan outsourcing (C) bukan prinsip komunikasi."
-  },
-  {
-    q: "Mesin cuci punya tiga rentang suhu: bahan halus 10-30°C, bahan biasa 31-60°C, bahan sangat kotor/kaku 61-100°C. Dengan Equivalence Partitioning, input test case yang sesuai adalah....",
+    q: "Dalam konteks biaya kualitas, review perangkat lunak masuk dalam kategori...",
     opts: [
-      "25, 45, 77",
-      "20, 65, 90",
-      "15, 30, 60",
-      "10, 31, 55"
-    ],
-    correct: 0,
-    explain: "EP butuh satu nilai representatif dari tiap partisi (10-30, 31-60, 61-100). Hanya opsi pertama yang punya satu wakil valid dari ketiga partisi; opsi lain melewatkan salah satu partisi atau memakai nilai boundary bukan representatif."
-  },
-  {
-    q: "Termometer digital 7 warna, tiap warna rentang 5°C, suhu operasional minimum -15°C dan maksimum 60°C. Manakah nilai berikut yang PALING TIDAK MUNGKIN dipilih sebagai test case dengan metode pengujian BVA?",
-    opts: ["12", "25", "0", "60"],
-    correct: 0,
-    explain: "Batas pita 5°C dari -15°C jatuh pada kelipatan 5 dari titik awal (...,-15,-10,-5,0,5,...,25,...,60). 0, 25, dan 60 adalah batas pita yang valid, sedangkan 12 tidak jatuh di batas manapun sehingga paling tidak mungkin dipilih sebagai test case BVA."
-  },
-  {
-    q: "Manakah di antara tugas-tugas berikut ini yang dikerjakan oleh TESTER dan dikerjakan oleh TEST LEADER?\na) Penentuan strategi pengujian\nb) Penentuan spesifikasi pelaksanaan pengujian\nc) Membuat laporan insiden\nd) Menulis laporan rekap pengujian",
-    opts: [
-      "a dan b dikerjakan oleh test leader, c dan d dikerjakan oleh tester",
-      "a dan c dikerjakan oleh test leader, b dan d dikerjakan oleh tester",
-      "b dan c dikerjakan oleh test leader, a dan d dikerjakan oleh tester",
-      "a dan d dikerjakan oleh test leader, b dan c dikerjakan oleh tester"
+      "Warranty cost",
+      "Detection cost",
+      "External failure cost",
+      "Appraisal cost",
+      "Prevention cost"
     ],
     correct: 3,
-    explain: "Test leader bertanggung jawab atas strategi pengujian (a) dan laporan rekap pengujian (d). Tester bertanggung jawab menulis spesifikasi pelaksanaan pengujian (b) dan laporan insiden (c)."
+    explain: "<strong>D (Benar):</strong> Review adalah aktivitas penilaian untuk menemukan cacat sehingga biayanya masuk appraisal (evaluation) cost.<br><strong>A, B, C, E (Salah):</strong> Warranty adalah biaya garansi, external failure adalah biaya kegagalan di sisi pelanggan, dan prevention adalah biaya pencegahan terjadinya cacat."
   },
   {
-    q: "Manakah di antara pernyataan berikut yang paling TEPAT untuk mendeskripsikan hubungan antara test planning dan test execution?",
+    q: "Dalam konteks budaya kualitas, faktor yang PALING memengaruhi kualitas perangkat lunak adalah...",
     opts: [
-      "Test planning mendefinisikan pendekatan pengujian tanpa menjadwalkan secara mendetil aktifitas-aktifitasnya, termasuk test execution",
-      "Test planning menentukan jadwal untuk test execution tapi tidak mengalokasikan sumber daya",
-      "Test planning menentukan level pengujian dan tingkat ketelitian yang sesuai untuk test execution",
-      "Test planning membuat laporan pengujian dan mendefinisikan tujuan pengujian dari test execution"
+      "Besarnya budget yang dialokasikan untuk biaya kualitas",
+      "Penggunaan teknologi terbaru",
+      "Banyaknya standar formal yang digunakan",
+      "Ukuran tim pengembang",
+      "Keterlibatan klien di sepanjang fase proyek"
+    ],
+    correct: 4,
+    explain: "<strong>E (Benar):</strong> Keterlibatan klien di sepanjang fase proyek adalah faktor yang paling memengaruhi kualitas perangkat lunak.<br><strong>A, B, C, D (Salah):</strong> Besar budget, teknologi terbaru, banyaknya standar formal, dan ukuran tim pengaruhnya lebih kecil dibanding keterlibatan klien."
+  },
+  {
+    q: "Dalam konteks keamanan perangkat lunak, kemampuan untuk membuktikan bahwa suatu tindakan atau peristiwa benar-benar terjadi dan tidak dapat disangkal termasuk aspek...",
+    opts: [
+      "Accountability",
+      "Authenticity",
+      "Integrity",
+      "Non-repudiation",
+      "Confidentiality"
+    ],
+    correct: 3,
+    explain: "<strong>D (Benar):</strong> Non-repudiation menjamin suatu tindakan atau peristiwa tidak dapat disangkal bahwa ia benar-benar terjadi.<br><strong>A, B, C, E (Salah):</strong> Accountability soal pertanggungjawaban pelaku, authenticity soal keaslian identitas, integrity soal keutuhan data, dan confidentiality soal kerahasiaan."
+  },
+  {
+    q: "Dalam penjaminan kualitas perangkat lunak, trade-off antara atribut kualitas sering muncul. Misalnya, upaya meningkatkan efisiensi dapat mengurangi...",
+    opts: [
+      "Reliability",
+      "Testability",
+      "Portability",
+      "Robustness",
+      "Usability"
     ],
     correct: 2,
-    explain: "Test planning menentukan cakupan, pendekatan, dan tingkat ketelitian pengujian (berdasarkan risiko) yang menjadi acuan bagi test execution."
+    explain: "<strong>C (Benar):</strong> Optimasi efisiensi biasanya membuat kode spesifik pada suatu platform sehingga mengorbankan portability.<br><strong>A, B, D, E (Salah):</strong> Reliability, testability, robustness, dan usability bukan trade-off utama dari peningkatan efisiensi dalam konteks ini."
   },
   {
-    q: "Cost for defect correction merupakan biaya yang timbul pada user sebagai akibat dari kegagalan selama pengoperasian aplikasi perangkat lunak",
-    opts: ["True", "False"],
+    q: "Dalam proses code review, tim menemukan bahwa pada modul perhitungan diskon, programmer menulis rumus yang seharusnya \"harga * diskon / 100\" menjadi \"harga - (harga * diskon / 100)\". Kesalahan ini terdeteksi sebelum pengujian dilakukan. Kasus ini merupakan contoh...",
+    opts: [
+      "Error",
+      "Anomaly",
+      "Defect",
+      "Failure",
+      "Incident"
+    ],
+    correct: 2,
+    explain: "<strong>C (Benar):</strong> Rumus yang salah tertulis di artefak dan terdeteksi saat code review sebelum pengujian adalah defect.<br><strong>A, B, D, E (Salah):</strong> Error adalah kesalahan manusianya, failure baru terjadi saat operasi, sedangkan anomaly dan incident bukan istilah yang tepat untuk kasus ini."
+  },
+  {
+    q: "Dalam proyek sistem kontrol lalu lintas, tim QA menemukan bahwa 60% fault telah dihapus tetapi reliability hanya meningkat 3%. Penjelasan yang paling tepat untuk fenomena ini adalah...",
+    opts: [
+      "Fault removal dapat menambah defect baru",
+      "Fault yang tersisa tidak memengaruhi penurunan reliability",
+      "Fault tidak selalu berbanding lurus dengan reliability",
+      "Fault yang dihapus adalah fault minor dengan dampak kecil pada reliability",
+      "Reliability tidak bisa diukur dengan fault removal"
+    ],
+    correct: 2,
+    explain: "<strong>C (Benar):</strong> Fault dan reliability tidak selalu berbanding lurus karena dampaknya tergantung seberapa sering bagian ber-fault dieksekusi.<br><strong>A, B, D, E (Salah):</strong> Fault removal tidak serta-merta menambah defect baru, fault yang tersisa tetap berpengaruh, dan reliability tetap dapat diukur."
+  },
+  {
+    q: "Dalam review formal terkait proyek ERP, ditemukan bahwa peserta rapat tidak melakukan persiapan sebelumnya. Hasil review pun minim manfaat. Analisis yang tepat adalah...",
+    opts: [
+      "Kegagalan terjadi karena tidak adanya pelatihan untuk reviewer",
+      "Review gagal karena dipaksakan pelaksanaannya oleh pimpinan rapat",
+      "Review dapat tetap dilaksanakan walau tanpa persiapan",
+      "Kurangnya persiapan reviewer menurunkan efektivitas review",
+      "Kegagalan terjadi karena tidak ada fasilitator yang terampil"
+    ],
+    correct: 3,
+    explain: "<strong>D (Benar):</strong> Review formal mensyaratkan persiapan peserta; tanpa persiapan, efektivitas review turun dan hasilnya minim manfaat.<br><strong>A, B, C, E (Salah):</strong> Akar masalahnya bukan pelatihan reviewer, paksaan pimpinan, atau fasilitator, dan review seharusnya tidak dipaksakan jalan tanpa persiapan."
+  },
+  {
+    q: "Dalam sebuah audit, ditemukan bahwa organisasi sudah memiliki PDCA cycle, risk-based thinking, serta sistem dokumentasi mutu yang baik. Namun belum ada panduan spesifik untuk perangkat lunak. Standar tambahan yang perlu dipakai adalah...",
+    opts: [
+      "ISO/IEC 29110",
+      "ISO/IEC/IEEE 15289",
+      "IEEE 730",
+      "ISO/IEC 20000",
+      "ISO/IEC 90003"
+    ],
+    correct: 4,
+    explain: "<strong>E (Benar):</strong> ISO/IEC 90003 adalah panduan penerapan ISO 9001 yang spesifik untuk perangkat lunak.<br><strong>A, B, C, D (Salah):</strong> 29110 untuk usaha sangat kecil, 15289 untuk dokumentasi, 730 untuk rencana SQA, dan 20000 untuk manajemen layanan TI."
+  },
+  {
+    q: "Dalam sebuah proyek e-commerce, tim memilih melakukan walkthrough untuk mendiskusikan desain antarmuka. Namun, banyak cacat teknis tidak teridentifikasi. Analisis yang tepat adalah...",
+    opts: [
+      "Walkthrough lebih berfokus pada pemahaman, bukan deteksi cacat sistematis",
+      "Walkthrough tidak cocok untuk mendiskusikan desain",
+      "Tim tidak menggunakan checklist, sehingga walkthrough tidak bisa mendeteksi cacat",
+      "Walkthrough hanya boleh dilakukan di akhir proyek",
+      "Walkthrough selalu lebih efektif dibanding inspection"
+    ],
+    correct: 0,
+    explain: "<strong>A (Benar):</strong> Walkthrough bertujuan membangun pemahaman bersama atas desain, bukan menemukan cacat teknis secara sistematis seperti inspection.<br><strong>B, C, D, E (Salah):</strong> Walkthrough tetap cocok membahas desain, bisa dilakukan di awal, tidak selalu kalah efektif dari inspection, dan ketiadaan checklist bukan akar masalahnya."
+  },
+  {
+    q: "Dalam sebuah proyek ERP internasional, tim QA menemukan perbedaan persepsi requirement antara cabang di negara A dan negara B. Untuk mencegah defect akibat masalah komunikasi, aktivitas SQA yang paling tepat adalah...",
+    opts: [
+      "Enforcing standards",
+      "Formal technical reviews",
+      "Controlling change",
+      "Measurement",
+      "Record keeping and reporting"
+    ],
     correct: 1,
-    explain: "Ini sebenarnya definisi 'external failure cost' / biaya yang dialami user akibat kegagalan operasional. 'Cost for defect correction' merujuk pada biaya memperbaiki defect (biasanya ditemukan selama dev/testing), bukan biaya yang ditanggung user."
+    explain: "<strong>B (Benar):</strong> Formal technical review menyelaraskan persepsi requirement antar cabang sehingga mencegah defect akibat miskomunikasi.<br><strong>A, C, D, E (Salah):</strong> Enforcing standards, controlling change, measurement, dan record keeping tidak menyelesaikan perbedaan persepsi requirement."
   },
   {
-    q: "Sebuah sistem yang sedang dikembangkan memiliki perhitungan dan logika keputusan yang cukup kompleks, dan dikatakan memiliki resiko tinggi karena tim yang mengembangkan masih belum memiliki pengalaman yang cukup pada domain aplikasi. Manakah di antara jenis pengujian ini yang paling sesuai untuk kasus tersebut?",
+    q: "Dalam sebuah proyek ERP, manajer hanya fokus pada biaya dan jadwal, sementara kualitas diabaikan. Setelah implementasi, terjadi banyak error yang menyebabkan keterlambatan. Analisis ini sesuai dengan pernyataan...",
     opts: [
-      "Equivalence Partitioning",
-      "State Transition Testing",
-      "Basis Path Testing",
-      "Decision Table Testing"
+      "Watts Humphrey: \"Quality is lost in the noise\"",
+      "Boeing 777: tantangan 20% teknis 80% budaya",
+      "Albert Brooks: Etika hanya masalah pribadi",
+      "Krasner: Maturity berbanding lurus dengan rework",
+      "Wiegers: Keterlibatan klien faktor terbesar kualitas"
+    ],
+    correct: 0,
+    explain: "<strong>A (Benar):</strong> Sesuai pernyataan Humphrey, ketika fokus hanya pada biaya dan jadwal maka kualitas tenggelam dalam kebisingan (lost in the noise).<br><strong>B, C, D, E (Salah):</strong> Tantangan budaya Boeing, etika Brooks, kematangan Krasner, dan keterlibatan klien Wiegers tidak menggambarkan kasus ini."
+  },
+  {
+    q: "Faktor yang memengaruhi pemilihan praktik rekayasa perangkat lunak KECUALI...",
+    opts: [
+      "Iklim organisasi",
+      "Biaya perbaikan error",
+      "Regulasi",
+      "Criticality",
+      "Jumlah pengguna akhir"
+    ],
+    correct: 4,
+    explain: "<strong>E (Benar):</strong> Jumlah pengguna akhir bukan faktor yang memengaruhi pemilihan praktik rekayasa perangkat lunak.<br><strong>A, B, C, D (Salah):</strong> Iklim organisasi, biaya perbaikan error, regulasi, dan criticality semuanya memengaruhi pemilihan praktik tersebut."
+  },
+  {
+    q: "ISO/IEC/IEEE 12207 digunakan untuk...",
+    opts: [
+      "Menetapkan kerangka kerja proses siklus hidup perangkat lunak",
+      "Mengatur proses manajemen layanan TI",
+      "Menentukan format dokumen proyek dan laporan",
+      "Menyusun standar keamanan informasi",
+      "Membuat standar etika software engineer"
+    ],
+    correct: 0,
+    explain: "<strong>A (Benar):</strong> ISO/IEC/IEEE 12207 menetapkan kerangka kerja proses siklus hidup perangkat lunak.<br><strong>B, C, D, E (Salah):</strong> Manajemen layanan TI diatur 20000, format dokumen oleh 15289, keamanan informasi oleh 27000, dan etika oleh kode etik profesi."
+  },
+  {
+    q: "Jika perangkat lunak sepenuhnya memenuhi spesifikasi fungsional tetapi gagal memenuhi kebutuhan implisit pengguna, maka kondisi kualitas perangkat lunak tersebut dapat dianggap...",
+    opts: [
+      "Kualitas masih dapat diterima",
+      "Sudah dianggap memenuhi kualitas",
+      "Berkualitas rendah",
+      "Tergantung pada standar organisasi",
+      "Netral, karena spesifikasi eksplisit terpenuhi"
+    ],
+    correct: 2,
+    explain: "<strong>C (Benar):</strong> Kualitas mencakup pemenuhan kebutuhan implisit; lolos spesifikasi fungsional tetapi gagal memenuhi kebutuhan pengguna berarti berkualitas rendah.<br><strong>A, B, D, E (Salah):</strong> Kondisinya bukan dapat diterima, bukan memenuhi kualitas, bukan tergantung standar organisasi, dan bukan netral."
+  },
+  {
+    q: "Karakteristik yang menilai kemampuan sistem untuk berfungsi dengan baik di berbagai lingkungan perangkat keras dan perangkat lunak termasuk dalam aspek...",
+    opts: [
+      "Maintainability",
+      "Portability",
+      "Reliability",
+      "Compatibility",
+      "Security"
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Kemampuan berfungsi baik di berbagai lingkungan perangkat keras dan lunak adalah portability.<br><strong>A, C, D, E (Salah):</strong> Maintainability soal kemudahan perawatan, reliability soal keandalan operasi, compatibility soal hidup berdampingan, dan security soal keamanan."
+  },
+  {
+    q: "Kegagalan perangkat lunak biasanya terjadi akibat...",
+    opts: [
+      "Defect yang tidak diperbaiki sejak awal",
+      "Overlap antar fungsi modul",
+      "Terlalu sering dilakukan perubahan",
+      "Terlalu banyak pendekatan desain yang digunakan",
+      "Dokumentasi yang tidak lengkap"
+    ],
+    correct: 0,
+    explain: "<strong>A (Benar):</strong> Kegagalan perangkat lunak umumnya berakar pada defect yang tidak diperbaiki sejak awal hingga lolos ke operasi.<br><strong>B, C, D, E (Salah):</strong> Overlap modul, seringnya perubahan, banyaknya pendekatan desain, dan dokumentasi tak lengkap bukan penyebab utama yang dimaksud."
+  },
+  {
+    q: "Kualitas perangkat lunak dapat terjamin jika dilakukan hal berikut, KECUALI...",
+    opts: [
+      "Dokumentasi dibuat secara lengkap",
+      "Pengembang fokus pada kualitas coding",
+      "Testing dilakukan lebih dari sekali",
+      "Defect segera diidentifikasi dan diperbaiki sebelum menjadi failure.",
+      "Reviu dilakukan pada setiap akhir tahap pengembangan"
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Kualitas tidak bisa dijamin hanya dengan mengandalkan kualitas coding individu; ia butuh dokumentasi, testing berulang, reviu tiap tahap, dan perbaikan defect sejak dini.<br><strong>A, C, D, E (Salah):</strong> Dokumentasi lengkap, testing lebih dari sekali, identifikasi-perbaikan defect dini, dan reviu tiap akhir tahap justru merupakan penjamin kualitas."
+  },
+  {
+    q: "Manfaat utama penerapan reviu kualitas pada setiap fase siklus hidup perangkat lunak adalah...",
+    opts: [
+      "Mengurangi kebutuhan dokumentasi",
+      "Menemukan masalah lebih awal sehingga biaya koreksi menurun",
+      "Mempercepat release ke pasar",
+      "Menggantikan kebutuhan testing formal",
+      "Memastikan semua requirement dapat diubah dengan fleksibel"
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Reviu di setiap fase menemukan masalah sejak awal sehingga biaya koreksi menurun drastis (efek defect amplification).<br><strong>A, C, D, E (Salah):</strong> Reviu tidak mengurangi kebutuhan dokumentasi, tidak mempercepat rilis dengan sendirinya, tidak menggantikan testing formal, dan tidak membuat requirement bebas diubah."
+  },
+  {
+    q: "Mengacu pada konsep defect amplification, jika error pada tahap desain tidak ditemukan dan diteruskan ke tahap coding, maka dampak utamanya adalah...",
+    opts: [
+      "Error tidak memengaruhi reliability",
+      "Error otomatis teratasi saat integrasi",
+      "Kesalahan dapat diperbaiki saat testing",
+      "Kesalahan semakin sulit dan mahal diperbaiki",
+      "Biaya perbaikan dapat diefisiensikan"
     ],
     correct: 3,
-    explain: "Decision Table Testing dirancang khusus untuk menguji kombinasi aturan bisnis/kondisi keputusan yang rumit, cocok untuk sistem dengan logika keputusan kompleks."
+    explain: "<strong>D (Benar):</strong> Sesuai konsep defect amplification, error yang lolos antar tahap akan berlipat sehingga semakin sulit dan mahal diperbaiki.<br><strong>A, B, C, E (Salah):</strong> Error tidak hilang sendiri saat integrasi atau testing, tidak mengabaikan reliability, dan tidak mengefisienkan biaya."
+  },
+  {
+    q: "Menurut prinsip budaya kualitas, siapa yang seharusnya menemukan defect terlebih dahulu?",
+    opts: [
+      "Klien",
+      "User akhir",
+      "Manajer proyek",
+      "Peer atau rekan kerja",
+      "Auditor internal"
+    ],
+    correct: 3,
+    explain: "<strong>D (Benar):</strong> Budaya kualitas menuntut defect ditemukan pertama kali oleh peer atau rekan kerja sedekat mungkin dengan sumbernya.<br><strong>A, B, C, E (Salah):</strong> Jika klien, user akhir, manajer, atau auditor yang pertama menemukan, berarti pertahanan kualitas internal sudah kebobolan."
+  },
+  {
+    q: "Peer review memiliki ciri khusus yaitu...",
+    opts: [
+      "Dilakukan pada masa akhir proyek",
+      "Selalu dilakukan bersama auditor internal",
+      "Dilakukan antar kolega tanpa keterlibatan manajer",
+      "Fokus pada biaya perbaikan setelah kegagalan",
+      "Dilakukan dengan prosedur formal berdasarkan standar ISO"
+    ],
+    correct: 2,
+    explain: "<strong>C (Benar):</strong> Peer review dilakukan antar kolega setara tanpa keterlibatan manajer sehingga bersifat terbuka dan kolegial.<br><strong>A, B, D, E (Salah):</strong> Ia tidak harus di akhir proyek, tidak melibatkan auditor internal, tidak fokus pada biaya pasca-gagal, dan tidak memakai prosedur formal ISO."
+  },
+  {
+    q: "Perbedaan utama antara perangkat lunak dan perangkat keras dalam kurva keandalan adalah...",
+    opts: [
+      "Perangkat lunak memiliki kinerja yang fluktuatif",
+      "Perangkat keras cenderung memiliki pola yang teratur dalam penurunan kinerjanya",
+      "Perangkat lunak tidak mengalami degradasi fisik",
+      "Perangkat lunak tidak dapat mengalami penurunan kinerja",
+      "Perangkat keras mengalami penurunan kinerja dari masa ke masa"
+    ],
+    correct: 2,
+    explain: "<strong>C (Benar):</strong> Perangkat lunak tidak mengalami degradasi fisik; kegagalannya berasal dari defect desain, berbeda dengan hardware yang aus.<br><strong>A, B, D, E (Salah):</strong> Kinerja software tidak fluktuatif dengan sendirinya, pola penurunan teratur justru ciri hardware, dan software tetap bisa menurun kinerjanya karena faktor non-fisik."
+  },
+  {
+    q: "Perbedaan utama antara walkthrough dan inspection adalah...",
+    opts: [
+      "Walkthrough lebih fokus pada pemahaman bersama, inspection lebih fokus pada penemuan cacat",
+      "Keduanya memiliki mekanisme yang sama, hanya berbeda tujuan",
+      "Walkthrough lebih lama waktunya, inspection lebih singkat",
+      "Walkthrough hanya dilakukan oleh manajer, inspection dilakukan dengan melibatkan pengguna",
+      "Inspection membutuhkan checklist, walkthrough tidak menggunakan checklist"
+    ],
+    correct: 0,
+    explain: "<strong>A (Benar):</strong> Walkthrough berfokus pada pemahaman bersama sedangkan inspection berfokus pada penemuan cacat secara sistematis.<br><strong>B, C, D, E (Salah):</strong> Mekanisme keduanya berbeda, walkthrough tidak selalu lebih lama, tidak khusus dilakukan manajer, dan inspection memakai checklist formal."
+  },
+  {
+    q: "Pernyataan \"degree to which the system can be effectively and efficiently modified without introducing defects\" merupakan definisi dari...",
+    opts: [
+      "Modularity",
+      "Reusability",
+      "Modifiability",
+      "Testability",
+      "Analyzability"
+    ],
+    correct: 2,
+    explain: "<strong>C (Benar):</strong> Definisi tersebut tepat untuk modifiability, yaitu subkarakteristik maintainability pada ISO 25010.<br><strong>A, B, D, E (Salah):</strong> Modularity soal dekomposisi modul, reusability soal pakai ulang, testability soal kemudahan diuji, dan analyzability soal kemudahan dianalisis."
+  },
+  {
+    q: "Saat proses peer review terkait dokumen kebutuhan sistem, salah satu anggota tim menemukan bahwa deskripsi \"pengguna dapat menambah item ke keranjang\" tidak menjelaskan batas maksimum item. Ketidaktepatan ini belum masuk ke tahap implementasi kode. Situasi ini dikategorikan sebagai...",
+    opts: [
+      "Error",
+      "Failure",
+      "Defect",
+      "Non-conformance",
+      "Risk"
+    ],
+    correct: 2,
+    explain: "<strong>C (Benar):</strong> Spesifikasi yang tidak lengkap dan belum masuk ke kode adalah defect pada artefak kebutuhan.<br><strong>A, B, D, E (Salah):</strong> Ia bukan error (kesalahan manusia pembuatnya), bukan failure (belum beroperasi), bukan non-conformance implementasi, dan bukan risk."
+  },
+  {
+    q: "Salah satu atribut kualitas perangkat lunak menurut ISO 25010 yang berkaitan dengan kemampuan perangkat lunak untuk terus beroperasi meskipun menghadapi gangguan adalah...",
+    opts: [
+      "Adaptability",
+      "Learnability",
+      "Testability",
+      "Usability",
+      "Robustness"
+    ],
+    correct: 4,
+    explain: "<strong>E (Benar):</strong> Robustness adalah kemampuan perangkat lunak untuk terus beroperasi walaupun menghadapi gangguan.<br><strong>A, B, C, D (Salah):</strong> Adaptability soal penyesuaian lingkungan, learnability soal kemudahan dipelajari, testability soal kemudahan diuji, dan usability soal kemudahan pakai."
+  },
+  {
+    q: "Sebuah aplikasi kesehatan gagal lolos audit eksternal karena tidak ada bukti dokumentasi standar yang konsisten pada setiap proyek. Berdasarkan kerangka SQA, kelemahan utama organisasi ini terletak pada...",
+    opts: [
+      "Reliability attributes",
+      "Organization policies",
+      "Technical method application",
+      "Project-specific quality plan",
+      "Maintenance review"
+    ],
+    correct: 1,
+    explain: "<strong>B (Benar):</strong> Tidak adanya kebijakan dan standar dokumentasi yang konsisten adalah kelemahan pada organization policies.<br><strong>A, C, D, E (Salah):</strong> Kelemahannya bukan pada reliability attributes, bukan technical method, bukan quality plan proyek spesifik, dan bukan maintenance review."
+  },
+  {
+    q: "Sebuah aplikasi perbankan sering gagal memproses transaksi ketika jumlah pengguna meningkat drastis pada jam sibuk. Hal ini menunjukkan kelemahan pada aspek...",
+    opts: [
+      "Functional appropriateness",
+      "Reliability",
+      "Operability",
+      "Time-behavior",
+      "Modifiability"
+    ],
+    correct: 3,
+    explain: "<strong>D (Benar):</strong> Gagal memproses transaksi saat beban puncak menunjukkan kelemahan time-behavior, yaitu perilaku waktu dalam performance efficiency.<br><strong>A, B, C, E (Salah):</strong> Bukan functional appropriateness, bukan reliability, bukan operability, dan bukan modifiability."
+  },
+  {
+    q: "Sebuah e-commerce tidak dapat beroperasi bersamaan dengan sistem pembayaran eksternal karena data transaksi tidak dapat ditukar dengan format yang benar. Kelemahan ini terkait dengan...",
+    opts: [
+      "Security – Authenticity",
+      "Reliability – Availability",
+      "Portability – Installability",
+      "Maintainability – Modifiability",
+      "Compatibility – Interoperability"
+    ],
+    correct: 4,
+    explain: "<strong>E (Benar):</strong> Tidak bisa bertukar data dengan sistem pembayaran eksternal adalah masalah interoperability dalam compatibility.<br><strong>A, B, C, D (Salah):</strong> Bukan authenticity (security), bukan availability (reliability), bukan installability (portability), dan bukan modifiability (maintainability)."
   }
 ];
 
@@ -1568,6 +1449,7 @@ function getShuffledOrder(qIdx) {
 }
 
 function init() {
+  questions = shuffleArray(questions);
   renderQuestionNav();
   renderQuiz();
   updateStats();
@@ -1601,7 +1483,7 @@ function goToQuestion(idx) {
 }
 
 function getDynamicExplain(q, order) {
-  const letters = ['A', 'B', 'C', 'D'];
+  const letters = ['A', 'B', 'C', 'D', 'E'];
   // Mapping: original index (0-3) -> display letter (A-D)
   const origToDisplay = {};
   order.forEach((origIdx, displayIdx) => {
@@ -1632,7 +1514,7 @@ function renderQuiz() {
   const userAns = answered[current];
   const order = getShuffledOrder(current);
 
-  const letters = ['A', 'B', 'C', 'D'];
+  const letters = ['A', 'B', 'C', 'D', 'E'];
 
   let optsHtml = order.map((origIdx, displayIdx) => {
     let cls = 'option';
@@ -1675,6 +1557,7 @@ function renderQuiz() {
       <span class="key">B</span>
       <span class="key">C</span>
       <span class="key">D</span>
+      <span class="key">E</span>
       <span>untuk menjawab</span>
     </div>
   `;
@@ -1742,7 +1625,7 @@ function showResult() {
 
   if (pct >= 80) {
     resultTitle.textContent = 'Luar Biasa';
-    resultDesc.textContent = 'Kamu menguasai materi Pengujian Perangkat Lunak dengan sangat baik. Pertahankan prestasimu!';
+    resultDesc.textContent = 'Kamu menguasai materi Quality Assurance dengan sangat baik. Pertahankan prestasimu!';
   } else if (pct >= 60) {
     resultTitle.textContent = 'Bagus Sekali';
     resultDesc.textContent = 'Kamu sudah memahami konsep dasar. Terus belajar untuk meningkatkan pemahamanmu.';
@@ -1761,6 +1644,7 @@ function restartQuiz() {
   score = 0;
   answered = [];
   shuffleMap = [];
+  questions = shuffleArray(questions);
   document.getElementById('resultArea').classList.add('hidden');
   document.getElementById('quizArea').classList.remove('hidden');
   renderQuiz();
@@ -1770,7 +1654,7 @@ function restartQuiz() {
 document.addEventListener('keydown', (e) => {
   const key = e.key.toUpperCase();
 
-  if (['A', 'B', 'C', 'D'].includes(key)) {
+  if (['A', 'B', 'C', 'D', 'E'].includes(key)) {
     const displayIdx = key.charCodeAt(0) - 65;
     const order = getShuffledOrder(current);
     if (displayIdx < order.length) {
